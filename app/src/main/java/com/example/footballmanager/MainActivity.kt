@@ -27,8 +27,9 @@ class MainActivity : ComponentActivity() {
         runBlocking {
             try {
                 val listResult =
-                    FootballApi.retrofitService.getStatus()
+                    FootballApi.retrofitService.getFixtures(1)
                 name = listResult
+                Log.d("odpowiedzz", listResult)
             }catch (e:IOException){
                 Log.d("ErrorMessageMainActivity", "onCreate: $e")
                 name = "Error: $e"

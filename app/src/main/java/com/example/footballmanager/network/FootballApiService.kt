@@ -18,12 +18,38 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(ScalarsConverterFactory.create())
     .build()
 
+
 interface FootballApiService {
     @Headers(
         "x-rapidapi-host: v3.football.api-sports.io",
         "x-rapidapi-key: 182fc0d02721df1eca6a1ad83cf310ac")
     @GET("status")
     suspend fun getStatus():String
+
+    @Headers(
+        "x-rapidapi-host: v3.football.api-sports.io",
+        "x-rapidapi-key: 182fc0d02721df1eca6a1ad83cf310ac")
+    @GET("standings")
+    suspend fun getStandings(
+        @Query("season") season: Int //YYYY
+    ):String
+
+    @Headers(
+        "x-rapidapi-host: v3.football.api-sports.io",
+        "x-rapidapi-key: 182fc0d02721df1eca6a1ad83cf310ac")
+    @GET("leagues")
+    suspend fun getLeagues(
+        @Query("id") id: Int,
+        @Query("season") season: Int //YYYY
+    ):String
+
+    @Headers(
+        "x-rapidapi-host: v3.football.api-sports.io",
+        "x-rapidapi-key: 182fc0d02721df1eca6a1ad83cf310ac")
+    @GET("fixtures")
+    suspend fun getFixtures(
+        @Query("last") last: Int //2 characters
+    ):String
 }
 
 object FootballApi{
