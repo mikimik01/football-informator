@@ -1,5 +1,6 @@
 package com.example.footballmanager.network
 
+import com.example.footballmanager.BuildConfig
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -16,11 +17,10 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
     .build()
 
-
 interface FootballApiService {
     @Headers(
-        "x-rapidapi-host: v3.football.api-sports.io",
-        "x-rapidapi-key: 182fc0d02721df1eca6a1ad83cf310ac")
+        "x-rapidapi-host: ${BuildConfig.RAPIDAPI_HOST}",
+        "x-rapidapi-key: ${BuildConfig.RAPIDAPI_KEY}")
     @GET("fixtures")
     fun getFixtures(
         @Query("last") last: Int //2 characters
