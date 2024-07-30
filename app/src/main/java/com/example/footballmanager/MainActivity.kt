@@ -29,8 +29,7 @@ class MainActivity : ComponentActivity() {
         val call = FootballApi.retrofitService.getFixtures(1)
         call.enqueue(object : Callback<FixtureDataWrapper> {
             override fun onResponse(
-                call: Call<FixtureDataWrapper>,
-                response: Response<FixtureDataWrapper>
+                call: Call<FixtureDataWrapper>, response: Response<FixtureDataWrapper>
             ) {
                 if (response.isSuccessful) {
                     name = response.body()?.responseBody?.get(0)?.teams?.home?.name ?: "null"
@@ -51,8 +50,7 @@ class MainActivity : ComponentActivity() {
             FootballManagerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = name,
-                        modifier = Modifier.padding(innerPadding)
+                        name = name, modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
@@ -63,8 +61,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = name,
-        modifier = modifier
+        text = name, modifier = modifier
     )
 }
 
