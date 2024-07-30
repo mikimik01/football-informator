@@ -34,59 +34,92 @@ import com.example.footballmanager.network.FixtureDataWrapper
 @Composable
 fun MatchScoreTab(
     fixture: FixtureDataWrapper,
-    modifier: Modifier = Modifier) {
-
-    val fixturesCount = fixture.responseBody.size
-    val league = fixture.responseBody[0].league?.name?:"null"
-    val leagueLogo = fixture.responseBody[0].league?.logo?:"null"
-    val team1 = fixture.responseBody[0].teams?.home?.name?:"null"
-    val team2 = fixture.responseBody[0].teams?.away?.name?:"null"
-    val short = fixture.responseBody[0].fixture?.status?.short?:"null"
-    Log.d("Sprawdzaniestruktury", "League: $league")
-    Log.d("Sprawdzaniestruktury", "Logo league: $leagueLogo")
-    Log.d("Sprawdzaniestruktury", "Team1: $team1")
-    Log.d("Sprawdzaniestruktury", "Team2 $team2")
-    Log.d("Sprawdzaniestruktury", "Short: $short")
-
-
+    modifier: Modifier = Modifier
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         modifier = modifier
             .requiredWidth(width = 390.dp)
             .padding(horizontal = 16.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(leagueLogo),
-                contentDescription = "League logo",
-                modifier = Modifier
-                    .requiredSize(size = 20.dp)
-                    .clip(shape = RoundedCornerShape(12.dp)))
-            Text(
-                text = "Premier League",
-                color = Color(0xffb6b6b6),
-                textAlign = TextAlign.Center,
-                lineHeight = 1.5.em,
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium))
-        }
-
         LazyColumn {
-            items(3){
-                FixtureItem()
+            for (item in fixture.responseBody) {
+                val leagueName = item.league?.name ?: "null"
+                val leagueLogo = item.league?.logo ?: "null"
+                val nameTeamHome = item.teams?.home?.name ?: "null"
+                val nameTeamAway = item.teams?.away?.name ?: "null"
+                val scoreTeamHome = item.goals?.home.toString()
+                val scoreTeamAway = item.goals?.away.toString()
+                val logoTeamHome = item.teams?.home?.logo?:"null"
+                val logoTeamAway = item.teams?.away?.logo?:"null"
+                val short = item.fixture?.status?.short ?: "null"
+
+                item {
+                    LeagueHeader(
+                        leagueLogo = leagueLogo,
+                        leagueName = leagueName
+                    )
+                }
+                item() {
+                    FixtureItem(
+                        nameTeamHome = nameTeamHome,
+                        nameTeamAway = nameTeamAway,
+                        scoreTeamHome = scoreTeamHome,
+                        scoreTeamAway = scoreTeamAway,
+                        logoTeamHome = logoTeamHome,
+                        logoTeamAway = logoTeamAway,
+                        short = short,
+                        numberToAskDoNotKnowWhatItIs = "15/4"
+                    )
+
+                }
             }
         }
 
     }
 }
 
+@Composable
+fun LeagueHeader(
+    leagueLogo: String,
+    leagueName: String
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(leagueLogo),
+            contentDescription = "League logo",
+            modifier = Modifier
+                .requiredSize(size = 20.dp)
+                .clip(shape = RoundedCornerShape(12.dp))
+        )
+        Text(
+            text = leagueName,
+            color = Color(0xffb6b6b6),
+            textAlign = TextAlign.Center,
+            lineHeight = 1.5.em,
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium
+            )
+        )
+    }
+}
 
 @Composable
-fun FixtureItem(modifier: Modifier = Modifier) {
+fun FixtureItem(
+    modifier: Modifier = Modifier,
+    nameTeamHome: String,
+    nameTeamAway: String,
+    scoreTeamHome: String,
+    scoreTeamAway: String,
+    logoTeamHome: String,
+    logoTeamAway: String,
+    short: String,
+    numberToAskDoNotKnowWhatItIs: String
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
@@ -101,25 +134,29 @@ fun FixtureItem(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top)
         ) {
             Text(
-                text = "FT ",
+                text = short,
                 color = Color(0xff5d5c64),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = TextStyle(
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium),
+                    fontWeight = FontWeight.Medium
+                ),
                 modifier = Modifier
-                    .requiredWidth(width = 36.dp))
+                    .requiredWidth(width = 36.dp)
+            )
             Text(
-                text = "15/4",
+                text = numberToAskDoNotKnowWhatItIs,
                 color = Color(0xff5d5c64),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = TextStyle(
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium),
+                    fontWeight = FontWeight.Medium
+                ),
                 modifier = Modifier
-                    .requiredWidth(width = 36.dp))
+                    .requiredWidth(width = 36.dp)
+            )
         }
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
@@ -139,30 +176,35 @@ fun FixtureItem(modifier: Modifier = Modifier) {
                         .weight(weight = 1f)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.swipe_right_icon),
-                        contentDescription = "image 7",
+                        painter = rememberAsyncImagePainter(logoTeamHome),
+                        contentDescription = "Home Logo",
                         contentScale = ContentScale.Inside,
                         modifier = Modifier
-                            .requiredSize(size = 24.dp))
+                            .requiredSize(size = 24.dp)
+                    )
                     Text(
-                        text = "West Ham United",
+                        text = nameTeamHome,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         lineHeight = 1.5.em,
                         style = TextStyle(
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium))
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
                 }
                 Text(
-                    text = "2",
+                    text = scoreTeamHome,
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     lineHeight = 1.5.em,
                     style = TextStyle(
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold),
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier
-                        .requiredWidth(width = 40.dp))
+                        .requiredWidth(width = 40.dp)
+                )
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(120.dp, Alignment.Start),
@@ -177,30 +219,35 @@ fun FixtureItem(modifier: Modifier = Modifier) {
                         .weight(weight = 1f)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.swipe_right_icon),
-                        contentDescription = "image 7",
+                        painter = rememberAsyncImagePainter(logoTeamAway),
+                        contentDescription = "Team away",
                         contentScale = ContentScale.Inside,
                         modifier = Modifier
-                            .requiredSize(size = 24.dp))
+                            .requiredSize(size = 24.dp)
+                    )
                     Text(
-                        text = "Arsenal",
+                        text = nameTeamAway,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         lineHeight = 1.5.em,
                         style = TextStyle(
                             fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium))
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
                 }
                 Text(
-                    text = "2",
+                    text = scoreTeamAway,
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     lineHeight = 1.5.em,
                     style = TextStyle(
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold),
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier
-                        .requiredWidth(width = 40.dp))
+                        .requiredWidth(width = 40.dp)
+                )
             }
         }
     }

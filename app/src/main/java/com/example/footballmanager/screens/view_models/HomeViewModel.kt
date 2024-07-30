@@ -27,7 +27,7 @@ class HomeViewModel : ViewModel() {
     fun getFixturesData(ctx: Context) {
         viewModelScope.launch {
             try {
-                val result = FootballApi.retrofitService.getFixtures(3)
+                val result = FootballApi.retrofitService.getFixtures(10)
                 retrievingDataState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
                 retrievingDataState = RetrievingDataState.Error
@@ -35,11 +35,10 @@ class HomeViewModel : ViewModel() {
                 Toast.makeText(ctx, "Check \"Errors_\"", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun get7DatesToDisplay():List<RetrievedData>{
+    fun get7DatesToDisplay(): List<RetrievedData> {
         val retList = mutableListOf<RetrievedData>()
         for (daysOffset in -50..50) {
             val currentTime = LocalDate.now().plusDays(daysOffset.toLong())
@@ -54,8 +53,8 @@ class HomeViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getOneMoreDay(whichDay:Int): RetrievedData {
-        val currentTime = LocalDate.now().plusDays((4+whichDay).toLong())
+    fun getOneMoreDay(whichDay: Int): RetrievedData {
+        val currentTime = LocalDate.now().plusDays((4 + whichDay).toLong())
         val formatter = DateTimeFormatter.ofPattern("dd")
         val month = currentTime.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
         val dayOfWeek = currentTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
@@ -64,7 +63,6 @@ class HomeViewModel : ViewModel() {
         return RetrievedData(dayOfWeek, fullyFormattedDate)
     }
 }
-
 
 
 data class RetrievedData(

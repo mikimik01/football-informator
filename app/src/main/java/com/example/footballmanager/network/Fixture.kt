@@ -47,6 +47,6 @@ data class Away(
 )
 
 data class Goals(
-    @SerializedName("home") var home: String? = null,
-    @SerializedName("away") var away: String? = null
+    @SerializedName("home") var home: Int? = null,
+    @SerializedName("away") var away: Int? = null
 )
