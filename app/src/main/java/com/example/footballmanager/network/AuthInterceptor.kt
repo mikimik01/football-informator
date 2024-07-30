@@ -12,9 +12,9 @@ class AuthInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val currentRequest = chain.request().newBuilder()
-        currentRequest.addHeader(hostName, hostValue)
-        currentRequest.addHeader(keyName, keyValue)
-        val newRequest = currentRequest.build()
-        return chain.proceed(newRequest)
+            .addHeader(hostName, hostValue)
+            .addHeader(keyName, keyValue)
+            .build()
+        return chain.proceed(currentRequest)
     }
 }
