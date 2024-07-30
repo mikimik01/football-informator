@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -18,6 +20,25 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        //load the values from .properties file
+        val keystoreFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        //return empty key in case something goes wrong
+        val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: ""
+        val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: ""
+
+        buildConfigField(
+            type = "String",
+            name = "RAPIDAPI_KEY",
+            value = rapidApiKey
+        )
+        buildConfigField(
+            type = "String",
+            name = "RAPIDAPI_HOST",
+            value = rapidApiHost
+        )
     }
 
     buildTypes {
@@ -38,6 +59,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -59,6 +81,17 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    //Serialization
+    implementation(libs.converter.gson)
+    //Scalars
+    implementation(libs.converter.scalars)
+    //interceptor lib
+    implementation(libs.logging.interceptor)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
