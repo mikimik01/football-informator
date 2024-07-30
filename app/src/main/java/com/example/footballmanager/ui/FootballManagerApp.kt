@@ -21,9 +21,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.screens.result_screens.success_components.Header
 import com.example.footballmanager.screens.HomeScreen
 import com.example.footballmanager.screens.view_models.HomeViewModel
+import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FootballManagerApp() {
@@ -33,13 +32,13 @@ fun FootballManagerApp() {
 
     LaunchedEffect(key1 = true) {
         Toast.makeText(ctx, "Invoke retrieving data here", Toast.LENGTH_SHORT).show()
-        homeViewModel.getFixturesData(ctx)
+        homeViewModel.getFixturesData(ctx, LocalDate.now().toString())
     }
 
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { AppTopBar(scrollBehavior = scrollBehavior)}
+        topBar = { AppTopBar(scrollBehavior = scrollBehavior) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -51,14 +50,12 @@ fun FootballManagerApp() {
     }
 }
 
-
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier
-){
+) {
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {

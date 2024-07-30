@@ -1,7 +1,5 @@
 package com.example.footballmanager.screens.result_screens.success_components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +25,6 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Header(modifier: Modifier = Modifier) {
     Row(

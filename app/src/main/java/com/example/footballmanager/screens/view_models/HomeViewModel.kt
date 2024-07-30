@@ -24,10 +24,10 @@ class HomeViewModel : ViewModel() {
         private set
 
     //fun get
-    fun getFixturesData(ctx: Context) {
+    fun getFixturesData(ctx: Context, date: String) {
         viewModelScope.launch {
             try {
-                val result = FootballApi.retrofitService.getFixtures(10)
+                val result = FootballApi.retrofitService.getFixtures(date)
                 retrievingDataState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
                 retrievingDataState = RetrievingDataState.Error
@@ -37,7 +37,6 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun get7DatesToDisplay(): List<RetrievedData> {
         val retList = mutableListOf<RetrievedData>()
         for (daysOffset in -50..50) {
@@ -47,12 +46,11 @@ class HomeViewModel : ViewModel() {
             val dayOfWeek = currentTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
             val day = currentTime.format(formatter)
             val fullyFormattedDate = "$day $month"
-            retList.add(RetrievedData(dayOfWeek, fullyFormattedDate))
+            retList.add(RetrievedData(dayOfWeek, currentTime.toString(), fullyFormattedDate))
         }
         return retList
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getOneMoreDay(whichDay: Int): RetrievedData {
         val currentTime = LocalDate.now().plusDays((4 + whichDay).toLong())
         val formatter = DateTimeFormatter.ofPattern("dd")
@@ -60,14 +58,13 @@ class HomeViewModel : ViewModel() {
         val dayOfWeek = currentTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
         val day = currentTime.format(formatter)
         val fullyFormattedDate = "$day $month"
-        return RetrievedData(dayOfWeek, fullyFormattedDate)
+        return RetrievedData(dayOfWeek, currentTime.toString(), fullyFormattedDate)
     }
 }
 
 
 data class RetrievedData(
-    val dayOfWeek: String,
-    val restOfDate: String
+    val dayOfWeek: String, val localDate: String, val restOfDate: String
 )
 
 

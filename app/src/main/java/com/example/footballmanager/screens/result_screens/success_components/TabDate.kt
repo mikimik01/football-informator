@@ -1,8 +1,5 @@
 package com.example.footballmanager.screens.result_screens.success_components
 
-import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
@@ -42,8 +39,6 @@ import com.example.footballmanager.screens.view_models.RetrievedData
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
-@SuppressLint("RememberReturnType", "CoroutineCreationDuringComposition")
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TabDate(modifier: Modifier = Modifier) {
 
@@ -156,7 +151,6 @@ fun TabDate(modifier: Modifier = Modifier) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DateField(
     modifier: Modifier = Modifier,

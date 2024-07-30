@@ -9,7 +9,7 @@ object FootballApi {
     private const val BASE_URL =
         "https://v3.football.api-sports.io"
 
-    val client = OkHttpClient.Builder()
+    private val client = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor())
         .build()
 

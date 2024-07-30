@@ -1,5 +1,6 @@
 package com.example.footballmanager.screens.result_screens.success_components
 
+import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,13 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.getString
 import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
 import com.example.footballmanager.network.FixtureDataWrapper
@@ -42,25 +46,33 @@ fun MatchScoreTab(
             .requiredWidth(width = 390.dp)
             .padding(horizontal = 16.dp)
     ) {
+        val ctx = LocalContext.current
         LazyColumn {
+            var previousLeagueName = ""
             for (item in fixture.responseBody) {
-                val leagueName = item.league?.name ?: "null"
-                val leagueLogo = item.league?.logo ?: "null"
-                val nameTeamHome = item.teams?.home?.name ?: "null"
-                val nameTeamAway = item.teams?.away?.name ?: "null"
-                val scoreTeamHome = item.goals?.home.toString()
-                val scoreTeamAway = item.goals?.away.toString()
-                val logoTeamHome = item.teams?.home?.logo?:"null"
-                val logoTeamAway = item.teams?.away?.logo?:"null"
-                val short = item.fixture?.status?.short ?: "null"
+                val defaultValue = getString(ctx, R.string.default_value)
+                val leagueName = item.league?.name ?: defaultValue
+                val leagueLogo = item.league?.logo ?: defaultValue
+                val nameTeamHome = item.teams?.home?.name ?: defaultValue
+                val nameTeamAway = item.teams?.away?.name ?: defaultValue
+                val scoreTeamHome = item.goals?.home?.toString() ?: defaultValue
+                val scoreTeamAway = item.goals?.away?.toString() ?: defaultValue
+                val logoTeamHome = item.teams?.home?.logo ?: defaultValue
+                val logoTeamAway = item.teams?.away?.logo ?: defaultValue
+                val short = item.fixture?.status?.short ?: defaultValue
+
+                if (leagueName != previousLeagueName) {
+                    item {
+                        LeagueHeader(
+                            leagueLogo = leagueLogo,
+                            leagueName = leagueName
+                        )
+                    }
+                }
+                previousLeagueName = leagueName
+
 
                 item {
-                    LeagueHeader(
-                        leagueLogo = leagueLogo,
-                        leagueName = leagueName
-                    )
-                }
-                item() {
                     FixtureItem(
                         nameTeamHome = nameTeamHome,
                         nameTeamAway = nameTeamAway,
@@ -124,7 +136,7 @@ fun FixtureItem(
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .padding(10.dp)
+            .padding(5.dp)
             .requiredWidth(width = 358.dp)
             .clip(shape = RoundedCornerShape(6.dp))
             .background(color = Color(0xff1e1e1e))

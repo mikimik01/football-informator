@@ -20,7 +20,8 @@ data class League(
 )
 
 data class Fixture(
-    @SerializedName("status") var status: Status? = Status()
+    @SerializedName("status") var status: Status? = Status(),
+    @SerializedName("date") var date: String? = null
 )
 
 data class Status(
