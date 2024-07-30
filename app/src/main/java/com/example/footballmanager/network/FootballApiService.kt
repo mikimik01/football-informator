@@ -20,14 +20,15 @@ private val retrofit = Retrofit.Builder()
 interface FootballApiService {
     @Headers(
         "x-rapidapi-host: ${BuildConfig.RAPIDAPI_HOST}",
-        "x-rapidapi-key: ${BuildConfig.RAPIDAPI_KEY}")
+        "x-rapidapi-key: ${BuildConfig.RAPIDAPI_KEY}"
+    )
     @GET("fixtures")
-    fun getFixtures(
+    suspend fun getFixtures(
         @Query("last") last: Int //2 characters
-    ):Call<FixtureDataWrapper>
+    ): FixtureDataWrapper
 }
 
-object FootballApi{
+object FootballApi {
     val retrofitService: FootballApiService by lazy {
         retrofit.create(FootballApiService::class.java)
     }

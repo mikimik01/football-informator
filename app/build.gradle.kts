@@ -88,6 +88,10 @@ dependencies {
     implementation(libs.converter.gson)
     //Scalars
     implementation(libs.converter.scalars)
+    //viewmodel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    //loading images from url
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

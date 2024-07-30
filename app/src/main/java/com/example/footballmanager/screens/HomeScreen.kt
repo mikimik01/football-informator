@@ -1,19 +1,23 @@
 package com.example.footballmanager.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Text
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.footballmanager.screens.result_screens.ErrorScreen
+import com.example.footballmanager.screens.result_screens.LoadingScreen
+import com.example.footballmanager.screens.result_screens.SuccessScreen
+import com.example.footballmanager.screens.view_models.RetrievingDataState
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
+    retrievingDataState:RetrievingDataState,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-    ){
-        Text(text = "Hello")
+    when(retrievingDataState){
+        is RetrievingDataState.Success -> SuccessScreen(fixture = retrievingDataState.fixtures)
+        is RetrievingDataState.Loading -> LoadingScreen()
+        is RetrievingDataState.Error -> ErrorScreen()
     }
 }
