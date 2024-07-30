@@ -28,14 +28,18 @@ class MainActivity : ComponentActivity() {
 
         val call = FootballApi.retrofitService.getFixtures(1)
         call.enqueue(object : Callback<FixtureDataWrapper> {
-            override fun onResponse(call: Call<FixtureDataWrapper>, response: Response<FixtureDataWrapper>) {
-                if(response.isSuccessful){
-                    name = response.body()?.responseBody?.get(0)?.teams?.home?.name?: "null"
+            override fun onResponse(
+                call: Call<FixtureDataWrapper>,
+                response: Response<FixtureDataWrapper>
+            ) {
+                if (response.isSuccessful) {
+                    name = response.body()?.responseBody?.get(0)?.teams?.home?.name ?: "null"
                     Toast.makeText(this@MainActivity, name, Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     Toast.makeText(this@MainActivity, "Blad", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<FixtureDataWrapper>, t: Throwable) {
                 Log.d("ErrorMessageMainActivity", "onCreate: $t")
                 name = "Error: $t"

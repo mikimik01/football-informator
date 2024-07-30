@@ -88,6 +88,9 @@ dependencies {
     implementation(libs.converter.gson)
     //Scalars
     implementation(libs.converter.scalars)
+    //interceptor lib
+    implementation(libs.logging.interceptor)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
