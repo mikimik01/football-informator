@@ -9,13 +9,12 @@ import com.example.footballmanager.screens.result_screens.LoadingScreen
 import com.example.footballmanager.screens.result_screens.SuccessScreen
 import com.example.footballmanager.screens.view_models.RetrievingDataState
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
-    retrievingDataState:RetrievingDataState,
+    retrievingDataState: RetrievingDataState,
     modifier: Modifier = Modifier
 ) {
-    when(retrievingDataState){
+    when (retrievingDataState) {
         is RetrievingDataState.Success -> SuccessScreen(fixture = retrievingDataState.fixtures)
         is RetrievingDataState.Loading -> LoadingScreen()
         is RetrievingDataState.Error -> ErrorScreen()

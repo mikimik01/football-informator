@@ -27,12 +27,11 @@ import java.time.LocalDate
 @Composable
 fun FootballManagerApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val ctx = LocalContext.current
     val homeViewModel: HomeViewModel = viewModel()
 
     LaunchedEffect(key1 = true) {
-        Toast.makeText(ctx, "Invoke retrieving data here", Toast.LENGTH_SHORT).show()
-        homeViewModel.getFixturesData(ctx, LocalDate.now().toString())
+        //Toast.makeText(ctx, "Invoke retrieving data here", Toast.LENGTH_SHORT).show()
+        homeViewModel.getFixturesData()
     }
 
 

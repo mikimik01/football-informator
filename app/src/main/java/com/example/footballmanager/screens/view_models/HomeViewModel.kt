@@ -24,15 +24,15 @@ class HomeViewModel : ViewModel() {
         private set
 
     //fun get
-    fun getFixturesData(ctx: Context, date: String) {
+    fun getFixturesData(date: String = LocalDate.now().toString()) {
         viewModelScope.launch {
             try {
-                val result = FootballApi.retrofitService.getFixtures(date)
+                val result = FootballApi.retrofitService.getFixtures(date = date)
                 retrievingDataState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
                 retrievingDataState = RetrievingDataState.Error
                 Log.d("Errors_", "getFixturesData: $e")
-                Toast.makeText(ctx, "Check \"Errors_\"", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(ctx, "Check \"Errors_\"", Toast.LENGTH_SHORT).show()
             }
         }
     }

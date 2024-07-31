@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
@@ -25,7 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,7 +44,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun TabDate(modifier: Modifier = Modifier) {
 
-    val ctx = LocalContext.current
     val homeViewModel: HomeViewModel = viewModel()
     val gotDates = homeViewModel.get7DatesToDisplay()
     var listOfDates = remember {
@@ -69,20 +70,26 @@ fun TabDate(modifier: Modifier = Modifier) {
     }
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(
+            dimensionResource(id = R.dimen.row_spacing),
+            Alignment.CenterHorizontally
+        ),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .requiredWidth(width = 390.dp)
-            .padding(vertical = 12.dp)
+            .fillMaxWidth()
+            .padding(vertical = dimensionResource(id = R.dimen.row_padding))
     ) {
         Column(
             horizontalAlignment = Alignment.Start
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                horizontalArrangement = Arrangement.spacedBy(
+                    dimensionResource(id = R.dimen.inner_row_spacing),
+                    Alignment.Start
+                ),
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(20.dp))
-                    .padding(all = 4.dp)
+                    .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.inner_row_rounded_radius)))
+                    .padding(all = dimensionResource(id = R.dimen.inner_row_padding))
             ) {
                 IconButton(
                     onClick = {
@@ -97,7 +104,7 @@ fun TabDate(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(id = R.drawable.swipe_left_icon),
                         contentDescription = "chevron-right",
-                        modifier = Modifier.requiredSize(size = 20.dp)
+                        modifier = Modifier.requiredSize(size = dimensionResource(id = R.dimen.icons_size))
                     )
                 }
             }
@@ -128,10 +135,13 @@ fun TabDate(modifier: Modifier = Modifier) {
         ) {
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                horizontalArrangement = Arrangement.spacedBy(
+                    dimensionResource(id = R.dimen.inner_row_spacing),
+                    Alignment.Start
+                ),
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(20.dp))
-                    .padding(all = 4.dp)
+                    .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.inner_row_rounded_shape)))
+                    .padding(all = dimensionResource(id = R.dimen.inner_row_rounded_radius))
             ) {
                 IconButton(
                     onClick = {
@@ -143,7 +153,7 @@ fun TabDate(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(id = R.drawable.swipe_right_icon),
                         contentDescription = "chevron-right",
-                        modifier = Modifier.requiredSize(size = 20.dp)
+                        modifier = Modifier.requiredSize(size = dimensionResource(id = R.dimen.icons_size))
                     )
                 }
             }
@@ -159,33 +169,36 @@ fun DateField(
     dayAndMonth: String
 ) {
     Row(
-        modifier = modifier.requiredWidth(width = 60.dp)
+        modifier = modifier.requiredWidth(width = dimensionResource(id = R.dimen.single_date_required_width))
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(6.dp))
+                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.single_date_rounded_shape)))
                 .padding(
-                    horizontal = 8.dp, vertical = 4.dp
+                    horizontal = dimensionResource(id = R.dimen.single_date_padding_horizontal),
+                    vertical = dimensionResource(id = R.dimen.single_date_padding_vertical)
                 )
         ) {
             Text(
                 text = dayOfWeek,
-                color = if (highlighted) Color.White else Color(0xff5d5c64),
+                color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 12.sp, fontWeight = FontWeight.Medium
+                    fontSize = dimensionResource(id = R.dimen.single_date_font_size).value.sp,
+                    fontWeight = FontWeight.Medium
                 )
             )
             Text(
                 text = dayAndMonth,
-                color = if (highlighted) Color.White else Color(0xff5d5c64),
+                color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 12.sp, fontWeight = FontWeight.Medium
+                    fontSize = dimensionResource(id = R.dimen.single_date_font_size).value.sp,
+                    fontWeight = FontWeight.Medium
                 )
             )
         }

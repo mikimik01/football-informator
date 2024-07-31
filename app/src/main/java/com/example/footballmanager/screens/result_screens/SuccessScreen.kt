@@ -6,7 +6,9 @@ import com.example.footballmanager.screens.result_screens.success_components.Mat
 import com.example.footballmanager.screens.result_screens.success_components.TabDate
 
 @Composable
-fun SuccessScreen(fixture: FixtureDataWrapper) {
+fun SuccessScreen(
+    fixture: FixtureDataWrapper
+) {
     TabDate()
     MatchScoreTab(fixture)
 }

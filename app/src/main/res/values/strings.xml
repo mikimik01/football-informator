@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">FootballManager</string>
+
+    <!--  HEADER  -->
     <string name="home_page_tittle">scorelive</string>
+    <string name="header_tittle">scorelive</string>
+    <string name="notification_icon_content_description">notification icon</string>
+    <string name="search_icon_content_description">search_icon</string>
+
+    <!--  MATCH SCORE TAB  -->
     <string name="default_value">-</string>
+    <string name="league_logo">League logo</string>
 </resources>
