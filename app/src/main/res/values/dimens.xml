@@ -59,4 +59,10 @@
 
     <!--  Loading screen  -->
     <dimen name="loading_animation_size">50dp</dimen>
+
+    <!--  Error screen  -->
+    <dimen name="error_dot_offset_x">50dp</dimen>
+    <dimen name="error_dot_offset_y">0dp</dimen>
+
+
 </resources>
