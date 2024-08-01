@@ -8,7 +8,23 @@ data class FixtureDataWrapper(
 
 data class ResponseBody(
     @SerializedName("teams") var teams: Teams? = Teams(),
-    @SerializedName("goals") var goals: Goals? = Goals()
+    @SerializedName("goals") var goals: Goals? = Goals(),
+    @SerializedName("league") var league: League? = League(),
+    @SerializedName("fixture") var fixture: Fixture? = Fixture()
+)
+
+data class League(
+    @SerializedName("name") var name: String? = null,
+    @SerializedName("logo") var logo: String? = null
+)
+
+data class Fixture(
+    @SerializedName("status") var status: Status? = Status(),
+    @SerializedName("date") var date: String? = null
+)
+
+data class Status(
+    @SerializedName("short") var short: String? = null
 )
 
 data class Teams(
@@ -31,6 +47,6 @@ data class Away(
 )
 
 data class Goals(
-    @SerializedName("home") var home: String? = null,
-    @SerializedName("away") var away: String? = null
+    @SerializedName("home") var home: Int? = null,
+    @SerializedName("away") var away: Int? = null
 )
