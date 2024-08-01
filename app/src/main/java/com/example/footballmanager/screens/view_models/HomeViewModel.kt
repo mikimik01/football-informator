@@ -26,9 +26,12 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val result = FootballApi.retrofitService.getFixtures(date = date)
-                retrievingDataState = RetrievingDataState.Success(result)
+                if (result.responseBody.size == 0)
+                    retrievingDataState = RetrievingDataState.Error("Daily requests limit may have been reached")
+                else
+                    retrievingDataState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
-                retrievingDataState = RetrievingDataState.Error
+                retrievingDataState = RetrievingDataState.Error("Check your internet connection")
                 Log.d("Errors_", "getFixturesData: $e")
             }
         }
@@ -66,6 +69,6 @@ data class RetrievedData(
 
 sealed interface RetrievingDataState {
     data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
-    object Error : RetrievingDataState
+    data class Error(val errorHint: String) : RetrievingDataState
     object Loading : RetrievingDataState
 }

@@ -25,24 +25,21 @@ private const val INITIAL_SCALE = 1.4f
 private const val TARGET_SCALE = 1.5f
 
 @Composable
-fun ErrorScreen() {
+fun ErrorScreen(errorHint: String) {
     val infiniteTransition =
         rememberInfiniteTransition(label = stringResource(R.string.remember_transition))
     val scale by infiniteTransition.animateFloat(
         initialValue = INITIAL_SCALE,
         targetValue = TARGET_SCALE,
-        animationSpec = infiniteRepeatable(
-            animation = keyframes {
-                durationMillis = ANIMATION_DURATION
-                TARGET_SCALE at ANIMATION_DURATION / 2
-                INITIAL_SCALE at ANIMATION_DURATION
-            }
-        ),
+        animationSpec = infiniteRepeatable(animation = keyframes {
+            durationMillis = ANIMATION_DURATION
+            TARGET_SCALE at ANIMATION_DURATION / 2
+            INITIAL_SCALE at ANIMATION_DURATION
+        }),
         label = stringResource(R.string.loading_resize_animation),
     )
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
@@ -59,5 +56,14 @@ fun ErrorScreen() {
                 modifier = Modifier.wrapContentWidth()
             )
         }
+        Text(
+            text = errorHint,
+            color = colorResource(id = R.color.headerDotColor),
+            style = androidx.compose.ui.text.TextStyle(
+                fontSize = dimensionResource(id = R.dimen.header_font_size).value.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.wrapContentWidth()
+        )
     }
 }

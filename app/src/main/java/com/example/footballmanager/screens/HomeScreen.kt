@@ -17,6 +17,6 @@ fun HomeScreen(
     when (retrievingDataState) {
         is RetrievingDataState.Success -> SuccessScreen(fixture = retrievingDataState.fixtures)
         is RetrievingDataState.Loading -> LoadingScreen()
-        is RetrievingDataState.Error -> ErrorScreen()
+        is RetrievingDataState.Error -> ErrorScreen(errorHint = retrievingDataState.errorHint)
     }
 }
