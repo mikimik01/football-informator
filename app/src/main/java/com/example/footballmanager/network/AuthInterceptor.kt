@@ -1,7 +1,6 @@
 package com.example.footballmanager.network
 
 import com.example.footballmanager.BuildConfig
-import com.example.footballmanager.R
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -31,7 +31,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -39,6 +38,9 @@ import com.example.footballmanager.R
 import com.example.footballmanager.screens.view_models.HomeViewModel
 import com.example.footballmanager.screens.view_models.RetrievedData
 import kotlinx.coroutines.launch
+
+const val COUNT_OF_ITEMS_TO_START_PAGINATION = 6
+const val CORRECT_TO_GET_TODAY_DATE_CENTERED = 2
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -56,12 +58,12 @@ fun TabDate(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = Unit) {
-        lazyListState.scrollToItem(listOfDates.size / 2 - 1)
+        lazyListState.scrollToItem(listOfDates.size / 2 - CORRECT_TO_GET_TODAY_DATE_CENTERED)
     }
 
     val currentState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     LaunchedEffect(key1 = currentState.value) {
-        if (currentState.value + 6 > listOfDates.size) {
+        if (currentState.value + COUNT_OF_ITEMS_TO_START_PAGINATION > listOfDates.size) {
             val oneMoreDay = homeViewModel.getOneMoreDay(currentState.value + 1)
             listOfDates = listOfDates.apply {
                 add(oneMoreDay)
@@ -71,8 +73,7 @@ fun TabDate(modifier: Modifier = Modifier) {
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(
-            dimensionResource(id = R.dimen.row_spacing),
-            Alignment.CenterHorizontally
+            dimensionResource(id = R.dimen.row_spacing), Alignment.CenterHorizontally
         ),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -84,23 +85,20 @@ fun TabDate(modifier: Modifier = Modifier) {
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(
-                    dimensionResource(id = R.dimen.inner_row_spacing),
-                    Alignment.Start
+                    dimensionResource(id = R.dimen.inner_row_spacing), Alignment.Start
                 ),
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.inner_row_rounded_radius)))
                     .padding(all = dimensionResource(id = R.dimen.inner_row_padding))
             ) {
-                IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            val scrollTo = currentState.value - 1
-                            if (scrollTo >= 0) {
-                                lazyListState.animateScrollToItem(currentState.value - 1)
-                            }
+                IconButton(onClick = {
+                    coroutineScope.launch {
+                        val scrollTo = currentState.value - 1
+                        if (scrollTo >= 0) {
+                            lazyListState.animateScrollToItem(currentState.value - 1)
                         }
                     }
-                ) {
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.swipe_left_icon),
                         contentDescription = "chevron-right",
@@ -125,7 +123,7 @@ fun TabDate(modifier: Modifier = Modifier) {
                     DateField(
                         dayOfWeek = listOfDates[index].dayOfWeek,
                         dayAndMonth = listOfDates[index].restOfDate,
-                        highlighted = index == currentState.value + 2
+                        highlighted = index == currentState.value + CORRECT_TO_GET_TODAY_DATE_CENTERED
                     )
                 }
             }
@@ -136,20 +134,17 @@ fun TabDate(modifier: Modifier = Modifier) {
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(
-                    dimensionResource(id = R.dimen.inner_row_spacing),
-                    Alignment.Start
+                    dimensionResource(id = R.dimen.inner_row_spacing), Alignment.Start
                 ),
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.inner_row_rounded_shape)))
                     .padding(all = dimensionResource(id = R.dimen.inner_row_rounded_radius))
             ) {
-                IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            lazyListState.animateScrollToItem(currentState.value + 1)
-                        }
+                IconButton(onClick = {
+                    coroutineScope.launch {
+                        lazyListState.animateScrollToItem(currentState.value + 1)
                     }
-                ) {
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.swipe_right_icon),
                         contentDescription = "chevron-right",

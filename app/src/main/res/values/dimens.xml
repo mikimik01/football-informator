@@ -38,6 +38,7 @@
     <dimen name="score_required_width">40dp</dimen>
     <dimen name="away_row_spacing">120dp</dimen>
 
+    <dimen name="text_height">18sp</dimen>
     <!--  TAB DATE -->
     <dimen name="row_spacing">8dp</dimen>
     <dimen name="row_padding">12dp</dimen>

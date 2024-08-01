@@ -10,4 +10,6 @@
     <!--  MATCH SCORE TAB  -->
     <string name="default_value">-</string>
     <string name="league_logo">League logo</string>
+    <string name="home_logo">Home Logo</string>
+    <string name="away_logo">Away Logo</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.example.footballmanager.network
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serial
 
 data class FixtureDataWrapper(
     @SerializedName("response") var responseBody: ArrayList<ResponseBody> = arrayListOf()
