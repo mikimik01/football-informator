@@ -94,8 +94,6 @@ fun MatchScoreTab(
                     val short = fixture?.status?.short ?: defaultValue
                     var date = fixture?.date ?: defaultValue
 
-
-                    //date formating
                     if (date != defaultValue) {
                         try {
                             val offsetDateTime =
@@ -117,7 +115,6 @@ fun MatchScoreTab(
                         }
                     }
                     previousLeagueName = leagueName
-
 
                     item {
                         FixtureItem(
@@ -159,7 +156,7 @@ fun LeagueHeader(
             text = leagueName,
             color = colorResource(id = R.color.league_header_text_color),
             textAlign = TextAlign.Center,
-            lineHeight = dimensionResource(id = R.dimen.text_height).value.sp, //nie wiem jak to przeniesc do res
+            lineHeight = dimensionResource(id = R.dimen.text_height).value.sp,
             style = TextStyle(
                 fontSize = dimensionResource(id = R.dimen.league_header_font_size).value.sp,
                 fontWeight = FontWeight.Medium
@@ -201,7 +198,7 @@ fun FixtureItem(
                 text = short,
                 color = colorResource(id = R.color.date_snd_short_color),
                 textAlign = TextAlign.Center,
-                lineHeight = dimensionResource(id = R.dimen.text_height).value.sp, // nie wiem jak to wyeksportować
+                lineHeight = dimensionResource(id = R.dimen.text_height).value.sp,
                 style = TextStyle(
                     fontSize = dimensionResource(id = R.dimen.items_font_size).value.sp,
                     fontWeight = FontWeight.Medium
