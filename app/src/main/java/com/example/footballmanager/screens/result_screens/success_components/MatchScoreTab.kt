@@ -47,7 +47,7 @@ const val ITEMS_TO_LOAD = 10
 
 @Composable
 fun MatchScoreTab(
-    fixture: FixtureDataWrapper, modifier: Modifier = Modifier
+    fixtureDataWrapper: FixtureDataWrapper, modifier: Modifier = Modifier
 ) {
     val ctx = LocalContext.current
     var lastLoadedIndex by remember {
@@ -57,7 +57,7 @@ fun MatchScoreTab(
     val currentState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val shouldLoadMore =
         remember { derivedStateOf { currentState.value + ITEMS_TO_LOAD >= lastLoadedIndex } }
-    val lastFixtureIndex = fixture.responseBody.size - 1
+    val lastFixtureIndex = fixtureDataWrapper.responseBody.size - 1
 
     LaunchedEffect(key1 = shouldLoadMore.value) {
         lastLoadedIndex += if (lastLoadedIndex + ITEMS_TO_LOAD < lastFixtureIndex) {
@@ -81,54 +81,57 @@ fun MatchScoreTab(
         ) {
             var previousLeagueName = defaultValue
             for (i in 0..lastLoadedIndex) {
-                val item = fixture.responseBody[i]
-                val leagueName = item.league?.name ?: defaultValue
-                val leagueLogo = item.league?.logo ?: defaultValue
-                val nameTeamHome = item.teams?.home?.name ?: defaultValue
-                val nameTeamAway = item.teams?.away?.name ?: defaultValue
-                val scoreTeamHome = item.goals?.home?.toString() ?: defaultValue
-                val scoreTeamAway = item.goals?.away?.toString() ?: defaultValue
-                val logoTeamHome = item.teams?.home?.logo ?: defaultValue
-                val logoTeamAway = item.teams?.away?.logo ?: defaultValue
-                val short = item.fixture?.status?.short ?: defaultValue
-                var date = item.fixture?.date ?: defaultValue
+                val item = fixtureDataWrapper.responseBody[i]
+                with(item) {
+                    val leagueName = league?.name ?: defaultValue
+                    val leagueLogo = league?.logo ?: defaultValue
+                    val nameTeamHome = teams?.home?.name ?: defaultValue
+                    val nameTeamAway = teams?.away?.name ?: defaultValue
+                    val scoreTeamHome = goals?.home?.toString() ?: defaultValue
+                    val scoreTeamAway = goals?.away?.toString() ?: defaultValue
+                    val logoTeamHome = teams?.home?.logo ?: defaultValue
+                    val logoTeamAway = teams?.away?.logo ?: defaultValue
+                    val short = fixture?.status?.short ?: defaultValue
+                    var date = fixture?.date ?: defaultValue
 
-                //date formating
-                if (date != defaultValue) {
-                    try {
-                        val offsetDateTime =
-                            OffsetDateTime.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 
-                        val dateDate = offsetDateTime.toLocalDate()
-                            .format(DateTimeFormatter.ofPattern("dd/MM"))
-                        date = dateDate.toString()
-                    } catch (e: Exception) {
-                        Toast.makeText(ctx, e.toString(), Toast.LENGTH_SHORT).show()
+                    //date formating
+                    if (date != defaultValue) {
+                        try {
+                            val offsetDateTime =
+                                OffsetDateTime.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+
+                            val dateDate = offsetDateTime.toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("dd/MM"))
+                            date = dateDate.toString()
+                        } catch (e: Exception) {
+                            Toast.makeText(ctx, e.toString(), Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                if (leagueName != previousLeagueName) {
+                    if (leagueName != previousLeagueName) {
+                        item {
+                            LeagueHeader(
+                                leagueLogo = leagueLogo, leagueName = leagueName
+                            )
+                        }
+                    }
+                    previousLeagueName = leagueName
+
+
                     item {
-                        LeagueHeader(
-                            leagueLogo = leagueLogo, leagueName = leagueName
+                        FixtureItem(
+                            nameTeamHome = nameTeamHome,
+                            nameTeamAway = nameTeamAway,
+                            scoreTeamHome = scoreTeamHome,
+                            scoreTeamAway = scoreTeamAway,
+                            logoTeamHome = logoTeamHome,
+                            logoTeamAway = logoTeamAway,
+                            short = short,
+                            fixtureDate = date
                         )
+
                     }
-                }
-                previousLeagueName = leagueName
-
-
-                item {
-                    FixtureItem(
-                        nameTeamHome = nameTeamHome,
-                        nameTeamAway = nameTeamAway,
-                        scoreTeamHome = scoreTeamHome,
-                        scoreTeamAway = scoreTeamAway,
-                        logoTeamHome = logoTeamHome,
-                        logoTeamAway = logoTeamAway,
-                        short = short,
-                        fixtureDate = date
-                    )
-
                 }
             }
         }
