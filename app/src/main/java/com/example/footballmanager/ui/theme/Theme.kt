@@ -14,7 +14,8 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    background = background,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -35,8 +36,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun FootballManagerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    darkTheme: Boolean = true,//isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

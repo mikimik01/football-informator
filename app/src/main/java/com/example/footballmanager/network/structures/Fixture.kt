@@ -1,4 +1,4 @@
-package com.example.footballmanager.network
+package com.example.footballmanager.network.structures
 
 import com.google.gson.annotations.SerializedName
 

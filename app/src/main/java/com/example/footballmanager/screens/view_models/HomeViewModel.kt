@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.footballmanager.network.FixtureDataWrapper
+import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.network.FootballApi
 import kotlinx.coroutines.launch
 import java.io.IOException

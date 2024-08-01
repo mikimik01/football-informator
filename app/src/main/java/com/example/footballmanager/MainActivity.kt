@@ -13,7 +13,6 @@ import com.example.footballmanager.ui.FootballManagerApp
 import com.example.footballmanager.ui.theme.FootballManagerTheme
 
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
