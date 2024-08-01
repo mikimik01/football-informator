@@ -95,15 +95,13 @@ fun MatchScoreTab(
                     var date = fixture?.date ?: defaultValue
 
                     if (date != defaultValue) {
-                        try {
+                        runCatching {
                             val offsetDateTime =
                                 OffsetDateTime.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 
                             val dateDate = offsetDateTime.toLocalDate()
                                 .format(DateTimeFormatter.ofPattern("dd/MM"))
                             date = dateDate.toString()
-                        } catch (e: Exception) {
-                            Toast.makeText(ctx, e.toString(), Toast.LENGTH_SHORT).show()
                         }
                     }
 
