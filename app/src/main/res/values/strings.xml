@@ -12,4 +12,11 @@
     <string name="league_logo">League logo</string>
     <string name="home_logo">Home Logo</string>
     <string name="away_logo">Away Logo</string>
+
+    <!--  Loading screen  -->
+    <string name="remember_transition">Remember transition</string>
+    <string name="loading_resize_animation">Loading resize animation</string>
+
+    <!--  Error screen  -->
+    <string name="error">Error</string>
 </resources>

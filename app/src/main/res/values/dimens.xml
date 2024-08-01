@@ -12,6 +12,7 @@
     <dimen name="header_notification_icon_offset_x">52dp</dimen>
     <dimen name="header_notification_icon_offset_y">0dp</dimen>
     <dimen name="header_icons_required_size">28dp</dimen>
+    <dimen name="text_height_head">32sp</dimen>
 
     <!--  MATCH SCORE TAB  -->
     <dimen name="column_spacing">12dp</dimen>
@@ -37,8 +38,8 @@
     <dimen name="team_icon_required_size">24dp</dimen>
     <dimen name="score_required_width">40dp</dimen>
     <dimen name="away_row_spacing">120dp</dimen>
-
     <dimen name="text_height">18sp</dimen>
+
     <!--  TAB DATE -->
     <dimen name="row_spacing">8dp</dimen>
     <dimen name="row_padding">12dp</dimen>
@@ -53,4 +54,9 @@
     <dimen name="single_date_padding_vertical">4dp</dimen>
     <dimen name="single_date_padding_horizontal">8dp</dimen>
     <dimen name="single_date_font_size">12sp</dimen>
+
+    <dimen name="text_height_date">18sp</dimen>
+
+    <!--  Loading screen  -->
+    <dimen name="loading_animation_size">50dp</dimen>
 </resources>
