@@ -51,7 +51,8 @@ fun ErrorScreen(errorHint: String) {
     )
     Column(
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
     ){
         Box(
             modifier = Modifier
