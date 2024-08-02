@@ -1,6 +1,5 @@
 package com.example.footballmanager.screens.result_screens.success_components
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -20,11 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -38,21 +33,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
-import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.screens.view_models.HomeViewModel
-import com.example.footballmanager.screens.view_models.RetrievingDataState
 
 @Composable
 fun LiveScoreTab(
@@ -145,7 +135,7 @@ fun LiveScoreHeader() {
         )
         Text(
             text = stringResource(R.string.see_more),
-            color = Color(0xfff63d68),
+            color = colorResource(id = R.color.app_red_motive),
             textAlign = TextAlign.Center,
             style = TextStyle(
                 fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
@@ -205,7 +195,7 @@ fun LiveScoreItem(
                         )
                         Text(
                             text = leagueName,
-                            color = Color(0xffb6b6b6),
+                            color = colorResource(id = R.color.app_darker_white_motive),
                             textAlign = TextAlign.Center,
                             lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                             style = TextStyle(
@@ -245,10 +235,10 @@ fun LiveScoreItem(
                 Button(
                     onClick = {},
                     colors = ButtonColors(
-                        containerColor = Color(0xfff63d68),
-                        contentColor = Color(0xfff63d68),
-                        disabledContentColor = Color(0xfff63d68),
-                        disabledContainerColor = Color(0xfff63d68)
+                        containerColor = colorResource(id = R.color.app_red_motive),
+                        contentColor = colorResource(id = R.color.app_red_motive),
+                        disabledContentColor = colorResource(id = R.color.app_red_motive),
+                        disabledContainerColor = colorResource(id = R.color.app_red_motive)
 
                     ),
                     modifier = Modifier
@@ -278,7 +268,7 @@ fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.big)))
-                .background(color = Color(0xffecfdf3))
+                .background(color = colorResource(id = R.color.live_shower_background))
                 .padding(
                     start = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_start),
                     end = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_end),
@@ -289,7 +279,7 @@ fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
             Sizesm()
             Text(
                 text = "89",
-                color = Color(0xff027a48),
+                color = colorResource(id = R.color.live_shower_dark_green),
                 textAlign = TextAlign.Center,
                 lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                 style = TextStyle(
@@ -308,7 +298,7 @@ fun Sizesm(modifier: Modifier = Modifier) {
             .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_live_shower_background))
     ) {
         Badge(
-            containerColor = Color(0xff12b76a),
+            containerColor = colorResource(id = R.color.live_shower_light_green),
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
                 .offset(

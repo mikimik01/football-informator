@@ -148,7 +148,7 @@ fun LeagueHeader(
         )
         Text(
             text = leagueName,
-            color = colorResource(id = R.color.league_header_text_color),
+            color = colorResource(id = R.color.app_darker_white_motive),
             textAlign = TextAlign.Center,
             lineHeight = dimensionResource(id = R.dimen.text_height).value.sp,
             style = TextStyle(
@@ -190,7 +190,7 @@ fun FixtureItem(
         ) {
             Text(
                 text = short,
-                color = colorResource(id = R.color.date_snd_short_color),
+                color = colorResource(id = R.color.app_grey_motive),
                 textAlign = TextAlign.Center,
                 lineHeight = dimensionResource(id = R.dimen.text_height).value.sp,
                 style = TextStyle(
@@ -201,7 +201,7 @@ fun FixtureItem(
             )
             Text(
                 text = fixtureDate,
-                color = colorResource(id = R.color.date_snd_short_color),
+                color = colorResource(id = R.color.app_grey_motive),
                 textAlign = TextAlign.Center,
                 lineHeight = dimensionResource(id = R.dimen.text_height).value.sp,
                 style = TextStyle(

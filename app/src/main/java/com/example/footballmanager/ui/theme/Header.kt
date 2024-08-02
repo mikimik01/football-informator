@@ -60,7 +60,7 @@ fun Header(modifier: Modifier = Modifier) {
                     )
                     .requiredSize(size = dimensionResource(id = R.dimen.header_dot_required_size))
                     .clip(shape = CircleShape)
-                    .background(color = colorResource(id = R.color.headerDotColor))
+                    .background(color = colorResource(id = R.color.app_red_motive))
             )
         }
         Box(
@@ -71,7 +71,7 @@ fun Header(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.notiffication_icon),
                 contentDescription = stringResource(id = R.string.notification_icon_content_description),
-                colorFilter = ColorFilter.tint(colorResource(id = R.color.notification_icon_tint_color)),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.app_white_motive)),
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(
@@ -83,7 +83,7 @@ fun Header(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.search_icon),
                 contentDescription = stringResource(id = R.string.search_icon_content_description),
-                colorFilter = ColorFilter.tint(colorResource(id = R.color.search_icon_tint_color)),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.app_white_motive)),
                 modifier = Modifier
                     .requiredSize(size = dimensionResource(id = R.dimen.header_icons_required_size))
             )

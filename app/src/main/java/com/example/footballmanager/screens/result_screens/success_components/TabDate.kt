@@ -178,7 +178,7 @@ fun DateField(
         ) {
             Text(
                 text = dayOfWeek,
-                color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
+                color = if (highlighted) Color.White else colorResource(id = R.color.app_grey_motive),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = androidx.compose.ui.text.TextStyle(
@@ -188,7 +188,7 @@ fun DateField(
             )
             Text(
                 text = dayAndMonth,
-                color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
+                color = if (highlighted) Color.White else colorResource(id = R.color.app_grey_motive),
                 textAlign = TextAlign.Center,
                 lineHeight = 1.5.em,
                 style = androidx.compose.ui.text.TextStyle(
