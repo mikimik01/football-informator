@@ -53,7 +53,7 @@ fun ErrorScreen(errorHint: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .wrapContentWidth()
@@ -100,6 +100,6 @@ fun ErrorScreen(errorHint: String) {
 
 @Preview
 @Composable
-fun PreviewError(){
+fun PreviewError() {
     ErrorScreen(errorHint = stringResource(id = R.string.error_hint_limit_reached))
 }

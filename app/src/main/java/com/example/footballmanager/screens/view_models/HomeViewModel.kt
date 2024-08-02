@@ -42,16 +42,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getFixturesData(date: String = LocalDate.now().toString(), ctx:Context) {
+    fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
         viewModelScope.launch {
             try {
                 val result = footballApiService.getFixturesByDate(date = date)
                 if (result.responseBody.size == 0)
-                    retrievingByDateState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
+                    retrievingByDateState =
+                        RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
                 else
                     retrievingByDateState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
-                retrievingByDateState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                retrievingByDateState =
+                    RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
             }
         }
     }
