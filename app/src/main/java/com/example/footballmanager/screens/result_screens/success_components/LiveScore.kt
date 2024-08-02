@@ -188,7 +188,7 @@ fun LiveScoreItem(
                     ) {
                         Image(
                             painter = rememberAsyncImagePainter(leagueLogo),
-                            contentDescription = "image 6",
+                            contentDescription = stringResource(id = R.string.league_logo),
                             modifier = Modifier
                                 .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_image_size))
                                 .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.medium)))
@@ -246,7 +246,7 @@ fun LiveScoreItem(
                         .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.live_score_item_button_corners)))
                 ) {
                     Text(
-                        text = "Details",
+                        text = stringResource(R.string.details),
                         color = Color.White,
                         lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                         style = TextStyle(
@@ -278,7 +278,7 @@ fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
         ) {
             Sizesm()
             Text(
-                text = "89",
+                text = "89", //Dont know what it is used for
                 color = colorResource(id = R.color.live_shower_dark_green),
                 textAlign = TextAlign.Center,
                 lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
@@ -323,7 +323,7 @@ fun TeamField(
     ) {
         Image(
             painter = rememberAsyncImagePainter(teamLogo),
-            contentDescription = "image 7",
+            contentDescription = stringResource(R.string.team_logo),
             contentScale = ContentScale.Inside,
             modifier = Modifier
                 .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_team_field_image_size))
