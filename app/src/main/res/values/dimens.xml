@@ -37,8 +37,8 @@
     <dimen name="team_icon_required_size">24dp</dimen>
     <dimen name="score_required_width">40dp</dimen>
     <dimen name="away_row_spacing">120dp</dimen>
-
     <dimen name="text_height">18sp</dimen>
+
     <!--  TAB DATE -->
     <dimen name="row_spacing">8dp</dimen>
     <dimen name="row_padding">12dp</dimen>
@@ -53,4 +53,30 @@
     <dimen name="single_date_padding_vertical">4dp</dimen>
     <dimen name="single_date_padding_horizontal">8dp</dimen>
     <dimen name="single_date_font_size">12sp</dimen>
+
+    <!-- LIVE SCORE TAB -->
+    <dimen name="medium">12dp</dimen>
+    <dimen name="big">16dp</dimen>
+    <dimen name="live_score_font_size">12sp</dimen>
+    <dimen name="live_score_font_size2">20sp</dimen>
+    <dimen name="live_score_line_height">18sp</dimen>
+    <dimen name="live_score_line_height2">30sp</dimen>
+    <dimen name="live_score_item_width">340dp</dimen>
+    <dimen name="live_score_item_corners">6dp</dimen>
+    <dimen name="live_score_item_spacing">6dp</dimen>
+    <dimen name="live_score_item_image_size">20dp</dimen>
+    <dimen name="live_score_item_button_corners">8dp</dimen>
+    <dimen name="live_score_item_live_shower_spacing">4dp</dimen>
+    <dimen name="live_score_item_live_shower_padding_start">6dp</dimen>
+    <dimen name="live_score_item_live_shower_padding_end">8dp</dimen>
+    <dimen name="live_score_item_live_shower_padding_top">2dp</dimen>
+    <dimen name="live_score_item_live_shower_padding_bottom">2dp</dimen>
+    <dimen name="live_score_item_live_shower_background">8dp</dimen>
+    <dimen name="live_score_item_live_shower_offset">1dp</dimen>
+    <dimen name="live_score_item_team_field_spacing">8dp</dimen>
+    <dimen name="live_score_item_team_field_height">76dp</dimen>
+    <dimen name="live_score_item_team_field_image_size">32dp</dimen>
+    <dimen name="live_score_item_team_field_text_width">104dp</dimen>
+
+
 </resources>

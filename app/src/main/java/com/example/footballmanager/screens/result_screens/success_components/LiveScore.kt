@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -65,7 +66,7 @@ fun LiveScoreTab(
         mutableIntStateOf(liveNowFixtures.responseBody.size)
     }
     val lastLiveNowFixtureIndex by remember {
-        mutableIntStateOf(liveNowFixturesCount-1)
+        mutableIntStateOf(liveNowFixturesCount - 1)
     }
     val isNotEmpty by remember {
         mutableStateOf((liveNowFixturesCount != 0))
@@ -74,11 +75,14 @@ fun LiveScoreTab(
     AnimatedVisibility(visible = isNotEmpty) {
         if (isNotEmpty) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(
+                    dimensionResource(id = R.dimen.medium),
+                    Alignment.Top
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        vertical = 12.dp
+                        vertical = dimensionResource(id = R.dimen.medium)
                     )
             ) {
                 LiveScoreHeader()
@@ -86,7 +90,7 @@ fun LiveScoreTab(
                 LazyRow {
                     for (i in 0..lastLiveNowFixtureIndex) {
                         val item = liveNowFixtures.responseBody[i]
-                        with(item){
+                        with(item) {
                             val leagueName = league?.name ?: defaultValue
                             val leagueLogo = league?.logo ?: defaultValue
                             val nameTeamHome = teams?.home?.name ?: defaultValue
@@ -95,18 +99,18 @@ fun LiveScoreTab(
                             val scoreTeamAway = goals?.away?.toString() ?: defaultValue
                             val logoTeamHome = teams?.home?.logo ?: defaultValue
                             val logoTeamAway = teams?.away?.logo ?: defaultValue
-                                item {
-                                    LiveScoreItem(
-                                        leagueLogo = leagueLogo,
-                                        leagueName = leagueName,
-                                        nameTeamHome = nameTeamHome,
-                                        nameTeamAway = nameTeamAway,
-                                        scoreTeamHome = scoreTeamHome,
-                                        scoreTeamAway = scoreTeamAway,
-                                        logoTeamHome = logoTeamHome,
-                                        logoTeamAway = logoTeamAway
-                                    )
-                                }
+                            item {
+                                LiveScoreItem(
+                                    leagueLogo = leagueLogo,
+                                    leagueName = leagueName,
+                                    nameTeamHome = nameTeamHome,
+                                    nameTeamAway = nameTeamAway,
+                                    scoreTeamHome = scoreTeamHome,
+                                    scoreTeamAway = scoreTeamAway,
+                                    logoTeamHome = logoTeamHome,
+                                    logoTeamAway = logoTeamAway
+                                )
+                            }
                         }
                     }
                 }
@@ -126,7 +130,7 @@ fun LiveScoreHeader() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom,
         modifier = Modifier
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = dimensionResource(id = R.dimen.big))
             .fillMaxWidth()
     ) {
         Text(
@@ -144,7 +148,7 @@ fun LiveScoreHeader() {
             color = Color(0xfff63d68),
             textAlign = TextAlign.Center,
             style = TextStyle(
-                fontSize = 12.sp,
+                fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -163,18 +167,24 @@ fun LiveScoreItem(
     logoTeamHome: String,
     logoTeamAway: String
 ) {
-    Box(modifier = Modifier.padding(start = 16.dp)) {
+    Box(modifier = Modifier.padding(start = dimensionResource(id = R.dimen.big))) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
+            horizontalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen.medium),
+                Alignment.Start
+            ),
             modifier = Modifier
-                .requiredWidth(width = 340.dp)
+                .requiredWidth(width = dimensionResource(id = R.dimen.live_score_item_width))
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+                verticalArrangement = Arrangement.spacedBy(
+                    dimensionResource(id = R.dimen.medium),
+                    Alignment.CenterVertically
+                ),
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(6.dp))
+                    .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.live_score_item_corners)))
                     .background(color = colorResource(id = R.color.highlighted_element_color))
-                    .padding(all = 12.dp)
+                    .padding(all = dimensionResource(id = R.dimen.medium))
             ) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -183,23 +193,23 @@ fun LiveScoreItem(
                         .fillMaxWidth()
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
+                        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_spacing), Alignment.Start),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
                             painter = rememberAsyncImagePainter(leagueLogo),
                             contentDescription = "image 6",
                             modifier = Modifier
-                                .requiredSize(size = 20.dp)
-                                .clip(shape = RoundedCornerShape(12.dp))
+                                .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_image_size))
+                                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.medium)))
                         )
                         Text(
                             text = leagueName,
                             color = Color(0xffb6b6b6),
                             textAlign = TextAlign.Center,
-                            lineHeight = 1.5.em,
+                            lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                             style = TextStyle(
-                                fontSize = 12.sp,
+                                fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
                                 fontWeight = FontWeight.Medium
                             )
                         )
@@ -207,7 +217,10 @@ fun LiveScoreItem(
                     LeagueMatchesLiveShower()
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        dimensionResource(id = R.dimen.medium),
+                        Alignment.Start
+                    ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     TeamField(
@@ -218,9 +231,9 @@ fun LiveScoreItem(
                         text = "$scoreTeamHome ${stringResource(id = R.string.score_separator)} $scoreTeamAway",
                         color = Color.White,
                         textAlign = TextAlign.Center,
-                        lineHeight = 1.5.em,
+                        lineHeight = dimensionResource(id = R.dimen.live_score_line_height2).value.sp,
                         style = TextStyle(
-                            fontSize = 20.sp,
+                            fontSize = dimensionResource(id = R.dimen.live_score_font_size2).value.sp,
                             fontWeight = FontWeight.Bold
                         )
                     )
@@ -240,14 +253,14 @@ fun LiveScoreItem(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(8.dp))
+                        .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.live_score_item_button_corners)))
                 ) {
                     Text(
                         text = "Details",
                         color = Color.White,
-                        lineHeight = 1.5.em,
+                        lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                         style = TextStyle(
-                            fontSize = 12.sp
+                            fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp
                         )
                     )
                 }
@@ -261,16 +274,16 @@ fun LiveScoreItem(
 fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
     Row(modifier) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_live_shower_spacing), Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(16.dp))
+                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.big)))
                 .background(color = Color(0xffecfdf3))
                 .padding(
-                    start = 6.dp,
-                    end = 8.dp,
-                    top = 2.dp,
-                    bottom = 2.dp
+                    start = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_start),
+                    end = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_end),
+                    top = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_top),
+                    bottom = dimensionResource(id = R.dimen.live_score_item_live_shower_padding_bottom)
                 )
         ) {
             Sizesm()
@@ -278,9 +291,9 @@ fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
                 text = "89",
                 color = Color(0xff027a48),
                 textAlign = TextAlign.Center,
-                lineHeight = 1.5.em,
+                lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
                     fontWeight = FontWeight.Medium
                 )
             )
@@ -292,15 +305,15 @@ fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
 fun Sizesm(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .requiredSize(size = 8.dp)
+            .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_live_shower_background))
     ) {
         Badge(
             containerColor = Color(0xff12b76a),
             modifier = Modifier
                 .align(alignment = Alignment.TopStart)
                 .offset(
-                    x = 1.dp,
-                    y = 1.dp
+                    x = dimensionResource(id = R.dimen.live_score_item_live_shower_offset),
+                    y = dimensionResource(id = R.dimen.live_score_item_live_shower_offset)
                 )
         )
     }
@@ -309,40 +322,33 @@ fun Sizesm(modifier: Modifier = Modifier) {
 @Composable
 fun TeamField(
     modifier: Modifier = Modifier,
-    teamName:String,
-    teamLogo:String
+    teamName: String,
+    teamLogo: String
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_team_field_spacing), Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .requiredHeight(height = 76.dp)
+            .requiredHeight(height = dimensionResource(id = R.dimen.live_score_item_team_field_height))
     ) {
         Image(
             painter = rememberAsyncImagePainter(teamLogo),
             contentDescription = "image 7",
             contentScale = ContentScale.Inside,
             modifier = Modifier
-                .requiredSize(size = 32.dp)
+                .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_team_field_image_size))
         )
         Text(
             text = teamName,
             color = Color.White,
             textAlign = TextAlign.Center,
-            lineHeight = 1.5.em,
+            lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
             style = TextStyle(
-                fontSize = 12.sp,
+                fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
                 fontWeight = FontWeight.Medium
             ),
             modifier = Modifier
-                .requiredWidth(width = 104.dp)
+                .requiredWidth(width = dimensionResource(id = R.dimen.live_score_item_team_field_text_width))
         )
     }
-}
-
-
-@Preview(widthDp = 390, heightDp = 240)
-@Composable
-private fun Frame16Preview() {
-    LeagueMatchesLiveShower()
 }
