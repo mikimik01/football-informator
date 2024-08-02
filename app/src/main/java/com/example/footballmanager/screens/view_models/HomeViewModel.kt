@@ -19,7 +19,7 @@ const val DAYS_OFFSET = 50
 
 class HomeViewModel : ViewModel() {
 
-    var retrievingDataState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
+    var retrievingDataState: RetrievingDataState by mutableStateOf(RetrievingDataState.Success(FixtureDataWrapper()))
         private set
 
     fun getFixturesData(date: String = LocalDate.now().toString()) {

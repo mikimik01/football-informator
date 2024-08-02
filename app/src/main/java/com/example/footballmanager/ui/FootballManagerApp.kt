@@ -30,7 +30,7 @@ fun FootballManagerApp() {
     val homeViewModel: HomeViewModel = viewModel()
 
     LaunchedEffect(key1 = true) {
-        homeViewModel.getFixturesData()
+        //homeViewModel.getFixturesData()
     }
 
 

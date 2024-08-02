@@ -12,5 +12,5 @@ fun SuccessScreen(
 ) {
     TabDate()
     LiveScoreTab()
-    MatchScoreTab(fixture)
+    //MatchScoreTab(fixture)
 }
