@@ -44,7 +44,7 @@ fun Header(modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(id = R.string.header_tittle),
                 color = Color.White,
-                lineHeight = dimensionResource(id = R.dimen.text_height_head).value.sp, //nie wiem jak to wyeksportowac
+                lineHeight = dimensionResource(id = R.dimen.text_height_head).value.sp,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = dimensionResource(id = R.dimen.header_font_size).value.sp,
                     fontWeight = FontWeight.Bold
