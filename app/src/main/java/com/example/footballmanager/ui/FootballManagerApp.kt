@@ -1,6 +1,5 @@
 package com.example.footballmanager.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,13 +12,11 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.screens.HomeScreen
 import com.example.footballmanager.screens.result_screens.success_components.Header
-import com.example.footballmanager.screens.result_screens.success_components.LiveScoreTab
 import com.example.footballmanager.screens.view_models.HomeViewModel
 import com.example.footballmanager.ui.theme.background
 
@@ -30,7 +27,9 @@ fun FootballManagerApp() {
     val homeViewModel: HomeViewModel = viewModel()
 
     LaunchedEffect(key1 = true) {
-        //homeViewModel.getFixturesData()
+        homeViewModel.getFixturesData()
+        //to nalezy odkomentowac pozniej
+        //homeViewModel.getFixturesLiveNow()
     }
 
 
@@ -43,7 +42,7 @@ fun FootballManagerApp() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            HomeScreen(homeViewModel.retrievingDataState)
+            HomeScreen(homeViewModel.retrievingByDateState)
         }
     }
 }

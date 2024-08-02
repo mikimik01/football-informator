@@ -9,11 +9,14 @@ import com.example.footballmanager.screens.view_models.RetrievingDataState
 
 @Composable
 fun HomeScreen(
-    retrievingDataState: RetrievingDataState,
+    retrievingByDateState: RetrievingDataState,
+    //retrievingByLiveNow: RetrievingDataState,
     modifier: Modifier = Modifier
 ) {
-    when (retrievingDataState) {
-        is RetrievingDataState.Success -> SuccessScreen(fixture = retrievingDataState.fixtures)
+    when (retrievingByDateState) {
+        is RetrievingDataState.Success -> SuccessScreen(
+            //liveNowFixtures = retrievingByLiveNow,
+            fixturesByDate = retrievingByDateState.fixtures)
         is RetrievingDataState.Loading -> LoadingScreen()
         is RetrievingDataState.Error -> ErrorScreen()
     }

@@ -39,25 +39,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
+import com.example.footballmanager.network.structures.FixtureDataWrapper
 
 @Composable
-fun LiveScoreTab(modifier: Modifier = Modifier) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                vertical = 12.dp
-            )
+fun LiveScoreTab(
+    modifier: Modifier = Modifier,
+    liveNowFixtures: FixtureDataWrapper
     ) {
-        LiveScoreHeader()
-        LazyRow {
-            items(4){
-                LiveScoreItem()
+    //if (liveNowFixtures.responseBody.size != 0) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(
+                    vertical = 12.dp
+                )
+        ) {
+            LiveScoreHeader()
+            LazyRow {
+                items(4) {
+                    LiveScoreItem()
+                }
             }
-        }
 
-    }
+        }
+    //}
 }
 
 @Composable
@@ -268,5 +274,5 @@ fun TeamField(modifier: Modifier = Modifier) {
 @Preview(widthDp = 390, heightDp = 240)
 @Composable
 private fun Frame16Preview() {
-    LiveScoreTab(Modifier)
+    LiveScoreTab(liveNowFixtures = FixtureDataWrapper())
 }
