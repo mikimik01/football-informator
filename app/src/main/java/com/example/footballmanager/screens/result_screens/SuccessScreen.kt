@@ -9,10 +9,8 @@ import com.example.footballmanager.screens.result_screens.success_components.Tab
 @Composable
 fun SuccessScreen(
     fixturesByDate: FixtureDataWrapper,
-    fixturesByLiveNow: FixtureDataWrapper //na ten moment nie nikt nic nie gra ->>>>
 ) {
     TabDate()
-    //->>>>> wiec uzyje tutaj meczy z dzisiejsza data
-    LiveScoreTab(liveNowFixtures = fixturesByDate)
+    LiveScoreTab()
     MatchScoreTab(fixtureDataWrapper = fixturesByDate)
 }

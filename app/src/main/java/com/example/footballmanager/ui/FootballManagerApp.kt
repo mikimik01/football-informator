@@ -16,7 +16,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.screens.HomeScreen
-import com.example.footballmanager.screens.result_screens.success_components.Header
+import com.example.footballmanager.ui.theme.Header
 import com.example.footballmanager.screens.view_models.HomeViewModel
 import com.example.footballmanager.ui.theme.background
 
@@ -28,8 +28,7 @@ fun FootballManagerApp() {
 
     LaunchedEffect(key1 = true) {
         homeViewModel.getFixturesData()
-        //to nalezy odkomentowac pozniej
-        //homeViewModel.getFixturesLiveNow()
+        homeViewModel.getFixturesLiveNow()
     }
 
 

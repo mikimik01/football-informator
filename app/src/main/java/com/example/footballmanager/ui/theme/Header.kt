@@ -1,4 +1,4 @@
-package com.example.footballmanager.screens.result_screens.success_components
+package com.example.footballmanager.ui.theme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,6 +1,8 @@
 package com.example.footballmanager.screens.result_screens.success_components
 
 import android.annotation.SuppressLint
+import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,13 +26,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,33 +46,79 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
 import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.screens.view_models.HomeViewModel
+import com.example.footballmanager.screens.view_models.RetrievingDataState
 
 @Composable
 fun LiveScoreTab(
-    modifier: Modifier = Modifier,
-    liveNowFixtures: FixtureDataWrapper
-    ) {
-    //if (liveNowFixtures.responseBody.size != 0) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 12.dp
-                )
-        ) {
-            LiveScoreHeader()
-            LazyRow {
-                items(4) {
-                    LiveScoreItem()
-                }
-            }
+    modifier: Modifier = Modifier
+) {
+    val homeViewModel: HomeViewModel = viewModel()
+    val liveNowFixtures by remember {
+        mutableStateOf(homeViewModel.retrievingByLiveNowState)
+    }
+    val liveNowFixturesCount by remember {
+        mutableIntStateOf(liveNowFixtures.responseBody.size)
+    }
+    val lastLiveNowFixtureIndex by remember {
+        mutableIntStateOf(liveNowFixturesCount-1)
+    }
+    val isNotEmpty by remember {
+        mutableStateOf((liveNowFixturesCount != 0))
+    }
 
+    AnimatedVisibility(visible = isNotEmpty) {
+        if (isNotEmpty) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = 12.dp
+                    )
+            ) {
+                LiveScoreHeader()
+                val defaultValue = stringResource(id = R.string.default_value)
+                LazyRow {
+                    for (i in 0..lastLiveNowFixtureIndex) {
+                        val item = liveNowFixtures.responseBody[i]
+                        with(item){
+                            val leagueName = league?.name ?: defaultValue
+                            val leagueLogo = league?.logo ?: defaultValue
+                            val nameTeamHome = teams?.home?.name ?: defaultValue
+                            val nameTeamAway = teams?.away?.name ?: defaultValue
+                            val scoreTeamHome = goals?.home?.toString() ?: defaultValue
+                            val scoreTeamAway = goals?.away?.toString() ?: defaultValue
+                            val logoTeamHome = teams?.home?.logo ?: defaultValue
+                            val logoTeamAway = teams?.away?.logo ?: defaultValue
+                                item {
+                                    LiveScoreItem(
+                                        leagueLogo = leagueLogo,
+                                        leagueName = leagueName,
+                                        nameTeamHome = nameTeamHome,
+                                        nameTeamAway = nameTeamAway,
+                                        scoreTeamHome = scoreTeamHome,
+                                        scoreTeamAway = scoreTeamAway,
+                                        logoTeamHome = logoTeamHome,
+                                        logoTeamAway = logoTeamAway
+                                    )
+                                }
+                        }
+                    }
+                }
+
+            }
         }
-    //}
+    }
+
+    val ctx = LocalContext.current
+    Toast.makeText(ctx, liveNowFixtures.responseBody.size.toString(), Toast.LENGTH_SHORT).show()
 }
+
 
 @Composable
 fun LiveScoreHeader() {
@@ -76,7 +130,7 @@ fun LiveScoreHeader() {
             .fillMaxWidth()
     ) {
         Text(
-            text = "Live Now",
+            text = stringResource(R.string.live_now),
             color = Color.White,
             textAlign = TextAlign.Center,
             lineHeight = 1.56.em,
@@ -86,7 +140,7 @@ fun LiveScoreHeader() {
             )
         )
         Text(
-            text = "See More",
+            text = stringResource(R.string.see_more),
             color = Color(0xfff63d68),
             textAlign = TextAlign.Center,
             style = TextStyle(
@@ -97,10 +151,18 @@ fun LiveScoreHeader() {
     }
 }
 
-@SuppressLint("InvalidColorHexValue")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LiveScoreItem(){
+fun LiveScoreItem(
+    modifier: Modifier = Modifier,
+    leagueLogo: String,
+    leagueName: String,
+    nameTeamHome: String,
+    nameTeamAway: String,
+    scoreTeamHome: String,
+    scoreTeamAway: String,
+    logoTeamHome: String,
+    logoTeamAway: String
+) {
     Box(modifier = Modifier.padding(start = 16.dp)) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
@@ -125,14 +187,14 @@ fun LiveScoreItem(){
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.notiffication_icon),
+                            painter = rememberAsyncImagePainter(leagueLogo),
                             contentDescription = "image 6",
                             modifier = Modifier
                                 .requiredSize(size = 20.dp)
                                 .clip(shape = RoundedCornerShape(12.dp))
                         )
                         Text(
-                            text = "Premier League",
+                            text = leagueName,
                             color = Color(0xffb6b6b6),
                             textAlign = TextAlign.Center,
                             lineHeight = 1.5.em,
@@ -148,9 +210,12 @@ fun LiveScoreItem(){
                     horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TeamField()
+                    TeamField(
+                        teamName = nameTeamHome,
+                        teamLogo = logoTeamHome
+                    )
                     Text(
-                        text = "0 - 2",
+                        text = "$scoreTeamHome ${stringResource(id = R.string.score_separator)} $scoreTeamAway",
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         lineHeight = 1.5.em,
@@ -159,7 +224,10 @@ fun LiveScoreItem(){
                             fontWeight = FontWeight.Bold
                         )
                     )
-                    TeamField()
+                    TeamField(
+                        teamName = nameTeamAway,
+                        teamLogo = logoTeamAway
+                    )
                 }
                 Button(
                     onClick = {},
@@ -187,7 +255,6 @@ fun LiveScoreItem(){
         }
     }
 }
-
 
 
 @Composable
@@ -240,7 +307,11 @@ fun Sizesm(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TeamField(modifier: Modifier = Modifier) {
+fun TeamField(
+    modifier: Modifier = Modifier,
+    teamName:String,
+    teamLogo:String
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -248,14 +319,14 @@ fun TeamField(modifier: Modifier = Modifier) {
             .requiredHeight(height = 76.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.notiffication_icon),
+            painter = rememberAsyncImagePainter(teamLogo),
             contentDescription = "image 7",
             contentScale = ContentScale.Inside,
             modifier = Modifier
                 .requiredSize(size = 32.dp)
         )
         Text(
-            text = "Udinese",
+            text = teamName,
             color = Color.White,
             textAlign = TextAlign.Center,
             lineHeight = 1.5.em,
@@ -270,9 +341,8 @@ fun TeamField(modifier: Modifier = Modifier) {
 }
 
 
-
 @Preview(widthDp = 390, heightDp = 240)
 @Composable
 private fun Frame16Preview() {
-    LiveScoreTab(liveNowFixtures = FixtureDataWrapper())
+    LeagueMatchesLiveShower()
 }

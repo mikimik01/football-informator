@@ -19,18 +19,17 @@ const val DAYS_OFFSET = 50
 
 class HomeViewModel : ViewModel() {
 
-    var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Success(FixtureDataWrapper()))
+    var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
-    var retrievingByLiveNowState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
+    var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
         private set
 
     fun getFixturesLiveNow(){
         viewModelScope.launch {
-            try {
+            runCatching {
                 val result = FootballApi.retrofitService.getFixturesByLiveNow()
-                retrievingByLiveNowState = RetrievingDataState.Success(result)
-            }catch (e : IOException){
-                retrievingByLiveNowState = RetrievingDataState.Error
+                //val result = FootballApi.retrofitService.getFixturesByDate(LocalDate.now().toString())
+                retrievingByLiveNowState = result
             }
         }
     }
