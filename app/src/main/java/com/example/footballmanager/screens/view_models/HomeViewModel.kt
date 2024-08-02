@@ -1,11 +1,14 @@
 package com.example.footballmanager.screens.view_models
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.footballmanager.R
 import com.example.footballmanager.network.FixtureDataWrapper
 import com.example.footballmanager.network.FootballApi
 import kotlinx.coroutines.launch
@@ -22,14 +25,16 @@ class HomeViewModel : ViewModel() {
     var retrievingDataState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
 
-    fun getFixturesData(date: String = LocalDate.now().toString()) {
+    fun getFixturesData(date: String = LocalDate.now().toString(), ctx:Context) {
         viewModelScope.launch {
             try {
                 val result = FootballApi.retrofitService.getFixtures(date = date)
-                retrievingDataState = RetrievingDataState.Success(result)
+                if (result.responseBody.size == 0)
+                    retrievingDataState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
+                else
+                    retrievingDataState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
-                retrievingDataState = RetrievingDataState.Error
-                Log.d("Errors_", "getFixturesData: $e")
+                retrievingDataState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
             }
         }
     }
@@ -66,6 +71,6 @@ data class RetrievedData(
 
 sealed interface RetrievingDataState {
     data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
-    object Error : RetrievingDataState
+    data class Error(val errorHint: String) : RetrievingDataState
     object Loading : RetrievingDataState
 }

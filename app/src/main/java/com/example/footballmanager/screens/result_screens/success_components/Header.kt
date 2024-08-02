@@ -25,7 +25,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
 
@@ -45,7 +44,7 @@ fun Header(modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(id = R.string.header_tittle),
                 color = Color.White,
-                lineHeight = 1.33.em, //nie wiem jak to wyeksportowac
+                lineHeight = dimensionResource(id = R.dimen.text_height_head).value.sp,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = dimensionResource(id = R.dimen.header_font_size).value.sp,
                     fontWeight = FontWeight.Bold

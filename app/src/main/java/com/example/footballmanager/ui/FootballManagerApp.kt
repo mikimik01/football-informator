@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.screens.HomeScreen
 import com.example.footballmanager.screens.result_screens.success_components.Header
@@ -22,9 +23,9 @@ import com.example.footballmanager.screens.view_models.HomeViewModel
 fun FootballManagerApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val homeViewModel: HomeViewModel = viewModel()
-
+    val ctx = LocalContext.current
     LaunchedEffect(key1 = true) {
-        homeViewModel.getFixturesData()
+        homeViewModel.getFixturesData(ctx = ctx)
     }
 
 

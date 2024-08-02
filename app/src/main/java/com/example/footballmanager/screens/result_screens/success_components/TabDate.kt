@@ -31,7 +31,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
@@ -180,7 +179,7 @@ fun DateField(
                 text = dayOfWeek,
                 color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
                 textAlign = TextAlign.Center,
-                lineHeight = 1.5.em,
+                lineHeight = dimensionResource(id = R.dimen.text_height_date).value.sp,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = dimensionResource(id = R.dimen.single_date_font_size).value.sp,
                     fontWeight = FontWeight.Medium
@@ -190,7 +189,7 @@ fun DateField(
                 text = dayAndMonth,
                 color = if (highlighted) Color.White else colorResource(id = R.color.highlighted_color),
                 textAlign = TextAlign.Center,
-                lineHeight = 1.5.em,
+                lineHeight = dimensionResource(id = R.dimen.text_height_date).value.sp,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = dimensionResource(id = R.dimen.single_date_font_size).value.sp,
                     fontWeight = FontWeight.Medium
