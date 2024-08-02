@@ -183,7 +183,10 @@ fun LiveScoreItem(
                         .fillMaxWidth()
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_spacing), Alignment.Start),
+                        horizontalArrangement = Arrangement.spacedBy(
+                            dimensionResource(id = R.dimen.live_score_item_spacing),
+                            Alignment.Start
+                        ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
@@ -264,7 +267,10 @@ fun LiveScoreItem(
 fun LeagueMatchesLiveShower(modifier: Modifier = Modifier) {
     Row(modifier) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_live_shower_spacing), Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen.live_score_item_live_shower_spacing),
+                Alignment.CenterHorizontally
+            ),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.big)))
@@ -316,7 +322,10 @@ fun TeamField(
     teamLogo: String
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.live_score_item_team_field_spacing), Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(
+            dimensionResource(id = R.dimen.live_score_item_team_field_spacing),
+            Alignment.CenterVertically
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .requiredHeight(height = dimensionResource(id = R.dimen.live_score_item_team_field_height))

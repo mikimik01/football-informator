@@ -8,27 +8,32 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.network.FootballApi
+import com.example.footballmanager.network.FootballApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
+import javax.inject.Inject
 
 const val DAYS_OFFSET = 50
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val footballApiService: FootballApiService
+) : ViewModel() {
 
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
     var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
         private set
 
-    fun getFixturesLiveNow(){
+    fun getFixturesLiveNow() {
         viewModelScope.launch {
             runCatching {
-                val result = FootballApi.retrofitService.getFixturesByLiveNow()
-                //val result = FootballApi.retrofitService.getFixturesByDate(LocalDate.now().toString())
+                val result = footballApiService.getFixturesByLiveNow()
                 retrievingByLiveNowState = result
             }
         }
@@ -37,7 +42,7 @@ class HomeViewModel : ViewModel() {
     fun getFixturesData(date: String = LocalDate.now().toString()) {
         viewModelScope.launch {
             try {
-                val result = FootballApi.retrofitService.getFixturesByDate(date = date)
+                val result = footballApiService.getFixturesByDate(date = date)
                 retrievingByDateState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
                 retrievingByDateState = RetrievingDataState.Error
