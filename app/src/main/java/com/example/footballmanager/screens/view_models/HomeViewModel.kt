@@ -8,33 +8,50 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.R
-import com.example.footballmanager.network.FixtureDataWrapper
 import com.example.footballmanager.network.FootballApi
+import com.example.footballmanager.network.FootballApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
+import javax.inject.Inject
 
 const val DAYS_OFFSET = 50
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val footballApiService: FootballApiService
+) : ViewModel() {
 
-    var retrievingDataState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
+    var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
+    var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
+        private set
+
+    fun getFixturesLiveNow() {
+        viewModelScope.launch {
+            runCatching {
+                val result = footballApiService.getFixturesByLiveNow()
+                retrievingByLiveNowState = result
+            }
+        }
+    }
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx:Context) {
         viewModelScope.launch {
             try {
-                val result = FootballApi.retrofitService.getFixtures(date = date)
+                val result = footballApiService.getFixturesByDate(date = date)
                 if (result.responseBody.size == 0)
-                    retrievingDataState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
+                    retrievingByDateState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
                 else
-                    retrievingDataState = RetrievingDataState.Success(result)
+                    retrievingByDateState = RetrievingDataState.Success(result)
             } catch (e: IOException) {
-                retrievingDataState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                retrievingByDateState = RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
             }
         }
     }

@@ -80,13 +80,13 @@ fun ErrorScreen(errorHint: String) {
                     )
                     .requiredSize(size = dimensionResource(id = R.dimen.header_dot_required_size))
                     .clip(shape = CircleShape)
-                    .background(color = colorResource(id = R.color.headerDotColor))
+                    .background(color = colorResource(id = R.color.app_red_motive))
             )
 
         }
         Text(
             text = stringResource(id = R.string.hint_text) + errorHint,
-            color = colorResource(id = R.color.headerDotColor),
+            color = colorResource(id = R.color.app_red_motive),
             style = androidx.compose.ui.text.TextStyle(
                 fontSize = dimensionResource(id = R.dimen.header_font_size).value.sp,
                 fontWeight = FontWeight.Bold
