@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.network.structures.FixtureDataWrapper
@@ -23,9 +24,7 @@ const val DAYS_OFFSET = 50
 @HiltViewModel
 class MasterViewModel @Inject constructor(
     private val footballApiService: FootballApiService
-) : ViewModel() {
-
-    var currentScreen: Screens by mutableStateOf(Screens.Home)
+) : ViewModel(), Screens {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
     var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
@@ -92,9 +91,9 @@ sealed interface RetrievingDataState {
     data object Loading : RetrievingDataState
 }
 
-sealed interface Screens {
-    data object Home : Screens
-    data object Competition : Screens
-    data object News: Screens
-    data object Account: Screens
+interface Screens {
+    fun Home(ctx:Context): String = ctx.getString(R.string.home)
+    fun Competition(ctx:Context): String = ctx.getString(R.string.competition)
+    fun News(ctx:Context): String = ctx.getString(R.string.news)
+    fun Account(ctx:Context): String = ctx.getString(R.string.account)
 }

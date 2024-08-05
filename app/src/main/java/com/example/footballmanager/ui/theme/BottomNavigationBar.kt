@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +41,10 @@ import com.example.footballmanager.R
 @Composable
 fun ButtonNavigationBar(
     modifier: Modifier = Modifier,
+    onNavigateToHomeScreen: () -> Unit,
+    onNavigateToCompetitionScreen: () -> Unit,
+    onNavigateToNewsScreen: () -> Unit,
+    onNavigateToAccountScreen: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.Top),
@@ -48,7 +54,7 @@ fun ButtonNavigationBar(
                 WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
             )
             .fillMaxWidth()
-            .background(color = Color(0xff1e1e1e))
+            .background(color = colorResource(id = R.color.highlighted_element_color))
             .padding(top = 12.dp)
     ) {
         Row(
@@ -56,21 +62,54 @@ fun ButtonNavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
+                .background(colorResource(R.color.highlighted_element_color))
         ) {
-            val buttonColor = ButtonColors(
-                contentColor = Color.Transparent,
-                containerColor = Color.Transparent,
-                disabledContentColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent
+            val buttonColor = NavigationBarItemColors(
+                selectedIconColor = Color(0xfff63d68),
+                selectedTextColor = Color.White,
+                selectedIndicatorColor = colorResource(R.color.highlighted_element_color),
+                unselectedIconColor = colorResource(R.color.highlighted_element_color),
+                unselectedTextColor = colorResource(R.color.highlighted_element_color),
+                disabledIconColor = colorResource(R.color.highlighted_element_color),
+                disabledTextColor = colorResource(R.color.highlighted_element_color)
             )
             NavigationBar(
                 modifier = Modifier
-                    .background(Color(0xff1e1e1e))
+                    .background(colorResource(R.color.highlighted_element_color)),
+                containerColor = colorResource(R.color.highlighted_element_color),
             ) {
                 NavigationBarItem(
                     selected = true,
-                    onClick = { /*TODO*/ },
-                    icon = { HomeNav() })
+                    onClick = { onNavigateToHomeScreen.invoke() },
+                    icon = { HomeNav() },
+                    colors = buttonColor,
+                    modifier = Modifier
+                        .background(colorResource(R.color.highlighted_element_color))
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { onNavigateToCompetitionScreen.invoke() },
+                    icon = { CompetitionNav() },
+                    colors = buttonColor,
+                    modifier = Modifier
+                        .background(colorResource(R.color.highlighted_element_color))
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { onNavigateToNewsScreen.invoke() },
+                    icon = { NewsNav() },
+                    colors = buttonColor,
+                    modifier = Modifier
+                        .background(colorResource(R.color.highlighted_element_color))
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { onNavigateToAccountScreen.invoke() },
+                    icon = { AccountNav() },
+                    colors = buttonColor,
+                    modifier = Modifier
+                        .background(colorResource(R.color.highlighted_element_color))
+                )
             }
 
         }
@@ -84,22 +123,17 @@ fun HomeNav(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .requiredWidth(width = 78.dp)
-            .background(color = Color(0xff1e1e1e))
+            .background(colorResource(R.color.highlighted_element_color))
     ) {
         Image(
             painter = painterResource(id = R.drawable.home_icon),
             contentDescription = "fluent:home-24-filled",
             colorFilter = ColorFilter.tint(Color(0xfff63d68)),
-            modifier = Modifier
-                .requiredSize(size = 24.dp)
+            modifier = Modifier.requiredSize(size = 24.dp)
         )
         Text(
-            text = "Home",
-            color = Color.White,
-            lineHeight = 1.43.em,
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+            text = "Home", color = Color.White, lineHeight = 1.43.em, style = TextStyle(
+                fontSize = 14.sp, fontWeight = FontWeight.Bold
             )
         )
     }
@@ -110,15 +144,13 @@ fun CompetitionNav(modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .background(color = Color(0xff1e1e1e))
+        modifier = modifier.background(color = colorResource(R.color.highlighted_element_color))
     ) {
         Image(
             painter = painterResource(id = R.drawable.competition_icon),
             contentDescription = "fluent:apps-list-24-regular",
             colorFilter = ColorFilter.tint(Color(0xff667085)),
-            modifier = Modifier
-                .requiredSize(size = 24.dp)
+            modifier = Modifier.requiredSize(size = 24.dp)
         )
         Text(
             text = "Competition",
@@ -138,20 +170,16 @@ fun NewsNav(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .requiredWidth(width = 78.dp)
-            .background(color = Color(0xff1e1e1e))
+            .background(color = colorResource(R.color.highlighted_element_color))
     ) {
         Image(
             painter = painterResource(id = R.drawable.news_icon),
             contentDescription = "fluent:news-24-regular",
             colorFilter = ColorFilter.tint(Color(0xff667085)),
-            modifier = Modifier
-                .requiredSize(size = 24.dp)
+            modifier = Modifier.requiredSize(size = 24.dp)
         )
         Text(
-            text = "News",
-            color = Color(0xff667085),
-            lineHeight = 1.43.em,
-            style = TextStyle(
+            text = "News", color = Color(0xff667085), lineHeight = 1.43.em, style = TextStyle(
                 fontSize = 14.sp
             )
         )
@@ -165,28 +193,18 @@ fun AccountNav(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .requiredWidth(width = 78.dp)
-            .background(color = Color(0xff1e1e1e))
+            .background(color = colorResource(R.color.highlighted_element_color))
     ) {
         Image(
             painter = painterResource(id = R.drawable.account_icon),
             contentDescription = "mdi:account-outline",
             colorFilter = ColorFilter.tint(Color(0xff667085)),
-            modifier = Modifier
-                .requiredSize(size = 24.dp)
+            modifier = Modifier.requiredSize(size = 24.dp)
         )
         Text(
-            text = "Account",
-            color = Color(0xff667085),
-            lineHeight = 1.43.em,
-            style = TextStyle(
+            text = "Account", color = Color(0xff667085), lineHeight = 1.43.em, style = TextStyle(
                 fontSize = 14.sp
             )
         )
     }
-}
-
-@Preview(widthDp = 390, heightDp = 102)
-@Composable
-private fun NavbarPreview() {
-    ButtonNavigationBar(Modifier)
 }
