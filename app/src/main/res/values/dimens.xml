@@ -90,6 +90,8 @@
     <dimen name="live_score_item_team_field_height">76dp</dimen>
     <dimen name="live_score_item_team_field_image_size">32dp</dimen>
     <dimen name="live_score_item_team_field_text_width">104dp</dimen>
+    <dimen name="live_score_text_live_now_font_size">18sp</dimen>
+    <dimen name="live_score_text_live_now_line_height">27sp</dimen>
 
 
 </resources>

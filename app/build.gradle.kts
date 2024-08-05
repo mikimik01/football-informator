@@ -30,6 +30,7 @@ android {
         //return empty key in case something goes wrong
         val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: ""
         val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: ""
+        val baseUrl = properties.getProperty("BASE_URL") ?: ""
 
         buildConfigField(
             type = "String",
@@ -40,6 +41,11 @@ android {
             type = "String",
             name = "RAPIDAPI_HOST",
             value = rapidApiHost
+        )
+        buildConfigField(
+            type = "String",
+            name = "BASE_URL",
+            value = baseUrl
         )
     }
 
@@ -97,6 +103,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    //hilt fragment
+    implementation(libs.androidx.hilt.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

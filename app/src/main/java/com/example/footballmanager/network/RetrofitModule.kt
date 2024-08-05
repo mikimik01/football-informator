@@ -1,5 +1,6 @@
 package com.example.footballmanager.network
 
+import com.example.footballmanager.BuildConfig
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 object FootballApi {
 
     @Provides
-    fun provideBaseUrl(): String = "https://v3.football.api-sports.io"
+    fun provideBaseUrl(): String = BuildConfig.BASE_URL
 
     @Provides
     fun provideClient(): OkHttpClient = OkHttpClient.Builder()
@@ -29,10 +30,6 @@ object FootballApi {
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
         .client(client)
         .build()
-
-    /*val retrofitService: FootballApiService by lazy {
-        retrofit.create(FootballApiService::class.java)
-    }*/
 
     @Provides
     @Singleton
