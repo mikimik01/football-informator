@@ -1,4 +1,4 @@
-package com.example.footballmanager.screens.result_screens
+package com.example.footballmanager.ui.screens.result_screens
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable

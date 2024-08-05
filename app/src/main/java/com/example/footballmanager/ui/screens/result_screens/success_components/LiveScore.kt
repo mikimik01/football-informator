@@ -1,4 +1,4 @@
-package com.example.footballmanager.screens.result_screens.success_components
+package com.example.footballmanager.ui.screens.result_screens.success_components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -17,15 +17,15 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
-import com.example.footballmanager.screens.result_screens.success_components.live_score_components.LiveScoreHeader
-import com.example.footballmanager.screens.result_screens.success_components.live_score_components.LiveScoreItem
-import com.example.footballmanager.screens.view_models.HomeViewModel
+import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreHeader
+import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreItem
+import com.example.footballmanager.ui.MasterViewModel
 
 @Composable
 fun LiveScoreTab(
     modifier: Modifier = Modifier
 ) {
-    val homeViewModel: HomeViewModel = viewModel()
+    val homeViewModel: MasterViewModel = viewModel()
     val liveNowFixtures by remember {
         mutableStateOf(homeViewModel.retrievingByLiveNowState)
     }
