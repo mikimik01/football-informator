@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
@@ -45,7 +46,7 @@ const val CORRECT_TO_GET_TODAY_DATE_CENTERED = 2
 @Composable
 fun TabDate(modifier: Modifier = Modifier) {
 
-    val homeViewModel: MasterViewModel = viewModel()
+    val homeViewModel: MasterViewModel = hiltViewModel()
     val gotDates = homeViewModel.get7DatesToDisplay()
     var listOfDates = remember {
         mutableStateListOf<RetrievedData>().apply {

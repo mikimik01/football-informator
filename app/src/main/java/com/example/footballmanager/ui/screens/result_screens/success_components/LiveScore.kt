@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreHeader
@@ -25,7 +26,7 @@ import com.example.footballmanager.ui.MasterViewModel
 fun LiveScoreTab(
     modifier: Modifier = Modifier
 ) {
-    val homeViewModel: MasterViewModel = viewModel()
+    val homeViewModel: MasterViewModel = hiltViewModel()
     val liveNowFixtures by remember {
         mutableStateOf(homeViewModel.retrievingByLiveNowState)
     }

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.R
 import com.example.footballmanager.network.FootballApiService
+import com.example.footballmanager.ui.theme.navigation.Screens
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -24,11 +25,13 @@ const val DAYS_OFFSET = 50
 @HiltViewModel
 class MasterViewModel @Inject constructor(
     private val footballApiService: FootballApiService
-) : ViewModel(), Screens {
+) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
     var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
         private set
+
+    var currentBotNavSelection: Screens by mutableStateOf(Screens.Home)
 
     fun getFixturesLiveNow() {
         viewModelScope.launch {
@@ -89,11 +92,4 @@ sealed interface RetrievingDataState {
     data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
     data class Error(val errorHint: String) : RetrievingDataState
     data object Loading : RetrievingDataState
-}
-
-interface Screens {
-    fun Home(ctx:Context): String = ctx.getString(R.string.home)
-    fun Competition(ctx:Context): String = ctx.getString(R.string.competition)
-    fun News(ctx:Context): String = ctx.getString(R.string.news)
-    fun Account(ctx:Context): String = ctx.getString(R.string.account)
 }
