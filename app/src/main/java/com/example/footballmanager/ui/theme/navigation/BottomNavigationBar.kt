@@ -23,12 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
@@ -36,13 +32,13 @@ import com.example.footballmanager.ui.MasterViewModel
 @Composable
 fun ButtonNavigationBar(
     modifier: Modifier = Modifier,
-    onNavigateToScreen: (Screens) -> Unit
+    onNavigateToScreen: (ScreensEnum) -> Unit
 ) {
 
     val masterViewModel: MasterViewModel = hiltViewModel()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.Top),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.bot_nav_bar_items_spacing), Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .windowInsetsPadding(
@@ -50,21 +46,21 @@ fun ButtonNavigationBar(
             )
             .fillMaxWidth()
             .background(color = colorResource(id = R.color.highlighted_element_color))
-            .padding(top = 12.dp)
+            .padding(top = dimensionResource(id = R.dimen.bot_nav_bar_padding))
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = dimensionResource(id = R.dimen.bot_nav_bar_row_padding))
                 .background(colorResource(R.color.highlighted_element_color))
         ) {
             val buttonColor = NavigationBarItemColors(
-                selectedIconColor = Color(0xfff63d68),
+                selectedIconColor = colorResource(id = R.color.app_red_motive),
                 selectedTextColor = Color.White,
                 selectedIndicatorColor = colorResource(R.color.highlighted_element_color),
-                unselectedIconColor = Color(0xff667085),
-                unselectedTextColor = Color(0xff667085),
+                unselectedIconColor = colorResource(id = R.color.unselected_navigation_item),
+                unselectedTextColor = colorResource(id = R.color.unselected_navigation_item),
                 disabledIconColor = colorResource(R.color.highlighted_element_color),
                 disabledTextColor = colorResource(R.color.highlighted_element_color)
             )
@@ -73,7 +69,7 @@ fun ButtonNavigationBar(
                     .background(colorResource(R.color.highlighted_element_color)),
                 containerColor = colorResource(R.color.highlighted_element_color),
             ) {
-                Screens.entries.forEach { screen ->
+                ScreensEnum.entries.forEach { screen ->
                     NavigationBarItem(
                         selected = masterViewModel.currentBotNavSelection == screen,
                         onClick = { onNavigateToScreen(screen) },
@@ -94,7 +90,7 @@ fun ButtonNavigationBar(
 fun NavItemIcon(modifier: Modifier = Modifier, imgVec: ImageVector) {
     Icon(
         imageVector = imgVec,
-        modifier = modifier.size(16.dp),
+        modifier = modifier.size(dimensionResource(id = R.dimen.bot_nav_bar_item_size)),
         contentDescription = null
     )
 }

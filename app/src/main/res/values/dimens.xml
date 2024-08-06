@@ -66,7 +66,6 @@
     <dimen name="error_dot_offset_y">0dp</dimen>
 
 
-
     <!-- LIVE SCORE TAB -->
     <dimen name="medium">12dp</dimen>
     <dimen name="big">16dp</dimen>
@@ -92,6 +91,13 @@
     <dimen name="live_score_item_team_field_text_width">104dp</dimen>
     <dimen name="live_score_text_live_now_font_size">18sp</dimen>
     <dimen name="live_score_text_live_now_line_height">27sp</dimen>
+
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <dimen name="bot_nav_bar_items_spacing">6dp</dimen>
+    <dimen name="bot_nav_bar_padding">12dp</dimen>
+    <dimen name="bot_nav_bar_row_padding">12dp</dimen>
+    <dimen name="bot_nav_bar_item_size">16dp</dimen>
 
 
 </resources>

@@ -26,7 +26,7 @@ import com.example.footballmanager.ui.screens.NewsScreen
 import com.example.footballmanager.ui.theme.Header
 import com.example.footballmanager.ui.theme.background
 import com.example.footballmanager.ui.theme.navigation.ButtonNavigationBar
-import com.example.footballmanager.ui.theme.navigation.Screens
+import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,18 +60,18 @@ fun FootballManagerApp() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Screens.Home.name
+                startDestination = ScreensEnum.Home.name
             ) {
-                composable(route = Screens.Home.name) {
+                composable(route = ScreensEnum.Home.name) {
                     HomeScreen(retrievingByDateState = masterViewModel.retrievingByDateState)
                 }
-                composable(route = Screens.Competition.name) {
+                composable(route = ScreensEnum.Competition.name) {
                     CompetitionScreen()
                 }
-                composable(route = Screens.News.name) {
+                composable(route = ScreensEnum.News.name) {
                     NewsScreen()
                 }
-                composable(route = Screens.Account.name) {
+                composable(route = ScreensEnum.Account.name) {
                     AccountScreen()
                 }
             }
