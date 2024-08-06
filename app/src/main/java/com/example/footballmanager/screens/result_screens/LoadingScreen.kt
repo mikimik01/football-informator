@@ -48,7 +48,7 @@ fun LoadingScreen() {
             modifier = Modifier
                 .size(dimensionResource(id = R.dimen.loading_animation_size))
                 .scale(scale)
-                .background(colorResource(id = R.color.headerDotColor), shape = CircleShape),
+                .background(colorResource(id = R.color.app_red_motive), shape = CircleShape),
         )
     }
 }

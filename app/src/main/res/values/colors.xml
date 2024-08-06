@@ -8,17 +8,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--  HEADER  -->
-    <color name="headerDotColor">#fff63d68</color>
-    <color name="notification_icon_tint_color">#ffeaecf0</color>
-    <color name="search_icon_tint_color">#ffeaecf0</color>
+    <color name="app_red_motive">#fff63d68</color>
+    <color name="app_white_motive">#ffeaecf0</color>
+    <color name="app_grey_motive">#ff5d5c64</color>
+    <color name="app_darker_white_motive">#ffb6b6b6</color>
 
     <!--  MATCH SCORE TAB -->
-    <color name="league_header_text_color">#ffb6b6b6</color>
     <color name="item_row_color">#ff1e1e1e</color>
-    <color name="date_snd_short_color">#ff5d5c64</color>
 
-    <!--  TAB DATE -->
-    <color name="highlighted_color">#ff5d5c64</color>
+    <!--  LiveScore -->
+    <color name="highlighted_element_color">#1E1E1E</color>
+    <color name="live_shower_background">#ecfdf3</color>
+    <color name="live_shower_light_green">#12b76a</color>
+    <color name="live_shower_dark_green">#027a48</color>
+
 
 </resources>
