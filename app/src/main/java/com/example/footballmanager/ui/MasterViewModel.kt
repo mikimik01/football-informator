@@ -1,8 +1,6 @@
 package com.example.footballmanager.ui
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -29,7 +27,7 @@ class MasterViewModel @Inject constructor(
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
-    var retrievingByLiveNowState: List<Match> by mutableStateOf(arrayListOf())
+    var retrievingByLiveNowState: List<Match> by mutableStateOf(listOf())
         private set
 
     var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
@@ -44,19 +42,20 @@ class MasterViewModel @Inject constructor(
     }
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
-        Log.d("mikolimikoli", "Launches")
         viewModelScope.launch {
             try {
                 val fetchResult = matchesRepository.fetchAndCacheMatchesByDate(date = date)
-                retrievingByDateState = RetrievingDataState.Success(matches = fetchResult, cached = false)
+                retrievingByDateState =
+                    RetrievingDataState.Success(matches = fetchResult, cached = false)
             } catch (e: Exception) {
 
                 val getCachedResult = matchesRepository.getCachedMatches()
                 if (getCachedResult.isEmpty()) {
                     retrievingByDateState =
-                        RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
+                        RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
                 } else {
-                    retrievingByDateState = RetrievingDataState.Success(matches = getCachedResult, cached = true)
+                    retrievingByDateState =
+                        RetrievingDataState.Success(matches = getCachedResult, cached = true)
                 }
             }
         }

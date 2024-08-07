@@ -102,6 +102,7 @@ dependencies {
     implementation(libs.coil.compose)
     //Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime.livedata)
     kapt(libs.hilt.compiler)
     //hilt fragment
     implementation(libs.androidx.hilt.navigation.compose)

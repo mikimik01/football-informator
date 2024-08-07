@@ -39,7 +39,7 @@ fun FootballManagerApp() {
 
     LaunchedEffect(key1 = true) {
         masterViewModel.getFixturesData(ctx = ctx)
-        //masterViewModel.getFixturesLiveNow()
+        masterViewModel.getFixturesLiveNow()
     }
 
     Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -63,7 +63,10 @@ fun FootballManagerApp() {
                 startDestination = ScreensEnum.Home.name
             ) {
                 composable(route = ScreensEnum.Home.name) {
-                    HomeScreen(retrievingByDateState = masterViewModel.retrievingByDateState)
+                    HomeScreen(
+                        retrievingByDateState = masterViewModel.retrievingByDateState,
+                        masterViewModel.retrievingByLiveNowState
+                    )
                 }
                 composable(route = ScreensEnum.Competition.name) {
                     CompetitionScreen()

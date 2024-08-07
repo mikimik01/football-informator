@@ -19,6 +19,7 @@ hilt = "2.48"
 roomCompiler = "2.6.1"
 roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
+runtimeLivedata = "1.6.8"
 
 
 [libraries]
@@ -54,6 +55,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

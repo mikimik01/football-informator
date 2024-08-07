@@ -73,10 +73,10 @@ fun MatchScoreTab(
     ) {
         val defaultValue = stringResource(id = R.string.default_value)
         AnimatedVisibility(visible = cached) {
-            Row (
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
-            ){
+            ) {
                 Text(
                     color = colorResource(id = R.color.app_darker_white_motive),
                     text = stringResource(R.string.data_retrieved_from_cache)

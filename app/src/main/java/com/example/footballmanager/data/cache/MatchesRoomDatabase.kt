@@ -10,23 +10,6 @@ import com.example.footballmanager.data.entities.Match
 
 @Database(entities = [Match::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class MatchesRoomDatabase: RoomDatabase(){
+abstract class MatchesRoomDatabase : RoomDatabase() {
     abstract fun matchDao(): MatchDao
-
-    companion object{
-        @Volatile
-        private var INSTANCE: MatchesRoomDatabase? = null
-
-        fun getDatabase(ctx: Context): MatchesRoomDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    ctx.applicationContext,
-                    MatchesRoomDatabase::class.java,
-                    DATABASE_NAME
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
 }
