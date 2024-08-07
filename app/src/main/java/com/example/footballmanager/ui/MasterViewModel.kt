@@ -2,14 +2,17 @@ package com.example.footballmanager.ui
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.R
+import com.example.footballmanager.data.MatchesRepository
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.FootballApiService
+import com.example.footballmanager.data.network.RetrievingDataState
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,7 +26,7 @@ const val DAYS_OFFSET = 50
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val footballApiService: FootballApiService
+    private val matchesRepository: MatchesRepository
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
@@ -35,7 +38,7 @@ class MasterViewModel @Inject constructor(
     fun getFixturesLiveNow() {
         viewModelScope.launch {
             runCatching {
-                val result = footballApiService.getMatchesByLiveNow().responseBody
+                val result = matchesRepository.fetchMatchesByLiveNow()
                 retrievingByLiveNowState = result
             }
         }
@@ -45,20 +48,25 @@ class MasterViewModel @Inject constructor(
         Log.d("mikolimikoli", "Launches")
         viewModelScope.launch {
             try {
-                val result = footballApiService.getMatchesByDate(date = date).responseBody
-                Log.d("mikolimikoli", result.toString())
-                if (result.isEmpty())
+                val fetchResult = matchesRepository.fetchAndCacheMatchesByDate(date = date)
+                retrievingByDateState = RetrievingDataState.Success(fetchResult)
+            } catch (e: Exception) {
+
+                val getCachedResult = matchesRepository.getCachedMatches()
+                if (getCachedResult.isEmpty()) {
                     retrievingByDateState =
                         RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
-                else
-                    retrievingByDateState = RetrievingDataState.Success(result)
-            } catch (e: Exception) {
-                retrievingByDateState =
-                    RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                } else {
+                    retrievingByDateState = RetrievingDataState.Success(getCachedResult)
+                    Toast.makeText(
+                        ctx, ctx.getString(R.string.loading_fom_cache_info), Toast.LENGTH_LONG
+                    ).show()
+                }
                 Log.d("mikolimikoli", e.toString())
             }
         }
     }
+
 
     private fun getDateProperties(currentTime: LocalDate): RetrievedData {
         val formatter = DateTimeFormatter.ofPattern("dd")
@@ -90,8 +98,4 @@ data class RetrievedData(
 )
 
 
-sealed interface RetrievingDataState {
-    data class Success(val matches: List<Match>) : RetrievingDataState
-    data class Error(val errorHint: String) : RetrievingDataState
-    data object Loading : RetrievingDataState
-}
+

@@ -1,12 +1,11 @@
 package com.example.footballmanager.ui.screens
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.footballmanager.ui.RetrievingDataState
-import com.example.footballmanager.ui.screens.result_screens.LoadingScreen
-import com.example.footballmanager.ui.screens.result_screens.ErrorScreen
-import com.example.footballmanager.ui.screens.result_screens.SuccessScreen
+import com.example.footballmanager.data.network.RetrievingDataState
+import com.example.footballmanager.ui.screens.home_components.LoadingScreen
+import com.example.footballmanager.ui.screens.home_components.ErrorScreen
+import com.example.footballmanager.ui.screens.home_components.SuccessScreen
 
 /*@NavDestination(
 

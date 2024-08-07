@@ -1,12 +1,17 @@
 package com.example.footballmanager.data.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.footballmanager.DATABASE_NAME
 import com.google.gson.annotations.SerializedName
 
 data class MatchDataWrapper(
-    @SerializedName("response") var responseBody: ArrayList<Match> = arrayListOf()
+    @SerializedName("response") var matches: ArrayList<Match> = arrayListOf()
 )
 
+@Entity(tableName = DATABASE_NAME)
 data class Match(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @SerializedName("teams") var teams: Teams? = Teams(),
     @SerializedName("goals") var goals: Goals? = Goals(),
     @SerializedName("league") var league: League? = League(),

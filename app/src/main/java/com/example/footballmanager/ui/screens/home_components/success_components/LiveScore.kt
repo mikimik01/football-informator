@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.result_screens.success_components
+package com.example.footballmanager.ui.screens.home_components.success_components
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -19,8 +19,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.R
-import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreHeader
-import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreItem
+import com.example.footballmanager.ui.screens.home_components.success_components.live_score_components.LiveScoreHeader
+import com.example.footballmanager.ui.screens.home_components.success_components.live_score_components.LiveScoreItem
 import com.example.footballmanager.ui.MasterViewModel
 
 @Composable

@@ -1,25 +1,32 @@
 package com.example.footballmanager.data.cache
 
-const val DATABASE_NAME = "word_database"
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.footballmanager.DATABASE_NAME
+import com.example.footballmanager.data.entities.Match
 
-//@Database(entities = [FixtureDataWrapper::class], version = 1, exportSchema = false)
-//abstract class FixturesRoomDatabase: RoomDatabase(){
-//    abstract fun fixtureDao(): FixtureDao
-//
-//    companion object{
-//        @Volatile
-//        private var INSTANCE: FixturesRoomDatabase? = null
-//
-//        fun getDatabase(ctx: Context): FixturesRoomDatabase {
-//            return INSTANCE ?: synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    ctx.applicationContext,
-//                    FixturesRoomDatabase::class.java,
-//                    DATABASE_NAME
-//                ).build()
-//                INSTANCE = instance
-//                instance
-//            }
-//        }
-//    }
-//}
+@Database(entities = [Match::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class MatchesRoomDatabase: RoomDatabase(){
+    abstract fun matchDao(): MatchDao
+
+    companion object{
+        @Volatile
+        private var INSTANCE: MatchesRoomDatabase? = null
+
+        fun getDatabase(ctx: Context): MatchesRoomDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    ctx.applicationContext,
+                    MatchesRoomDatabase::class.java,
+                    DATABASE_NAME
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}

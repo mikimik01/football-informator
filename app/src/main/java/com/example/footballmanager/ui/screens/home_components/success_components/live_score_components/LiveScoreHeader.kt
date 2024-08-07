@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components
+package com.example.footballmanager.ui.screens.home_components.success_components.live_score_components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
