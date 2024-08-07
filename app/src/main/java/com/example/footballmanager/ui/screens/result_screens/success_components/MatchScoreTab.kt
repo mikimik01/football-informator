@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
-import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.data.entities.FixtureDataWrapper
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 

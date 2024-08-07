@@ -1,6 +1,9 @@
-package com.example.footballmanager.network
+package com.example.footballmanager.data
 
+import android.app.Application
 import com.example.footballmanager.BuildConfig
+import com.example.footballmanager.data.network.AuthInterceptor
+import com.example.footballmanager.data.network.FootballApiService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -35,4 +38,8 @@ object FootballApi {
     @Singleton
     fun provideApiService(retrofit: Retrofit): FootballApiService =
         retrofit.create(FootballApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application) = AppDa
 }

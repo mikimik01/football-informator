@@ -1,5 +1,6 @@
 package com.example.footballmanager.ui.screens.result_screens.success_components
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,7 +41,7 @@ fun LiveScoreTab(
     val isNotEmpty by remember {
         mutableStateOf((liveNowFixturesCount != 0))
     }
-
+    Toast.makeText(LocalContext.current, isNotEmpty.toString(), Toast.LENGTH_SHORT).show()
     AnimatedVisibility(visible = isNotEmpty) {
         if (isNotEmpty) {
             Column(

@@ -107,6 +107,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     //navigation bar
     implementation(libs.androidx.navigation.compose)
+    //room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,6 +1,6 @@
-package com.example.footballmanager.network
+package com.example.footballmanager.data.network
 
-import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.data.entities.FixtureDataWrapper
 import retrofit2.http.GET
 import retrofit2.http.Query
 

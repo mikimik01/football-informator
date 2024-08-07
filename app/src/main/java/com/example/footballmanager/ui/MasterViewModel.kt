@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.data.entities.FixtureDataWrapper
 import com.example.footballmanager.R
-import com.example.footballmanager.network.FootballApiService
+import com.example.footballmanager.data.network.FootballApiService
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
