@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
-import com.example.footballmanager.data.entities.FixtureDataWrapper
+import com.example.footballmanager.data.entities.Match
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -42,7 +42,7 @@ const val ITEMS_TO_LOAD = 10
 
 @Composable
 fun MatchScoreTab(
-    fixtureDataWrapper: FixtureDataWrapper, modifier: Modifier = Modifier
+    matches: List<Match>, modifier: Modifier = Modifier
 ) {
     var lastLoadedIndex by remember {
         mutableIntStateOf(ITEMS_TO_LOAD)
@@ -51,7 +51,7 @@ fun MatchScoreTab(
     val currentState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val shouldLoadMore =
         remember { derivedStateOf { currentState.value + ITEMS_TO_LOAD >= lastLoadedIndex } }
-    val lastFixtureIndex = fixtureDataWrapper.responseBody.size - 1
+    val lastFixtureIndex = matches.size - 1
 
     LaunchedEffect(key1 = shouldLoadMore.value) {
         lastLoadedIndex += if (lastLoadedIndex + ITEMS_TO_LOAD < lastFixtureIndex) {
@@ -75,7 +75,7 @@ fun MatchScoreTab(
         ) {
             var previousLeagueName = defaultValue
             for (i in 0..lastLoadedIndex) {
-                val item = fixtureDataWrapper.responseBody[i]
+                val item = matches[i]
                 with(item) {
                     val leagueName = league?.name ?: defaultValue
                     val leagueLogo = league?.logo ?: defaultValue

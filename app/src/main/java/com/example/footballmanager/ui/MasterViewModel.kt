@@ -1,18 +1,18 @@
 package com.example.footballmanager.ui
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.footballmanager.data.entities.FixtureDataWrapper
 import com.example.footballmanager.R
+import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.FootballApiService
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -27,7 +27,7 @@ class MasterViewModel @Inject constructor(
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
-    var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
+    var retrievingByLiveNowState: List<Match> by mutableStateOf(arrayListOf())
         private set
 
     var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
@@ -35,24 +35,27 @@ class MasterViewModel @Inject constructor(
     fun getFixturesLiveNow() {
         viewModelScope.launch {
             runCatching {
-                val result = footballApiService.getFixturesByLiveNow()
+                val result = footballApiService.getMatchesByLiveNow().responseBody
                 retrievingByLiveNowState = result
             }
         }
     }
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
+        Log.d("mikolimikoli", "Launches")
         viewModelScope.launch {
             try {
-                val result = footballApiService.getFixturesByDate(date = date)
-                if (result.responseBody.size == 0)
+                val result = footballApiService.getMatchesByDate(date = date).responseBody
+                Log.d("mikolimikoli", result.toString())
+                if (result.isEmpty())
                     retrievingByDateState =
                         RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
                 else
                     retrievingByDateState = RetrievingDataState.Success(result)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 retrievingByDateState =
                     RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                Log.d("mikolimikoli", e.toString())
             }
         }
     }
@@ -88,7 +91,7 @@ data class RetrievedData(
 
 
 sealed interface RetrievingDataState {
-    data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
+    data class Success(val matches: List<Match>) : RetrievingDataState
     data class Error(val errorHint: String) : RetrievingDataState
     data object Loading : RetrievingDataState
 }

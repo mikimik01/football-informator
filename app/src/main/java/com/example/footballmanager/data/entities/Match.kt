@@ -2,11 +2,11 @@ package com.example.footballmanager.data.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class FixtureDataWrapper(
-    @SerializedName("response") var responseBody: ArrayList<ResponseBody> = arrayListOf()
+data class MatchDataWrapper(
+    @SerializedName("response") var responseBody: ArrayList<Match> = arrayListOf()
 )
 
-data class ResponseBody(
+data class Match(
     @SerializedName("teams") var teams: Teams? = Teams(),
     @SerializedName("goals") var goals: Goals? = Goals(),
     @SerializedName("league") var league: League? = League(),

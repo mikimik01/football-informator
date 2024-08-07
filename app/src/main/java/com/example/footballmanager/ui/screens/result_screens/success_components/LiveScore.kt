@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreHeader
 import com.example.footballmanager.ui.screens.result_screens.success_components.live_score_components.LiveScoreItem
@@ -29,17 +28,17 @@ fun LiveScoreTab(
     modifier: Modifier = Modifier
 ) {
     val homeViewModel: MasterViewModel = hiltViewModel()
-    val liveNowFixtures by remember {
+    val liveNowMatches by remember {
         mutableStateOf(homeViewModel.retrievingByLiveNowState)
     }
-    val liveNowFixturesCount by remember {
-        mutableIntStateOf(liveNowFixtures.responseBody.size)
+    val liveNowMatchesCount by remember {
+        mutableIntStateOf(liveNowMatches.size)
     }
-    val lastLiveNowFixtureIndex by remember {
-        mutableIntStateOf(liveNowFixturesCount - 1)
+    val lastLiveNowMatchIndex by remember {
+        mutableIntStateOf(liveNowMatchesCount - 1)
     }
     val isNotEmpty by remember {
-        mutableStateOf((liveNowFixturesCount != 0))
+        mutableStateOf((liveNowMatchesCount != 0))
     }
     Toast.makeText(LocalContext.current, isNotEmpty.toString(), Toast.LENGTH_SHORT).show()
     AnimatedVisibility(visible = isNotEmpty) {
@@ -58,8 +57,8 @@ fun LiveScoreTab(
                 LiveScoreHeader()
                 val defaultValue = stringResource(id = R.string.default_value)
                 LazyRow {
-                    for (i in 0..lastLiveNowFixtureIndex) {
-                        val item = liveNowFixtures.responseBody[i]
+                    for (i in 0..lastLiveNowMatchIndex) {
+                        val item = liveNowMatches[i]
                         with(item) {
                             item {
                                 LiveScoreItem(

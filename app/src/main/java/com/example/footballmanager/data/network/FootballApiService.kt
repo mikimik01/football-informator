@@ -1,18 +1,18 @@
 package com.example.footballmanager.data.network
 
-import com.example.footballmanager.data.entities.FixtureDataWrapper
+import com.example.footballmanager.data.entities.MatchDataWrapper
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface FootballApiService {
 
     @GET("fixtures")
-    suspend fun getFixturesByDate(
+    suspend fun getMatchesByDate(
         @Query("date") date: String
-    ): FixtureDataWrapper
+    ): MatchDataWrapper
 
     @GET("fixtures")
-    suspend fun getFixturesByLiveNow(
+    suspend fun getMatchesByLiveNow(
         @Query("live") live:String = "all"
-    ): FixtureDataWrapper
+    ): MatchDataWrapper
 }

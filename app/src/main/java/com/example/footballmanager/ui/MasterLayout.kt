@@ -38,7 +38,7 @@ fun FootballManagerApp() {
     val navController = rememberNavController()
 
     LaunchedEffect(key1 = true) {
-        //masterViewModel.getFixturesData(ctx = ctx)
+        masterViewModel.getFixturesData(ctx = ctx)
         //masterViewModel.getFixturesLiveNow()
     }
 

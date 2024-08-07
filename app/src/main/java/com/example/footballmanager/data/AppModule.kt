@@ -1,7 +1,9 @@
 package com.example.footballmanager.data
 
 import android.app.Application
+import androidx.room.Room
 import com.example.footballmanager.BuildConfig
+import com.example.footballmanager.data.cache.DATABASE_NAME
 import com.example.footballmanager.data.network.AuthInterceptor
 import com.example.footballmanager.data.network.FootballApiService
 import com.google.gson.GsonBuilder
@@ -39,7 +41,12 @@ object FootballApi {
     fun provideApiService(retrofit: Retrofit): FootballApiService =
         retrofit.create(FootballApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun provideDatabase(app: Application) = AppDa
+//    @Provides
+//    @Singleton
+//    fun provideDatabase(app: Application) = Room.databaseBuilder(app, FixturesRoomDatabase::class.java, DATABASE_NAME)
+//        .fallbackToDestructiveMigration()
+//        .build()
+//
+//    @Provides
+//    fun provideUserDao(db: FixturesRoomDatabase) = db.fixtureDao()
 }
