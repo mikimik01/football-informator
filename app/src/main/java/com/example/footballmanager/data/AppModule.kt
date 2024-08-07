@@ -44,9 +44,10 @@ object FootballApi {
 
     @Provides
     @Singleton
-    fun provideDatabase(app: Application) = Room.databaseBuilder(app, MatchesRoomDatabase::class.java, DATABASE_NAME)
-        .fallbackToDestructiveMigration()
-        .build()
+    fun provideDatabase(app: Application) =
+        Room.databaseBuilder(app, MatchesRoomDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideUserDao(db: MatchesRoomDatabase) = db.matchDao()

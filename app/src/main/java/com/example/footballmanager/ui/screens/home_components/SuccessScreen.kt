@@ -10,10 +10,11 @@ import com.example.footballmanager.ui.screens.home_components.success_components
 @Composable
 fun SuccessScreen(
     matches: List<Match>,
+    cached: Boolean
 ) {
     Column {
         TabDate()
         LiveScoreTab()
-        MatchScoreTab(matches = matches)
+        MatchScoreTab(matches = matches, cached = cached)
     }
 }

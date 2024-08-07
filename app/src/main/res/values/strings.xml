@@ -12,6 +12,7 @@
     <string name="league_logo">League logo</string>
     <string name="home_logo">Home Logo</string>
     <string name="away_logo">Away Logo</string>
+    <string name="data_retrieved_from_cache">Data retrieved from cache.</string>
 
 
     <!--  LiveScore TAB  -->

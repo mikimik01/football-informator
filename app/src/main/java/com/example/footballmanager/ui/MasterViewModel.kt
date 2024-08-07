@@ -8,10 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesRepository
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.network.FootballApiService
 import com.example.footballmanager.data.network.RetrievingDataState
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,6 @@ import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
 
-const val DAYS_OFFSET = 50
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
@@ -49,7 +48,7 @@ class MasterViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val fetchResult = matchesRepository.fetchAndCacheMatchesByDate(date = date)
-                retrievingByDateState = RetrievingDataState.Success(fetchResult)
+                retrievingByDateState = RetrievingDataState.Success(matches = fetchResult, cached = false)
             } catch (e: Exception) {
 
                 val getCachedResult = matchesRepository.getCachedMatches()
@@ -57,12 +56,8 @@ class MasterViewModel @Inject constructor(
                     retrievingByDateState =
                         RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
                 } else {
-                    retrievingByDateState = RetrievingDataState.Success(getCachedResult)
-                    Toast.makeText(
-                        ctx, ctx.getString(R.string.loading_fom_cache_info), Toast.LENGTH_LONG
-                    ).show()
+                    retrievingByDateState = RetrievingDataState.Success(matches = getCachedResult, cached = true)
                 }
-                Log.d("mikolimikoli", e.toString())
             }
         }
     }

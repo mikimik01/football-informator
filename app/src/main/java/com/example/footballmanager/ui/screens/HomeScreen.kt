@@ -16,7 +16,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     when (retrievingByDateState) {
-        is RetrievingDataState.Success -> SuccessScreen(matches = retrievingByDateState.matches)
+        is RetrievingDataState.Success -> SuccessScreen(matches = retrievingByDateState.matches, cached = retrievingByDateState.cached)
         is RetrievingDataState.Loading -> LoadingScreen()
         is RetrievingDataState.Error -> ErrorScreen(errorHint = retrievingByDateState.errorHint)
     }

@@ -27,9 +27,9 @@ import com.example.footballmanager.ui.MasterViewModel
 fun LiveScoreTab(
     modifier: Modifier = Modifier
 ) {
-    val homeViewModel: MasterViewModel = hiltViewModel()
+    val masterViewModel: MasterViewModel = hiltViewModel()
     val liveNowMatches by remember {
-        mutableStateOf(homeViewModel.retrievingByLiveNowState)
+        mutableStateOf(masterViewModel.retrievingByLiveNowState)
     }
     val liveNowMatchesCount by remember {
         mutableIntStateOf(liveNowMatches.size)
@@ -41,6 +41,7 @@ fun LiveScoreTab(
         mutableStateOf((liveNowMatchesCount != 0))
     }
     Toast.makeText(LocalContext.current, isNotEmpty.toString(), Toast.LENGTH_SHORT).show()
+
     AnimatedVisibility(visible = isNotEmpty) {
         if (isNotEmpty) {
             Column(
