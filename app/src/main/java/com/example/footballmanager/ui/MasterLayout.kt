@@ -20,10 +20,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.footballmanager.ui.screens.AccountScreen
-import com.example.footballmanager.ui.screens.CompetitionScreen
-import com.example.footballmanager.ui.screens.HomeScreen
-import com.example.footballmanager.ui.screens.NewsScreen
+import com.example.footballmanager.ui.screens.main.AccountScreen
+import com.example.footballmanager.ui.screens.main.CompetitionScreen
+import com.example.footballmanager.ui.screens.main.HomeScreen
+import com.example.footballmanager.ui.screens.main.NewsScreen
 import com.example.footballmanager.ui.theme.Header
 import com.example.footballmanager.ui.theme.background
 import com.example.footballmanager.ui.theme.navigation.ButtonNavigationBar
