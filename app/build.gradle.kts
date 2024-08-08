@@ -41,17 +41,17 @@ android {
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_KEY",
-            value = "\"$rapidApiKey\""
+            value = "${rapidApiKey}"
         )
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_HOST",
-            value = "\"$rapidApiHost\""
+            value = "${rapidApiHost}"
         )
         buildConfigField(
             type = "String",
             name = "BASE_URL",
-            value = "\"$baseUrl\""
+            value = "${baseUrl}"
         )
     }
 
