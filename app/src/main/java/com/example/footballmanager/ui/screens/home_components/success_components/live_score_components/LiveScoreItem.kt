@@ -1,6 +1,5 @@
 package com.example.footballmanager.ui.screens.home_components.success_components.live_score_components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,9 +25,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun LiveScoreItem(
     modifier: Modifier = Modifier,
@@ -42,20 +43,18 @@ fun LiveScoreItem(
     logoTeamAway: String
 ) {
     val boxPaddingStart = dimensionResource(id = R.dimen.big)
-    Box(modifier = Modifier
-        .padding(start = boxPaddingStart)) {
+    Box(
+        modifier = Modifier.padding(start = boxPaddingStart)
+    ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(
-                dimensionResource(id = R.dimen.medium),
-                Alignment.Start
+                dimensionResource(id = R.dimen.medium), Alignment.Start
             ),
-            modifier = Modifier
-                .requiredWidth(width = dimensionResource(id = R.dimen.live_score_item_width))
+            modifier = Modifier.requiredWidth(width = dimensionResource(id = R.dimen.live_score_item_width))
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(
-                    dimensionResource(id = R.dimen.medium),
-                    Alignment.CenterVertically
+                    dimensionResource(id = R.dimen.medium), Alignment.CenterVertically
                 ),
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.live_score_item_corners)))
@@ -65,18 +64,15 @@ fun LiveScoreItem(
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(
-                            dimensionResource(id = R.dimen.live_score_item_spacing),
-                            Alignment.Start
-                        ),
-                        verticalAlignment = Alignment.CenterVertically
+                            dimensionResource(id = R.dimen.live_score_item_spacing), Alignment.Start
+                        ), verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(leagueLogo),
+                        GlideImage(
+                            model = leagueLogo,
                             contentDescription = stringResource(id = R.string.league_logo),
                             modifier = Modifier
                                 .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_image_size))
@@ -97,14 +93,11 @@ fun LiveScoreItem(
                 }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(
-                        dimensionResource(id = R.dimen.medium),
-                        Alignment.Start
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
+                        dimensionResource(id = R.dimen.medium), Alignment.Start
+                    ), verticalAlignment = Alignment.CenterVertically
                 ) {
                     TeamField(
-                        teamName = nameTeamHome,
-                        teamLogo = logoTeamHome
+                        teamName = nameTeamHome, teamLogo = logoTeamHome
                     )
                     Text(
                         text = "$scoreTeamHome ${stringResource(id = R.string.score_separator)} $scoreTeamAway",
@@ -117,8 +110,7 @@ fun LiveScoreItem(
                         )
                     )
                     TeamField(
-                        teamName = nameTeamAway,
-                        teamLogo = logoTeamAway
+                        teamName = nameTeamAway, teamLogo = logoTeamAway
                     )
                 }
                 Button(
