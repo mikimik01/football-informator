@@ -38,7 +38,10 @@ fun ButtonNavigationBar(
     val masterViewModel: MasterViewModel = hiltViewModel()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.bot_nav_bar_items_spacing), Alignment.Top),
+        verticalArrangement = Arrangement.spacedBy(
+            dimensionResource(id = R.dimen.bot_nav_bar_items_spacing),
+            Alignment.Top
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .windowInsetsPadding(
@@ -73,8 +76,18 @@ fun ButtonNavigationBar(
                     NavigationBarItem(
                         selected = masterViewModel.currentBotNavSelection == screen,
                         onClick = { onNavigateToScreen(screen) },
-                        icon = { NavItemIcon(imgVec = ImageVector.vectorResource(id = screen.iconRes)) },
-                        label = { NavItemText(screen.name) },
+                        icon = {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(id = screen.iconRes),
+                                modifier = modifier.size(dimensionResource(id = R.dimen.bot_nav_bar_item_size)),
+                                contentDescription = null
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = screen.name
+                            )
+                        },
                         colors = buttonColor,
                         modifier = Modifier
                             .background(colorResource(R.color.highlighted_element_color))
@@ -88,11 +101,7 @@ fun ButtonNavigationBar(
 
 @Composable
 fun NavItemIcon(modifier: Modifier = Modifier, imgVec: ImageVector) {
-    Icon(
-        imageVector = imgVec,
-        modifier = modifier.size(dimensionResource(id = R.dimen.bot_nav_bar_item_size)),
-        contentDescription = null
-    )
+
 }
 
 @Composable

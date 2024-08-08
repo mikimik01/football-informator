@@ -7,9 +7,6 @@ import com.example.footballmanager.ui.screens.result_screens.LoadingScreen
 import com.example.footballmanager.ui.screens.result_screens.ErrorScreen
 import com.example.footballmanager.ui.screens.result_screens.SuccessScreen
 
-/*@NavDestination(
-
-)*/
 @Composable
 fun HomeScreen(
     retrievingByDateState: RetrievingDataState,
