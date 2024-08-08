@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.result_screens.success_components
+package com.example.footballmanager.ui.screens.home_components.success_components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
@@ -33,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.RetrievedData

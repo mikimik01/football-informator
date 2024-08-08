@@ -65,13 +65,16 @@ fun FootballManagerApp() {
 }
 
 @Composable
-fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel){
+fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel) {
     NavHost(
         navController = navController,
         startDestination = ScreensEnum.Home.name
     ) {
         composable(route = ScreensEnum.Home.name) {
-            HomeScreen(retrievingByDateState = masterViewModel.retrievingByDateState)
+            HomeScreen(
+                retrievingByDateState = masterViewModel.retrievingByDateState,
+                masterViewModel.retrievingByLiveNowState
+            )
         }
         composable(route = ScreensEnum.Competition.name) {
             CompetitionScreen()

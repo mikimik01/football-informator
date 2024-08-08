@@ -1,4 +1,4 @@
-package com.example.footballmanager.network
+package com.example.footballmanager.data.network
 
 import com.example.footballmanager.BuildConfig
 import okhttp3.Interceptor

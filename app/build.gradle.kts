@@ -22,30 +22,36 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        //load the values from .properties file
+        // Load the values from .properties file if it exists, otherwise use environment variables
         val keystoreFile = project.rootProject.file("local.properties")
         val properties = Properties()
-        properties.load(keystoreFile.inputStream())
 
-        //return empty key in case something goes wrong
-        val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: ""
-        val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: ""
-        val baseUrl = properties.getProperty("BASE_URL") ?: ""
+        if (keystoreFile.exists()) {
+            properties.load(keystoreFile.inputStream())
+        }
+
+        // Return empty key in case something goes wrong or use environment variables
+        val rapidApiKey =
+            properties.getProperty("RAPIDAPI_KEY") ?: System.getenv("RAPIDAPI_KEY") ?: ""
+        val rapidApiHost =
+            properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
+        val baseUrl = properties.getProperty("BASE_URL") ?: System.getenv("BASE_URL") ?: ""
+
 
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_KEY",
-            value = rapidApiKey
+            value = "${rapidApiKey}"
         )
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_HOST",
-            value = rapidApiHost
+            value = "${rapidApiHost}"
         )
         buildConfigField(
             type = "String",
             name = "BASE_URL",
-            value = baseUrl
+            value = "${baseUrl}"
         )
     }
 
@@ -102,11 +108,16 @@ dependencies {
     implementation(libs.coil.compose)
     //Hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime.livedata)
     kapt(libs.hilt.compiler)
     //hilt fragment
     implementation(libs.androidx.hilt.navigation.compose)
     //navigation bar
     implementation(libs.androidx.navigation.compose)
+    //room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

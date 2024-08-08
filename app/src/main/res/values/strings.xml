@@ -12,6 +12,7 @@
     <string name="league_logo">League logo</string>
     <string name="home_logo">Home Logo</string>
     <string name="away_logo">Away Logo</string>
+    <string name="data_retrieved_from_cache">Data retrieved from cache.</string>
 
 
     <!--  LiveScore TAB  -->
@@ -29,6 +30,7 @@
     <string name="error">Error</string>
     <string name="error_hint_limit_reached">Daily requests limit may have been reached</string>
     <string name="error_hint_internet_connection">Check your internet connection</string>
+    <string name="loading_fom_cache_info">Could not load new data. Loading from cache.</string>
     <string name="hint_text">Hint:\n</string>
 
     <!--  Bottom Nav Screens  -->
@@ -36,4 +38,6 @@
     <string name="competition">Competition</string>
     <string name="news">News</string>
     <string name="account">Account</string>
+
+
 </resources>

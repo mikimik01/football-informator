@@ -1,5 +1,6 @@
-package com.example.footballmanager.ui.screens.result_screens.success_components
+package com.example.footballmanager.ui.screens.home_components.success_components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.footballmanager.R
-import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.data.entities.Match
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -42,7 +43,8 @@ const val ITEMS_TO_LOAD = 10
 
 @Composable
 fun MatchScoreTab(
-    fixtureDataWrapper: FixtureDataWrapper, modifier: Modifier = Modifier
+    matches: List<Match>, modifier: Modifier = Modifier,
+    cached: Boolean
 ) {
     var lastLoadedIndex by remember {
         mutableIntStateOf(ITEMS_TO_LOAD)
@@ -51,7 +53,7 @@ fun MatchScoreTab(
     val currentState = remember { derivedStateOf { lazyListState.firstVisibleItemIndex } }
     val shouldLoadMore =
         remember { derivedStateOf { currentState.value + ITEMS_TO_LOAD >= lastLoadedIndex } }
-    val lastFixtureIndex = fixtureDataWrapper.responseBody.size - 1
+    val lastFixtureIndex = matches.size - 1
 
     LaunchedEffect(key1 = shouldLoadMore.value) {
         lastLoadedIndex += if (lastLoadedIndex + ITEMS_TO_LOAD < lastFixtureIndex) {
@@ -70,12 +72,23 @@ fun MatchScoreTab(
             .padding(horizontal = dimensionResource(id = R.dimen.column_padding))
     ) {
         val defaultValue = stringResource(id = R.string.default_value)
+        AnimatedVisibility(visible = cached) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    color = colorResource(id = R.color.app_darker_white_motive),
+                    text = stringResource(R.string.data_retrieved_from_cache)
+                )
+            }
+        }
         LazyColumn(
             state = lazyListState, modifier = Modifier.fillMaxWidth()
         ) {
             var previousLeagueName = defaultValue
             for (i in 0..lastLoadedIndex) {
-                val item = fixtureDataWrapper.responseBody[i]
+                val item = matches[i]
                 with(item) {
                     val leagueName = league?.name ?: defaultValue
                     val leagueLogo = league?.logo ?: defaultValue

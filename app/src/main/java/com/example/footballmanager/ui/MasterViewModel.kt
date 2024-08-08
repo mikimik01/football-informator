@@ -6,28 +6,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.footballmanager.network.structures.FixtureDataWrapper
+import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
-import com.example.footballmanager.network.FootballApiService
+import com.example.footballmanager.data.MatchesDataSource
+import com.example.footballmanager.data.MatchesRepository
+import com.example.footballmanager.data.entities.Match
+import com.example.footballmanager.data.network.RetrievingDataState
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
 
-const val DAYS_OFFSET = 50
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val footballApiService: FootballApiService
+    private val matchesDataSource: MatchesDataSource
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
-    var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
+    var retrievingByLiveNowState: List<Match> by mutableStateOf(listOf())
         private set
 
     var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
@@ -35,7 +36,7 @@ class MasterViewModel @Inject constructor(
     fun getFixturesLiveNow() {
         viewModelScope.launch {
             runCatching {
-                val result = footballApiService.getFixturesByLiveNow()
+                val result = matchesDataSource.fetchMatchesByLiveNow()
                 retrievingByLiveNowState = result
             }
         }
@@ -43,19 +44,22 @@ class MasterViewModel @Inject constructor(
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
         viewModelScope.launch {
-            try {
-                val result = footballApiService.getFixturesByDate(date = date)
-                if (result.responseBody.size == 0)
-                    retrievingByDateState =
-                        RetrievingDataState.Error(ctx.getString(R.string.error_hint_limit_reached))
-                else
-                    retrievingByDateState = RetrievingDataState.Success(result)
-            } catch (e: IOException) {
-                retrievingByDateState =
+
+            retrievingByDateState = kotlin.runCatching {
+                val fetchResult = matchesDataSource.fetchAndCacheMatchesByDate(date = date)
+                RetrievingDataState.Success(matches = fetchResult, cached = false)
+            }.getOrElse {
+                val getCachedResult = matchesDataSource.getCachedMatches()
+                if (getCachedResult.isEmpty()) {
+
                     RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                } else {
+                    RetrievingDataState.Success(matches = getCachedResult, cached = true)
+                }
             }
         }
     }
+
 
     private fun getDateProperties(currentTime: LocalDate): RetrievedData {
         val formatter = DateTimeFormatter.ofPattern("dd")
@@ -87,8 +91,4 @@ data class RetrievedData(
 )
 
 
-sealed interface RetrievingDataState {
-    data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
-    data class Error(val errorHint: String) : RetrievingDataState
-    data object Loading : RetrievingDataState
-}
+
