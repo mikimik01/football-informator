@@ -16,6 +16,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -47,8 +48,8 @@ fun FootballManagerApp() {
         bottomBar = {
             ButtonNavigationBar(
                 onNavigateToScreen = { screen ->
-                    navController.navigate(screen.name); masterViewModel.currentBotNavSelection =
-                    screen
+                    navController.navigate(screen.name)
+                    masterViewModel.currentBotNavSelection = screen
                 }
             )
         }
@@ -58,26 +59,31 @@ fun FootballManagerApp() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            NavHost(
-                navController = navController,
-                startDestination = ScreensEnum.Home.name
-            ) {
-                composable(route = ScreensEnum.Home.name) {
-                    HomeScreen(
-                        retrievingByDateState = masterViewModel.retrievingByDateState,
-                        masterViewModel.retrievingByLiveNowState
-                    )
-                }
-                composable(route = ScreensEnum.Competition.name) {
-                    CompetitionScreen()
-                }
-                composable(route = ScreensEnum.News.name) {
-                    NewsScreen()
-                }
-                composable(route = ScreensEnum.Account.name) {
-                    AccountScreen()
-                }
-            }
+            NavigationManager(navController = navController, masterViewModel = masterViewModel)
+        }
+    }
+}
+
+@Composable
+fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel){
+    NavHost(
+        navController = navController,
+        startDestination = ScreensEnum.Home.name
+    ) {
+        composable(route = ScreensEnum.Home.name) {
+            HomeScreen(
+                retrievingByDateState = masterViewModel.retrievingByDateState,
+                masterViewModel.retrievingByLiveNowState
+            )
+        }
+        composable(route = ScreensEnum.Competition.name) {
+            CompetitionScreen()
+        }
+        composable(route = ScreensEnum.News.name) {
+            NewsScreen()
+        }
+        composable(route = ScreensEnum.Account.name) {
+            AccountScreen()
         }
     }
 }
