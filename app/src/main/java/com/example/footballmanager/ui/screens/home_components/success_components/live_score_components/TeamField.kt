@@ -1,6 +1,5 @@
 package com.example.footballmanager.ui.screens.home_components.success_components.live_score_components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.requiredHeight
@@ -18,9 +17,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun TeamField(
     modifier: Modifier = Modifier,
@@ -36,8 +37,8 @@ fun TeamField(
         modifier = modifier
             .requiredHeight(height = dimensionResource(id = R.dimen.live_score_item_team_field_height))
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(teamLogo),
+        GlideImage(
+            model = teamLogo,
             contentDescription = stringResource(R.string.team_logo),
             contentScale = ContentScale.Inside,
             modifier = Modifier

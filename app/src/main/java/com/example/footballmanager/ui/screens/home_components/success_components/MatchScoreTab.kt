@@ -34,6 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
 import java.time.OffsetDateTime
@@ -141,6 +143,7 @@ fun MatchScoreTab(
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun LeagueHeader(
     leagueLogo: String, leagueName: String
@@ -150,12 +153,13 @@ fun LeagueHeader(
             dimensionResource(id = R.dimen.league_header_spacing), Alignment.Start
         ), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(leagueLogo),
+        GlideImage(
+            model = leagueLogo,
             contentDescription = stringResource(R.string.league_logo),
             modifier = Modifier
                 .requiredSize(size = dimensionResource(id = R.dimen.league_header_image_required_size))
-                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corners_radius)))
+                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corners_radius))),
+            contentScale = ContentScale.Crop
         )
         Text(
             text = leagueName,
@@ -170,6 +174,7 @@ fun LeagueHeader(
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun FixtureItem(
     modifier: Modifier = Modifier,
@@ -242,8 +247,8 @@ fun FixtureItem(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(weight = 1f)
                 ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(logoTeamHome),
+                    GlideImage(
+                        model = logoTeamHome,
                         contentDescription = stringResource(R.string.home_logo),
                         contentScale = ContentScale.Inside,
                         modifier = Modifier.requiredSize(size = dimensionResource(id = R.dimen.team_icon_required_size))
@@ -287,8 +292,8 @@ fun FixtureItem(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(weight = 1f)
                 ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(logoTeamAway),
+                    GlideImage(
+                        model = logoTeamAway,
                         contentDescription = stringResource(R.string.away_logo),
                         contentScale = ContentScale.Inside,
                         modifier = Modifier.requiredSize(size = dimensionResource(id = R.dimen.team_icon_required_size))
