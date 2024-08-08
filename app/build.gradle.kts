@@ -22,15 +22,19 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        //load the values from .properties file
+        // Load the values from .properties file if it exists, otherwise use environment variables
         val keystoreFile = project.rootProject.file("local.properties")
         val properties = Properties()
-        properties.load(keystoreFile.inputStream())
 
-        //return empty key in case something goes wrong
-        val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: ""
-        val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: ""
-        val baseUrl = properties.getProperty("BASE_URL") ?: ""
+        if (keystoreFile.exists()) {
+            properties.load(keystoreFile.inputStream())
+        }
+
+        // Return empty key in case something goes wrong or use environment variables
+        val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: System.getenv("RAPIDAPI_KEY") ?: ""
+        val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
+        val baseUrl = properties.getProperty("BASE_URL") ?: System.getenv("BASE_URL") ?: ""
+
 
         buildConfigField(
             type = "String",
