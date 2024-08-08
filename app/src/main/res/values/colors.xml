@@ -22,5 +22,7 @@
     <color name="live_shower_light_green">#12b76a</color>
     <color name="live_shower_dark_green">#027a48</color>
 
+    <!--  BOTTOM NAVIGATION BAR  -->
+    <color name="unselected_navigation_item">#667085</color>
 
 </resources>

@@ -1,17 +1,15 @@
-package com.example.footballmanager.screens.view_models
+package com.example.footballmanager.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.network.structures.FixtureDataWrapper
 import com.example.footballmanager.R
-import com.example.footballmanager.network.FootballApi
 import com.example.footballmanager.network.FootballApiService
+import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -24,14 +22,15 @@ import javax.inject.Inject
 const val DAYS_OFFSET = 50
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class MasterViewModel @Inject constructor(
     private val footballApiService: FootballApiService
 ) : ViewModel() {
-
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
     var retrievingByLiveNowState: FixtureDataWrapper by mutableStateOf(FixtureDataWrapper())
         private set
+
+    var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
 
     fun getFixturesLiveNow() {
         viewModelScope.launch {
@@ -91,5 +90,5 @@ data class RetrievedData(
 sealed interface RetrievingDataState {
     data class Success(val fixtures: FixtureDataWrapper) : RetrievingDataState
     data class Error(val errorHint: String) : RetrievingDataState
-    object Loading : RetrievingDataState
+    data object Loading : RetrievingDataState
 }
