@@ -54,6 +54,4 @@ class Converters {
         val type = object : TypeToken<Fixture>() {}.type
         return gson.fromJson(fixtureString, type)
     }
-
-
 }

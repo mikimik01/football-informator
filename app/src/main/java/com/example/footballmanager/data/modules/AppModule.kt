@@ -1,6 +1,6 @@
-package com.example.footballmanager.data
+package com.example.footballmanager.data.modules
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.footballmanager.BuildConfig
 import com.example.footballmanager.DATABASE_NAME
@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -44,11 +45,12 @@ object FootballApi {
 
     @Provides
     @Singleton
-    fun provideDatabase(app: Application) =
-        Room.databaseBuilder(app, MatchesRoomDatabase::class.java, DATABASE_NAME)
+    fun provideDatabase(@ApplicationContext appContext: Context) =
+        Room.databaseBuilder(appContext, MatchesRoomDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
 
     @Provides
     fun provideUserDao(db: MatchesRoomDatabase) = db.matchDao()
+
 }

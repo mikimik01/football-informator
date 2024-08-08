@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
+import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.MatchesRepository
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.RetrievingDataState
@@ -23,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val matchesRepository: MatchesRepository
+    private val matchesDataSource: MatchesDataSource
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
@@ -35,7 +36,7 @@ class MasterViewModel @Inject constructor(
     fun getFixturesLiveNow() {
         viewModelScope.launch {
             runCatching {
-                val result = matchesRepository.fetchMatchesByLiveNow()
+                val result = matchesDataSource.fetchMatchesByLiveNow()
                 retrievingByLiveNowState = result
             }
         }
@@ -43,19 +44,17 @@ class MasterViewModel @Inject constructor(
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
         viewModelScope.launch {
-            try {
-                val fetchResult = matchesRepository.fetchAndCacheMatchesByDate(date = date)
-                retrievingByDateState =
-                    RetrievingDataState.Success(matches = fetchResult, cached = false)
-            } catch (e: Exception) {
 
-                val getCachedResult = matchesRepository.getCachedMatches()
+            retrievingByDateState = kotlin.runCatching {
+                val fetchResult = matchesDataSource.fetchAndCacheMatchesByDate(date = date)
+                RetrievingDataState.Success(matches = fetchResult, cached = false)
+            }.getOrElse {
+                val getCachedResult = matchesDataSource.getCachedMatches()
                 if (getCachedResult.isEmpty()) {
-                    retrievingByDateState =
-                        RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+
+                    RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
                 } else {
-                    retrievingByDateState =
-                        RetrievingDataState.Success(matches = getCachedResult, cached = true)
+                    RetrievingDataState.Success(matches = getCachedResult, cached = true)
                 }
             }
         }

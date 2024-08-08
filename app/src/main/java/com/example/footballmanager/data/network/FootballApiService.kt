@@ -13,6 +13,6 @@ interface FootballApiService {
 
     @GET("fixtures")
     suspend fun getMatchesByLiveNow(
-        @Query("live") live:String = "all"
+        @Query("live") live: String = "all"
     ): MatchDataWrapper
 }
