@@ -98,16 +98,3 @@ fun ButtonNavigationBar(
         }
     }
 }
-
-@Composable
-fun NavItemIcon(modifier: Modifier = Modifier, imgVec: ImageVector) {
-
-}
-
-@Composable
-fun NavItemText(name: String) {
-    Text(
-        text = name
-    )
-
-}
