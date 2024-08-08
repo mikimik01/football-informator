@@ -31,25 +31,27 @@ android {
         }
 
         // Return empty key in case something goes wrong or use environment variables
-        val rapidApiKey = properties.getProperty("RAPIDAPI_KEY") ?: System.getenv("RAPIDAPI_KEY") ?: ""
-        val rapidApiHost = properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
+        val rapidApiKey =
+            properties.getProperty("RAPIDAPI_KEY") ?: System.getenv("RAPIDAPI_KEY") ?: ""
+        val rapidApiHost =
+            properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
         val baseUrl = properties.getProperty("BASE_URL") ?: System.getenv("BASE_URL") ?: ""
 
 
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_KEY",
-            value = rapidApiKey
+            value = "\"$rapidApiKey\""
         )
         buildConfigField(
             type = "String",
             name = "RAPIDAPI_HOST",
-            value = rapidApiHost
+            value = "\"$rapidApiHost\""
         )
         buildConfigField(
             type = "String",
             name = "BASE_URL",
-            value = baseUrl
+            value = "\"$baseUrl\""
         )
     }
 
