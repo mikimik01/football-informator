@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">FootballManager</string>
+    <string name="client_api_key">900814988305-f5mthegn2lv6dvcbvgj4n8luh5ebsojo.apps.googleusercontent.com</string>
 
     <!--  HEADER  -->
     <string name="home_page_tittle">scorelive</string>

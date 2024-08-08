@@ -122,6 +122,12 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.compiler)
     implementation(libs.compose)
+    //Firebase
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
