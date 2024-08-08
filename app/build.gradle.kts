@@ -118,6 +118,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    //Glide
+    implementation(libs.glide)
+    kapt(libs.compiler)
+    implementation(libs.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
