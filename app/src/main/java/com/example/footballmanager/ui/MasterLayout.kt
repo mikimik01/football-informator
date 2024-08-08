@@ -65,7 +65,7 @@ fun FootballManagerApp() {
 }
 
 @Composable
-fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel){
+fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel) {
     NavHost(
         navController = navController,
         startDestination = ScreensEnum.Home.name
