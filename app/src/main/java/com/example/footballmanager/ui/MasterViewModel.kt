@@ -9,9 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesDataSource
-import com.example.footballmanager.data.MatchesRepository
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.network.RetrievingDataState
+import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

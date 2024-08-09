@@ -2,7 +2,7 @@ package com.example.footballmanager.data
 
 import com.example.footballmanager.data.cache.MatchDao
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.network.FootballApiService
+import com.example.footballmanager.data.network.api.FootballApiService
 import javax.inject.Inject
 
 class MatchesRepository @Inject constructor(

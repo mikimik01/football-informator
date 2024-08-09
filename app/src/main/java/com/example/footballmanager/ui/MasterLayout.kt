@@ -39,8 +39,8 @@ fun FootballManagerApp() {
     val navController = rememberNavController()
 
     LaunchedEffect(key1 = true) {
-        masterViewModel.getFixturesData(ctx = ctx)
-        masterViewModel.getFixturesLiveNow()
+        //masterViewModel.getFixturesData(ctx = ctx)
+        //masterViewModel.getFixturesLiveNow()
     }
 
     Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

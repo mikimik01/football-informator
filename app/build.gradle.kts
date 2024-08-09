@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -109,6 +110,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.auth)
+    implementation(libs.googleid)
     kapt(libs.hilt.compiler)
     //hilt fragment
     implementation(libs.androidx.hilt.navigation.compose)
@@ -123,11 +126,12 @@ dependencies {
     kapt(libs.compiler)
     implementation(libs.compose)
     //Firebase
-    implementation(libs.firebase.auth.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth)
     implementation(libs.play.services.auth)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
+    implementation(libs.androidx.credentials.v100alpha05)
+    implementation(libs.androidx.credentials.play.services.auth.v100alpha05)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

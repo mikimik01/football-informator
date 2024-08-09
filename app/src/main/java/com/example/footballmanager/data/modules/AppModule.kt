@@ -5,8 +5,8 @@ import androidx.room.Room
 import com.example.footballmanager.BuildConfig
 import com.example.footballmanager.DATABASE_NAME
 import com.example.footballmanager.data.cache.MatchesRoomDatabase
-import com.example.footballmanager.data.network.AuthInterceptor
-import com.example.footballmanager.data.network.FootballApiService
+import com.example.footballmanager.data.network.api.AuthInterceptor
+import com.example.footballmanager.data.network.api.FootballApiService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
