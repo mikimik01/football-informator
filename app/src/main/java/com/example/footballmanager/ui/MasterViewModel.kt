@@ -3,6 +3,7 @@ package com.example.footballmanager.ui
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,8 @@ import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate

@@ -1,6 +1,6 @@
 package com.example.footballmanager.ui.screens.login
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -41,7 +40,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.content.ContextCompat.startActivity
+import com.example.footballmanager.HomeActivity
+import com.example.footballmanager.LoginActivity
 import com.example.footballmanager.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -55,10 +56,17 @@ import kotlinx.coroutines.tasks.await
 
 @Composable
 fun LoginScreen() {
+    val ctx = LocalContext.current
     var user by remember { mutableStateOf(Firebase.auth.currentUser) }
     val launcher = rememberFirebaseAuthLauncher(
         onAuthComplete = { result ->
             user = result.user
+            val intent = Intent(ctx, HomeActivity::class.java)
+            intent.putExtra("name", user?.displayName.toString())
+            ctx.startActivity(intent)
+            ctx.startActivity(Intent(ctx, LoginActivity::class.java))
+            val activity = ctx as Activity
+            activity.finish()
         },
         onAuthError = {
             user = null

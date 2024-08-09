@@ -2,8 +2,10 @@
 <resources>
     <!--  HEADER  -->
     <dimen name="header_padding">16dp</dimen>
+    <dimen name="header_padding_vertical">5dp</dimen>
     <dimen name="header_text_line_height">1.33sp</dimen>
     <dimen name="header_font_size">24sp</dimen>
+    <dimen name="header_font_size_name">16sp</dimen>
     <dimen name="header_dot_offset_x">99dp</dimen>
     <dimen name="header_dot_offset_y">0dp</dimen>
     <dimen name="header_dot_required_size">10dp</dimen>
@@ -13,6 +15,7 @@
     <dimen name="header_notification_icon_offset_y">0dp</dimen>
     <dimen name="header_icons_required_size">28dp</dimen>
     <dimen name="text_height_head">32sp</dimen>
+    <dimen name="text_height_head_name">32sp</dimen>
 
     <!--  MATCH SCORE TAB  -->
     <dimen name="column_spacing">12dp</dimen>
@@ -94,10 +97,11 @@
 
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <dimen name="bot_nav_bar_items_spacing">6dp</dimen>
+    <dimen name="bot_nav_bar_items_spacing">16dp</dimen>
     <dimen name="bot_nav_bar_padding">12dp</dimen>
     <dimen name="bot_nav_bar_row_padding">12dp</dimen>
     <dimen name="bot_nav_bar_item_size">16dp</dimen>
+    <dimen name="bot_nav_bar_font_size">10sp</dimen>
 
 
 </resources>
