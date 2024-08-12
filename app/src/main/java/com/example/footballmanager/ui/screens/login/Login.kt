@@ -67,7 +67,7 @@ fun LoginScreen(
     }, onAuthError = {
         user = null
     })
-    val token = stringResource(id = R.string.default_web_client_id)
+    //val token = stringResource(id = R.string.default_web_client_id)
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -76,10 +76,7 @@ fun LoginScreen(
         if (user == null) {
             LogInOutButton(
                 onClickFunction = {
-                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(token).requestEmail().build()
-                    val googleSignInClient = GoogleSignIn.getClient(ctx, gso)
-                    launcher.launch(googleSignInClient.signInIntent)
+                    launcher.launch(viewModel.getGoogleClient(ctx = ctx))
                 }, text = stringResource(R.string.sign_in_via_google)
             )
         } else {
@@ -138,7 +135,7 @@ fun rememberFirebaseAuthLauncher(
     ) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
-            val account = task.getResult(ApiException::class.java)!!
+            val account = task.getResult(ApiException::class.java)
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
                 val authResult = Firebase.auth.signInWithCredential(credential).await()

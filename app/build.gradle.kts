@@ -38,6 +38,7 @@ android {
         val rapidApiHost =
             properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
         val baseUrl = properties.getProperty("BASE_URL") ?: System.getenv("BASE_URL") ?: ""
+        val googleToken = properties.getProperty("GOOGLE_TOKEN") ?: System.getenv("GOOGLE_TOKEN") ?: ""
 
 
         buildConfigField(
@@ -54,6 +55,11 @@ android {
             type = "String",
             name = "BASE_URL",
             value = "${baseUrl}"
+        )
+        buildConfigField(
+            type = "String",
+            name = "GOOGLE_TOKEN",
+            value = "${googleToken}"
         )
     }
 
