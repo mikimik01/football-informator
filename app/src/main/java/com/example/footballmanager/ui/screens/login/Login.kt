@@ -114,7 +114,7 @@ fun LogInOutButton(onClickFunction: () -> Unit, text: String) {
         modifier = Modifier
             .height(dimensionResource(id = R.dimen.login_activity_button_height))
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.login_activity_button_height)),
+            .padding(dimensionResource(id = R.dimen.login_activity_button_padding)),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black
