@@ -32,6 +32,7 @@ roomRuntime = "2.6.1"
 runtimeLivedata = "1.6.8"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+googleFirebaseCrashlytics = "3.0.2"
 
 
 [libraries]
@@ -52,8 +53,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose"
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "converterScalars" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
@@ -87,3 +90,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics"}
