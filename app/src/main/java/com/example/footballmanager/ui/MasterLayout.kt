@@ -68,7 +68,7 @@ fun NavigationManager(navController: NavHostController, masterViewModel: MasterV
         composable(route = ScreensEnum.Home.name) {
             HomeScreen(
                 retrievingByDateState = masterViewModel.retrievingByDateState,
-                masterViewModel.retrievingByLiveNowState
+                retrievedByLiveNowState = masterViewModel.retrievingByLiveNowState
             )
         }
         composable(route = ScreensEnum.Competition.name) {

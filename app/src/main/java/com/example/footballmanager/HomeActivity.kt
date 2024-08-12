@@ -16,7 +16,8 @@ class HomeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userName = intent.getStringExtra("name")?:"-"
+        val userName = intent.getStringExtra(getString(R.string.intent_putextra_user_name))
+            ?: getString(R.string.intent_putextra_user_name_default_value)
         enableEdgeToEdge()
         setContent {
             FootballManagerTheme {

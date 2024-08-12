@@ -35,7 +35,10 @@ class LoginActivity : ComponentActivity() {
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             val intent = Intent(this, HomeActivity::class.java)
-            intent.putExtra("name", currentUser?.displayName.toString())
+            intent.putExtra(
+                getString(R.string.intent_putextra_user_name),
+                currentUser.displayName.toString()
+            )
             startActivity(intent)
             finish()
         }

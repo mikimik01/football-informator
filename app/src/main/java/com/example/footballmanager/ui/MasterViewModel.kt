@@ -17,6 +17,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -47,18 +48,25 @@ class MasterViewModel @Inject constructor(
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
         viewModelScope.launch {
 
-            retrievingByDateState = kotlin.runCatching {
+            retrievingByDateState = runCatching {
                 val fetchResult = matchesDataSource.fetchAndCacheMatchesByDate(date = date)
-                RetrievingDataState.Success(matches = fetchResult, cached = false)
-            }.getOrElse {
-                val getCachedResult = matchesDataSource.getCachedMatches()
-                if (getCachedResult.isEmpty()) {
-
-                    RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                if (fetchResult.isEmpty()) {
+                    getCached(ctx)
                 } else {
-                    RetrievingDataState.Success(matches = getCachedResult, cached = true)
+                    RetrievingDataState.Success(matches = fetchResult, cached = false)
                 }
+            }.getOrElse {
+                getCached(ctx)
             }
+        }
+    }
+
+    private suspend fun getCached(ctx: Context): RetrievingDataState {
+        val getCachedResult = matchesDataSource.getCachedMatches()
+        return if (getCachedResult.isEmpty()) {
+            RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+        } else {
+            RetrievingDataState.Success(matches = getCachedResult, cached = true)
         }
     }
 

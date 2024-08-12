@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FootballManager</string>
+    <string name="intent_putextra_user_name">name</string>
+    <string name="intent_putextra_user_name_default_value">name</string>
     <string name="client_api_key">900814988305-f5mthegn2lv6dvcbvgj4n8luh5ebsojo.apps.googleusercontent.com</string>
 
     <!--  HEADER  -->
@@ -39,6 +41,11 @@
     <string name="competition">Competition</string>
     <string name="news">News</string>
     <string name="account">Account</string>
+
+    <!--  Login  -->
+    <string name="sign_in_via_google">Sign in via Google</string>
+    <string name="log_out">Log out</string>
+    <string name="google_logo">Google logo</string>
 
 
 </resources>
