@@ -33,8 +33,7 @@ import com.example.footballmanager.R
 
 @Composable
 fun Header(
-    modifier: Modifier = Modifier,
-    currentUserName: String
+    modifier: Modifier = Modifier, currentUserName: String
 ) {
     Column {
 
@@ -52,8 +51,7 @@ fun Header(
         ) {
 
             Box(
-                modifier = Modifier
-                    .wrapContentWidth()
+                modifier = Modifier.wrapContentWidth()
             ) {
                 Column {
                     Text(
@@ -109,18 +107,11 @@ fun Header(
                     painter = painterResource(id = R.drawable.search_icon),
                     contentDescription = stringResource(id = R.string.search_icon_content_description),
                     colorFilter = ColorFilter.tint(colorResource(id = R.color.app_white_motive)),
-                    modifier = Modifier
-                        .requiredSize(size = dimensionResource(id = R.dimen.header_icons_required_size))
+                    modifier = Modifier.requiredSize(size = dimensionResource(id = R.dimen.header_icons_required_size))
                 )
             }
 
         }
     }
 
-}
-
-@Preview
-@Composable
-fun ppprrr() {
-    Header(currentUserName = "Miki")
 }

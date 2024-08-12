@@ -35,16 +35,14 @@ import com.example.footballmanager.ui.MasterViewModel
 
 @Composable
 fun ButtonNavigationBar(
-    modifier: Modifier = Modifier,
-    onNavigateToScreen: (ScreensEnum) -> Unit
+    modifier: Modifier = Modifier, onNavigateToScreen: (ScreensEnum) -> Unit
 ) {
 
     val masterViewModel: MasterViewModel = hiltViewModel()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(id = R.dimen.bot_nav_bar_items_spacing),
-            Alignment.Top
+            dimensionResource(id = R.dimen.bot_nav_bar_items_spacing), Alignment.Top
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -72,8 +70,7 @@ fun ButtonNavigationBar(
                 disabledTextColor = colorResource(R.color.highlighted_element_color)
             )
             NavigationBar(
-                modifier = Modifier
-                    .background(colorResource(R.color.highlighted_element_color)),
+                modifier = Modifier.background(colorResource(R.color.highlighted_element_color)),
                 containerColor = colorResource(R.color.highlighted_element_color),
             ) {
                 ScreensEnum.entries.forEach { screen ->
@@ -94,17 +91,11 @@ fun ButtonNavigationBar(
                             )
                         },
                         colors = buttonColor,
-                        modifier = Modifier
-                            .background(colorResource(R.color.highlighted_element_color))
+                        modifier = Modifier.background(colorResource(R.color.highlighted_element_color))
                     )
                 }
             }
 
         }
     }
-}
-
-@Preview
-@Composable
-fun fafa(){
 }

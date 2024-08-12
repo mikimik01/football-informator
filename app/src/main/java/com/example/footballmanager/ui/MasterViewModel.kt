@@ -3,7 +3,6 @@ package com.example.footballmanager.ui
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,12 +11,10 @@ import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.api.RetrievingDataState
+import com.example.footballmanager.ui.screens.login.firebase.AuthService
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -27,7 +24,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val matchesDataSource: MatchesDataSource
+    private val matchesDataSource: MatchesDataSource,
+    private val authService: AuthService
+
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
@@ -94,6 +93,11 @@ class MasterViewModel @Inject constructor(
         val currentTime = LocalDate.now().plusDays((DAYS_OFFSET + whichDay).toLong())
         return getDateProperties(currentTime)
     }
+
+    fun logOut() {
+        authService.signOut()
+    }
+
 }
 
 data class RetrievedData(

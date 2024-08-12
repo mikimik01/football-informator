@@ -14,7 +14,9 @@ import com.example.footballmanager.ui.screens.login.LoginScreen
 import com.example.footballmanager.ui.theme.FootballManagerTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class LoginActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         val currentUser = Firebase.auth.currentUser
-        if (currentUser != null) {
+        currentUser?.let {
             val intent = Intent(this, HomeActivity::class.java)
             intent.putExtra(
                 getString(R.string.intent_putextra_user_name),

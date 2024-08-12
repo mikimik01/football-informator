@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CompetitionScreen(){
+fun CompetitionScreen() {
     Text(text = "Competition")
     TextButton(onClick = {
         throw RuntimeException("Test Crush")
@@ -18,6 +18,6 @@ fun CompetitionScreen(){
 
 @Preview
 @Composable
-fun CompetitionPreview(){
+fun CompetitionPreview() {
     CompetitionScreen()
 }

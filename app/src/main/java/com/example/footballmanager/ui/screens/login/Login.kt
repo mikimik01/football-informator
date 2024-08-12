@@ -36,8 +36,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.HomeActivity
 import com.example.footballmanager.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -51,26 +51,23 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     val ctx = LocalContext.current
-    var user by remember { mutableStateOf(Firebase.auth.currentUser) }
+    var user by remember { mutableStateOf(viewModel.user) }
     val putExtraName = stringResource(id = R.string.intent_putextra_user_name)
-    val launcher = rememberFirebaseAuthLauncher(
-        onAuthComplete = { result ->
-            user = result.user
-            val intent = Intent(ctx, HomeActivity::class.java)
-            intent.putExtra(putExtraName, user?.displayName.toString())
-            ctx.startActivity(intent)
-            val activity = ctx as Activity
-            activity.finish()
-        },
-        onAuthError = {
-            user = null
-        }
-    )
+    val launcher = rememberFirebaseAuthLauncher(onAuthComplete = { result ->
+        user = result.user
+        val intent = Intent(ctx, HomeActivity::class.java)
+        intent.putExtra(putExtraName, user?.displayName.toString())
+        ctx.startActivity(intent)
+        val activity = ctx as? Activity
+        activity!!.finish()
+    }, onAuthError = {
+        user = null
+    })
     val token = stringResource(id = R.string.default_web_client_id)
-    val context = LocalContext.current
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -79,30 +76,23 @@ fun LoginScreen() {
         if (user == null) {
             LogInOutButton(
                 onClickFunction = {
-                    val gso =
-                        GoogleSignInOptions
-                            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(token)
-                            .requestEmail()
-                            .build()
-                    val googleSignInClient = GoogleSignIn
-                        .getClient(context, gso)
-                    launcher
-                        .launch(googleSignInClient.signInIntent)
-                },
-                text = stringResource(R.string.sign_in_via_google)
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(token).requestEmail().build()
+                    val googleSignInClient = GoogleSignIn.getClient(ctx, gso)
+                    launcher.launch(googleSignInClient.signInIntent)
+                }, text = stringResource(R.string.sign_in_via_google)
             )
         } else {
             LogInOutButton(
                 onClickFunction = {
-                    Firebase.auth.signOut()
+                    viewModel.logOut()
                     user = null
-                },
-                text = stringResource(R.string.log_out)
+                }, text = stringResource(R.string.log_out)
             )
         }
     }
 }
+
 
 @Composable
 fun LogInOutButton(onClickFunction: () -> Unit, text: String) {
@@ -116,8 +106,7 @@ fun LogInOutButton(onClickFunction: () -> Unit, text: String) {
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.login_activity_button_padding)),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White,
-            contentColor = Color.Black
+            containerColor = Color.White, contentColor = Color.Black
         )
     ) {
         Image(
@@ -141,34 +130,22 @@ fun LogInOutButton(onClickFunction: () -> Unit, text: String) {
 
 @Composable
 fun rememberFirebaseAuthLauncher(
-    onAuthComplete: (AuthResult) -> Unit,
-    onAuthError: (ApiException) -> Unit
+    onAuthComplete: (AuthResult) -> Unit, onAuthError: (ApiException) -> Unit
 ): ManagedActivityResultLauncher<Intent, ActivityResult> {
     val scope = rememberCoroutineScope()
     return rememberLauncherForActivityResult(
-        ActivityResultContracts
-            .StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        val task = GoogleSignIn
-            .getSignedInAccountFromIntent(result.data)
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
-            val account = task
-                .getResult(ApiException::class.java)!!
-            val credential = GoogleAuthProvider
-                .getCredential(account.idToken!!, null)
+            val account = task.getResult(ApiException::class.java)!!
+            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
             scope.launch {
-                val authResult = Firebase
-                    .auth.signInWithCredential(credential).await()
+                val authResult = Firebase.auth.signInWithCredential(credential).await()
                 onAuthComplete(authResult)
             }
         } catch (e: ApiException) {
             onAuthError(e)
         }
     }
-}
-
-@Preview
-@Composable
-fun prete(){
-    LoginScreen()
 }
