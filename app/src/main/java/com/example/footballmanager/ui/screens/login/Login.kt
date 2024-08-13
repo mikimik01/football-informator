@@ -41,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.HomeActivity
 import com.example.footballmanager.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.Firebase
@@ -67,7 +68,6 @@ fun LoginScreen(
     }, onAuthError = {
         user = null
     })
-    //val token = stringResource(id = R.string.default_web_client_id)
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -135,8 +135,8 @@ fun rememberFirebaseAuthLauncher(
     ) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
-            val account = task.getResult(ApiException::class.java)
-            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+            val account:GoogleSignInAccount? = task.getResult(ApiException::class.java)
+            val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
             scope.launch {
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
                 onAuthComplete(authResult)

@@ -17,10 +17,6 @@ class LoginViewModel @Inject constructor(
 
     val user: FirebaseUser? get() = authService.getCurrentUser()
 
-    suspend fun signInWithGoogle(idToken: String): Boolean {
-        return authService.signInWithGoogle(idToken) != null
-    }
-
     fun getGoogleClient(ctx: Context): Intent {
         return authService.getGoogleClient(ctx = ctx)
     }
