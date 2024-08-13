@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.home_components.success_components
+package com.example.footballmanager.ui.screens.main.home_components.success_components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior

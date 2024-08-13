@@ -1,6 +1,7 @@
 package com.example.footballmanager.ui
 
 import android.content.Context
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,7 +13,8 @@ import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.screens.login.firebase.AuthService
-import com.example.footballmanager.ui.theme.navigation.ScreensEnum
+import com.example.footballmanager.ui.bottom_navigation.MainScreens
+import com.example.footballmanager.ui.headers.HeaderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -33,7 +35,14 @@ class MasterViewModel @Inject constructor(
     var retrievingByLiveNowState: List<Match> by mutableStateOf(listOf())
         private set
 
-    var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
+    var currentBotNavSelection: MainScreens by mutableStateOf(MainScreens.Home)
+
+    private val _currentSelectedHeader = mutableStateOf(HeaderType.HomeHeader)
+    val currentSelectedHeader:State<HeaderType> = _currentSelectedHeader
+
+    fun changeHeader(headerType: HeaderType) {
+        _currentSelectedHeader.value = headerType
+    }
 
     fun getFixturesLiveNow() {
         viewModelScope.launch {

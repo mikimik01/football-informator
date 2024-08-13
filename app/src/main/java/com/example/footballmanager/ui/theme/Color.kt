@@ -1,5 +1,7 @@
 package com.example.footballmanager.ui.theme
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -11,3 +13,12 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val background = Color(0xFF161616)
+
+@OptIn(ExperimentalMaterial3Api::class)
+val topAppBarColors = TopAppBarColors(
+    containerColor = background,
+    titleContentColor = background,
+    actionIconContentColor = background,
+    navigationIconContentColor = background,
+    scrolledContainerColor = background
+)
