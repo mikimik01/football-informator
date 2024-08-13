@@ -1,23 +1,9 @@
 package com.example.footballmanager
 
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import com.example.footballmanager.data.cache.MatchesRoomDatabase
-import com.example.footballmanager.data.entities.Away
-import com.example.footballmanager.data.entities.Fixture
-import com.example.footballmanager.data.entities.Goals
-import com.example.footballmanager.data.entities.Home
-import com.example.footballmanager.data.entities.League
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.entities.Teams
-import com.example.footballmanager.ui.MasterViewModel
 import com.google.gson.Gson
-import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
-import java.time.LocalDate
 
 /**
  * Example local unit test, which will execute on the development machine (host).

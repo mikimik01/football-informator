@@ -1,6 +1,6 @@
 package com.example.footballmanager
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.footballmanager.data.cache.MatchDao
@@ -18,18 +18,17 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class MatchDaoInstrumentedTest {
+class MatchDaoTest {
 
     private lateinit var database: MatchesRoomDatabase
     private lateinit var matchDao: MatchDao
+    private val context = ApplicationProvider.getApplicationContext<Context>()
 
     @Before
     fun setUp() {
         database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
+            context,
             MatchesRoomDatabase::class.java
         ).allowMainThreadQueries().build()
         matchDao = database.matchDao()
@@ -41,7 +40,7 @@ class MatchDaoInstrumentedTest {
     }
 
     @Test
-    fun `insertMatchIntoDatabaseAndRetrieve`() = runBlocking {
+    fun insertMatchIntoDatabaseAndRetrieve() = runBlocking {
         val match = Match(
             id = 1,
             teams = Teams(
