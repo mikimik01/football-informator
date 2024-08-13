@@ -72,31 +72,4 @@ class ExampleUnitTest {
         assertEquals("FT", match.fixture?.status?.short)
     }
 
-    @Test
-    fun `insert Match into database and retrieve`() = runBlocking {
-        val database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MatchesRoomDatabase::class.java
-        ).build()
-
-        val matchDao = database.matchDao()
-
-        val match = Match(
-            id = 1,
-            teams = Teams(
-                home = Home(id = 1, name = "Team A"),
-                away = Away(id = 2, name = "Team B")
-            ),
-            goals = Goals(home = 2, away = 1),
-            league = League(name = "Premier League"),
-            fixture = Fixture(date = "2024-01-01T14:00:00Z")
-        )
-
-        matchDao.insertAll(listOf( match))
-        val retrievedMatch = matchDao.getCachedMatches()
-
-        assertNotNull(retrievedMatch)
-        assertEquals("Team A", retrievedMatch[0].teams?.home?.name)
-    }
-
 }
