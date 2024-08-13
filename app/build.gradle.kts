@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -36,6 +38,7 @@ android {
         val rapidApiHost =
             properties.getProperty("RAPIDAPI_HOST") ?: System.getenv("RAPIDAPI_HOST") ?: ""
         val baseUrl = properties.getProperty("BASE_URL") ?: System.getenv("BASE_URL") ?: ""
+        val googleToken = properties.getProperty("GOOGLE_TOKEN") ?: System.getenv("GOOGLE_TOKEN") ?: ""
 
 
         buildConfigField(
@@ -52,6 +55,11 @@ android {
             type = "String",
             name = "BASE_URL",
             value = "${baseUrl}"
+        )
+        buildConfigField(
+            type = "String",
+            name = "GOOGLE_TOKEN",
+            value = "${googleToken}"
         )
     }
 
@@ -109,6 +117,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.firebase.auth)
+    implementation(libs.googleid)
     kapt(libs.hilt.compiler)
     //hilt fragment
     implementation(libs.androidx.hilt.navigation.compose)
@@ -122,6 +132,16 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.compiler)
     implementation(libs.compose)
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials.v100alpha05)
+    implementation(libs.androidx.credentials.play.services.auth.v100alpha05)
+    //firebase crash
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

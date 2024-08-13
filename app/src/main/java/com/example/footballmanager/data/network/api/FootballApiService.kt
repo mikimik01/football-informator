@@ -1,4 +1,4 @@
-package com.example.footballmanager.data.network
+package com.example.footballmanager.data.network.api
 
 import com.example.footballmanager.data.entities.MatchDataWrapper
 import retrofit2.http.GET

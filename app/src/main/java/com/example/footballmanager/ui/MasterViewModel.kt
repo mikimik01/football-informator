@@ -9,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesDataSource
-import com.example.footballmanager.data.MatchesRepository
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.network.RetrievingDataState
+import com.example.footballmanager.data.network.api.RetrievingDataState
+import com.example.footballmanager.ui.screens.login.firebase.AuthService
 import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +24,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val matchesDataSource: MatchesDataSource
+    private val matchesDataSource: MatchesDataSource,
+    private val authService: AuthService
+
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
@@ -45,18 +47,25 @@ class MasterViewModel @Inject constructor(
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
         viewModelScope.launch {
 
-            retrievingByDateState = kotlin.runCatching {
+            retrievingByDateState = runCatching {
                 val fetchResult = matchesDataSource.fetchAndCacheMatchesByDate(date = date)
-                RetrievingDataState.Success(matches = fetchResult, cached = false)
-            }.getOrElse {
-                val getCachedResult = matchesDataSource.getCachedMatches()
-                if (getCachedResult.isEmpty()) {
-
-                    RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+                if (fetchResult.isEmpty()) {
+                    getCached(ctx)
                 } else {
-                    RetrievingDataState.Success(matches = getCachedResult, cached = true)
+                    RetrievingDataState.Success(matches = fetchResult, cached = false)
                 }
+            }.getOrElse {
+                getCached(ctx)
             }
+        }
+    }
+
+    private suspend fun getCached(ctx: Context): RetrievingDataState {
+        val getCachedResult = matchesDataSource.getCachedMatches()
+        return if (getCachedResult.isEmpty()) {
+            RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
+        } else {
+            RetrievingDataState.Success(matches = getCachedResult, cached = true)
         }
     }
 
@@ -84,6 +93,11 @@ class MasterViewModel @Inject constructor(
         val currentTime = LocalDate.now().plusDays((DAYS_OFFSET + whichDay).toLong())
         return getDateProperties(currentTime)
     }
+
+    fun logOut() {
+        authService.signOut()
+    }
+
 }
 
 data class RetrievedData(

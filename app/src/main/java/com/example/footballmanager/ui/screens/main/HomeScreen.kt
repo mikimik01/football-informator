@@ -1,9 +1,9 @@
-package com.example.footballmanager.ui.screens
+package com.example.footballmanager.ui.screens.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.network.RetrievingDataState
+import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.screens.home_components.LoadingScreen
 import com.example.footballmanager.ui.screens.home_components.ErrorScreen
 import com.example.footballmanager.ui.screens.home_components.SuccessScreen

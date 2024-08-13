@@ -12,18 +12,19 @@ import com.example.footballmanager.ui.theme.FootballManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class HomeActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val userName = intent.getStringExtra(getString(R.string.intent_putextra_user_name))
+            ?: getString(R.string.intent_putextra_user_name_default_value)
         enableEdgeToEdge()
         setContent {
             FootballManagerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    FootballManagerApp()
+                    FootballManagerApp(userName = userName)
                 }
             }
         }

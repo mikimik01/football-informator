@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,22 +26,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.size.Size
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
 
 @Composable
 fun ButtonNavigationBar(
-    modifier: Modifier = Modifier,
-    onNavigateToScreen: (ScreensEnum) -> Unit
+    modifier: Modifier = Modifier, onNavigateToScreen: (ScreensEnum) -> Unit
 ) {
 
     val masterViewModel: MasterViewModel = hiltViewModel()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(id = R.dimen.bot_nav_bar_items_spacing),
-            Alignment.Top
+            dimensionResource(id = R.dimen.bot_nav_bar_items_spacing), Alignment.Top
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -68,8 +70,7 @@ fun ButtonNavigationBar(
                 disabledTextColor = colorResource(R.color.highlighted_element_color)
             )
             NavigationBar(
-                modifier = Modifier
-                    .background(colorResource(R.color.highlighted_element_color)),
+                modifier = Modifier.background(colorResource(R.color.highlighted_element_color)),
                 containerColor = colorResource(R.color.highlighted_element_color),
             ) {
                 ScreensEnum.entries.forEach { screen ->
@@ -85,12 +86,12 @@ fun ButtonNavigationBar(
                         },
                         label = {
                             Text(
-                                text = screen.name
+                                text = screen.name,
+                                fontSize = dimensionResource(id = R.dimen.bot_nav_bar_font_size).value.sp
                             )
                         },
                         colors = buttonColor,
-                        modifier = Modifier
-                            .background(colorResource(R.color.highlighted_element_color))
+                        modifier = Modifier.background(colorResource(R.color.highlighted_element_color))
                     )
                 }
             }

@@ -14,16 +14,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.footballmanager.ui.screens.AccountScreen
-import com.example.footballmanager.ui.screens.CompetitionScreen
-import com.example.footballmanager.ui.screens.HomeScreen
-import com.example.footballmanager.ui.screens.NewsScreen
+import com.example.footballmanager.ui.screens.main.AccountScreen
+import com.example.footballmanager.ui.screens.main.CompetitionScreen
+import com.example.footballmanager.ui.screens.main.HomeScreen
+import com.example.footballmanager.ui.screens.main.NewsScreen
 import com.example.footballmanager.ui.theme.Header
 import com.example.footballmanager.ui.theme.background
 import com.example.footballmanager.ui.theme.navigation.ButtonNavigationBar
@@ -31,7 +30,7 @@ import com.example.footballmanager.ui.theme.navigation.ScreensEnum
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FootballManagerApp() {
+fun FootballManagerApp(userName: String) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val masterViewModel: MasterViewModel = hiltViewModel()
     val ctx = LocalContext.current
@@ -44,16 +43,13 @@ fun FootballManagerApp() {
     }
 
     Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { AppTopBar(scrollBehavior = scrollBehavior) },
+        topBar = { AppTopBar(scrollBehavior = scrollBehavior, currentUserName = userName) },
         bottomBar = {
-            ButtonNavigationBar(
-                onNavigateToScreen = { screen ->
-                    navController.navigate(screen.name)
-                    masterViewModel.currentBotNavSelection = screen
-                }
-            )
-        }
-    ) { innerPadding ->
+            ButtonNavigationBar(onNavigateToScreen = { screen ->
+                navController.navigate(screen.name)
+                masterViewModel.currentBotNavSelection = screen
+            })
+        }) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -67,13 +63,12 @@ fun FootballManagerApp() {
 @Composable
 fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel) {
     NavHost(
-        navController = navController,
-        startDestination = ScreensEnum.Home.name
+        navController = navController, startDestination = ScreensEnum.Home.name
     ) {
         composable(route = ScreensEnum.Home.name) {
             HomeScreen(
                 retrievingByDateState = masterViewModel.retrievingByDateState,
-                masterViewModel.retrievingByLiveNowState
+                retrievedByLiveNowState = masterViewModel.retrievingByLiveNowState
             )
         }
         composable(route = ScreensEnum.Competition.name) {
@@ -91,7 +86,9 @@ fun NavigationManager(navController: NavHostController, masterViewModel: MasterV
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
-    scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier
+    scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
+    currentUserName: String
 ) {
     TopAppBar(colors = TopAppBarColors(
         containerColor = background,
@@ -100,12 +97,6 @@ fun AppTopBar(
         navigationIconContentColor = background,
         scrolledContainerColor = background
     ), scrollBehavior = scrollBehavior, title = {
-        Header()
+        Header(currentUserName = currentUserName)
     })
-}
-
-@Preview
-@Composable
-fun PreviewC() {
-    FootballManagerApp()
 }
