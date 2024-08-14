@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components.detail_components
+package com.example.footballmanager.ui.screens.main.detail_components
 
 
 import androidx.compose.foundation.Image

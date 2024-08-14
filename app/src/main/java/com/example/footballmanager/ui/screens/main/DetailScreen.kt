@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.providers.Providers
-import com.example.footballmanager.ui.screens.main.home_components.detail_components.DetailItemView
+import com.example.footballmanager.ui.screens.main.detail_components.DetailItemView
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
 
 @Composable

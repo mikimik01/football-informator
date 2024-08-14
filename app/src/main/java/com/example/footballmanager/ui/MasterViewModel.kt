@@ -30,8 +30,10 @@ class MasterViewModel @Inject constructor(
     private val matchesDataSource: MatchesDataSource,
     private val authService: AuthService
 ) : ViewModel() {
-    var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
+    var retrievingByDateState: RetrievingDataState<Match> by mutableStateOf(RetrievingDataState.Loading())
         private set
+
+
     var retrievingByLiveNowState: List<Match> by mutableStateOf(listOf())
         private set
 
@@ -76,7 +78,7 @@ class MasterViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCached(ctx: Context): RetrievingDataState {
+    private suspend fun getCached(ctx: Context): RetrievingDataState<Match> {
         val getCachedResult = matchesDataSource.getCachedMatches()
         return if (getCachedResult.isEmpty()) {
             RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
