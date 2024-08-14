@@ -15,6 +15,7 @@ import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.screens.login.firebase.AuthService
 import com.example.footballmanager.ui.bottom_navigation.MainScreens
 import com.example.footballmanager.ui.headers.HeaderType
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -28,7 +29,6 @@ import javax.inject.Inject
 class MasterViewModel @Inject constructor(
     private val matchesDataSource: MatchesDataSource,
     private val authService: AuthService
-
 ) : ViewModel() {
     var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
         private set
@@ -37,8 +37,15 @@ class MasterViewModel @Inject constructor(
 
     var currentBotNavSelection: MainScreens by mutableStateOf(MainScreens.Home)
 
-    private val _currentSelectedHeader = mutableStateOf(HeaderType.HomeHeader)
+    private val _currentSelectedHeader = mutableStateOf(HeaderType.MainHeader)
     val currentSelectedHeader:State<HeaderType> = _currentSelectedHeader
+
+    private val _selectedDetailItemData = mutableStateOf(LiveItemElements("-"))//ctx.getString(R.string.score_separator)))
+    val selectedDetailItemData: State<LiveItemElements> = _selectedDetailItemData
+
+    fun changeDetailViewData(liveItemElements: LiveItemElements){
+        _selectedDetailItemData.value = liveItemElements
+    }
 
     fun changeHeader(headerType: HeaderType) {
         _currentSelectedHeader.value = headerType

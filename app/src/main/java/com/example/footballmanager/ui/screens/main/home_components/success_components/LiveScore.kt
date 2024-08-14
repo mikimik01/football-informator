@@ -17,6 +17,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreHeader
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
 
@@ -55,14 +56,17 @@ fun LiveScoreTab(
                         with(item) {
                             item {
                                 LiveScoreItem(
-                                    leagueLogo = league?.logo ?: defaultValue,
-                                    leagueName = league?.name ?: defaultValue,
-                                    nameTeamHome = teams?.home?.name ?: defaultValue,
-                                    nameTeamAway = teams?.away?.name ?: defaultValue,
-                                    scoreTeamHome = goals?.home?.toString() ?: defaultValue,
-                                    scoreTeamAway = goals?.away?.toString() ?: defaultValue,
-                                    logoTeamHome = teams?.home?.logo ?: defaultValue,
-                                    logoTeamAway = teams?.away?.logo ?: defaultValue
+                                    LiveItemElements(
+                                        defaultValue = stringResource(id = R.string.score_separator),
+                                        leagueLogo = league?.logo ?: defaultValue,
+                                        leagueName = league?.name ?: defaultValue,
+                                        nameTeamHome = teams?.home?.name ?: defaultValue,
+                                        nameTeamAway = teams?.away?.name ?: defaultValue,
+                                        scoreTeamHome = goals?.home?.toString() ?: defaultValue,
+                                        scoreTeamAway = goals?.away?.toString() ?: defaultValue,
+                                        logoTeamHome = teams?.home?.logo ?: defaultValue,
+                                        logoTeamAway = teams?.away?.logo ?: defaultValue
+                                    )
                                 )
                             }
                         }

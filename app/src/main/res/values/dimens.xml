@@ -17,6 +17,8 @@
     <dimen name="text_height_head">32sp</dimen>
     <dimen name="text_height_head_name">32sp</dimen>
 
+    <dimen name="header_padding_top">10dp</dimen>
+
     <!--  MATCH SCORE TAB  -->
     <dimen name="column_spacing">12dp</dimen>
     <dimen name="column_required_width">390dp</dimen>

@@ -10,7 +10,7 @@
     <string name="search_icon_content_description">search_icon</string>
 
     <!--  MATCH SCORE TAB  -->
-    <string name="default_value">0</string>
+    <string name="default_value">-</string>
     <string name="league_logo">League logo</string>
     <string name="home_logo">Home Logo</string>
     <string name="away_logo">Away Logo</string>

@@ -1,5 +1,6 @@
 package com.example.footballmanager.ui
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,14 +13,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.footballmanager.R
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
 import com.example.footballmanager.ui.screens.main.AccountScreen
 import com.example.footballmanager.ui.screens.main.CompetitionScreen
@@ -40,11 +46,20 @@ fun FootballManagerApp(
     masterViewModel: MasterViewModel = hiltViewModel(),
     userName: String
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val pinnedScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val enterScrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val ctx = LocalContext.current
     val navController = rememberNavController()
-
     val navigationBarSwitcher by masterViewModel.currentSelectedHeader
+
+    var scrollBehavior by remember {
+        mutableStateOf(enterScrollBehaviour)
+    }
+    LaunchedEffect(key1 = masterViewModel.currentSelectedHeader.value.isScrollEnable) {
+        scrollBehavior.state.heightOffset = 0f
+        scrollBehavior.state.contentOffset = 0f
+        scrollBehavior = if (masterViewModel.currentSelectedHeader.value.isScrollEnable) enterScrollBehaviour else pinnedScrollBehavior
+    }
 
     with(Providers) {
         CompositionLocalProvider(
@@ -57,20 +72,27 @@ fun FootballManagerApp(
                 masterViewModel.getFixturesLiveNow()
             }
 
-            Scaffold(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            Scaffold(
+                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
-                    TopAppBar(colors = topAppBarColors, scrollBehavior = scrollBehavior, title = {
-                        AnimatedVisibility(visible = navigationBarSwitcher == HeaderType.HomeHeader) {
-                            HomeHeader(currentUserName = userName)
+                    TopAppBar(
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.header_padding_top)),
+                        colors = topAppBarColors,
+                        scrollBehavior = scrollBehavior,
+                        title = {
+                            AnimatedVisibility(visible = navigationBarSwitcher == HeaderType.MainHeader) {
+                                HomeHeader(currentUserName = userName)
+                            }
+                            AnimatedVisibility(visible = navigationBarSwitcher == HeaderType.DetailHeader) {
+                                DetailHeader()
+                            }
                         }
-                        AnimatedVisibility(visible = navigationBarSwitcher == HeaderType.DetailHeader) {
-                            DetailHeader()
-                        }
-                    })
+                    )
                 },
                 bottomBar = {
                     BottomNavigationBar(onNavigateToScreen = { screen ->
                         navController.navigate(screen.name)
+                        masterViewModel.changeHeader(HeaderType.MainHeader)
                         masterViewModel.currentBotNavSelection = screen
                     })
                 }) { innerPadding ->

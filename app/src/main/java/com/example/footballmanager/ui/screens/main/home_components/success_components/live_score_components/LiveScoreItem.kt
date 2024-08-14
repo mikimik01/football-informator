@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -40,18 +41,10 @@ import com.example.footballmanager.ui.providers.Providers
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun LiveScoreItem(
-    leagueLogo: String,
-    leagueName: String,
-    nameTeamHome: String,
-    nameTeamAway: String,
-    scoreTeamHome: String,
-    scoreTeamAway: String,
-    logoTeamHome: String,
-    logoTeamAway: String
+    liveItemElements: LiveItemElements
 ) {
     val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
-    val ctx = LocalContext.current
     val boxPaddingStart = dimensionResource(id = R.dimen.big)
     Box(
         modifier = Modifier.padding(start = boxPaddingStart)
@@ -71,63 +64,12 @@ fun LiveScoreItem(
                     .background(color = colorResource(id = R.color.highlighted_element_color))
                     .padding(all = dimensionResource(id = R.dimen.medium))
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(
-                            dimensionResource(id = R.dimen.live_score_item_spacing), Alignment.Start
-                        ), verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        GlideImage(
-                            model = leagueLogo,
-                            contentDescription = stringResource(id = R.string.league_logo),
-                            modifier = Modifier
-                                .requiredSize(size = dimensionResource(id = R.dimen.live_score_item_image_size))
-                                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.medium)))
-                        )
-                        Text(
-                            text = leagueName,
-                            color = colorResource(id = R.color.app_darker_white_motive),
-                            textAlign = TextAlign.Center,
-                            lineHeight = dimensionResource(id = R.dimen.live_score_line_height).value.sp,
-                            style = TextStyle(
-                                fontSize = dimensionResource(id = R.dimen.live_score_font_size).value.sp,
-                                fontWeight = FontWeight.Medium
-                            )
-                        )
-                    }
-                    LeagueMatchesLiveShower()
-                }
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        dimensionResource(id = R.dimen.medium), Alignment.Start
-                    ), verticalAlignment = Alignment.CenterVertically
-                ) {
-                    TeamField(
-                        teamName = nameTeamHome, teamLogo = logoTeamHome
-                    )
-                    Text(
-                        text = "$scoreTeamHome ${stringResource(id = R.string.score_separator)} $scoreTeamAway",
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        lineHeight = dimensionResource(id = R.dimen.live_score_line_height2).value.sp,
-                        style = TextStyle(
-                            fontSize = dimensionResource(id = R.dimen.live_score_font_size2).value.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    TeamField(
-                        teamName = nameTeamAway, teamLogo = logoTeamAway
-                    )
-                }
+                LiveItemUpperBody(liveItemElements = liveItemElements)
                 Button(
                     onClick = {
+                        masterViewModel.changeDetailViewData(liveItemElements)
                         masterViewModel.changeHeader(HeaderType.DetailHeader)
                         navController.navigate(route = AdditionalScreens.Detail.name)
-                        Toast.makeText(ctx, "Click", Toast.LENGTH_SHORT).show()
                     },
                     colors = ButtonColors(
                         containerColor = colorResource(id = R.color.app_red_motive),
