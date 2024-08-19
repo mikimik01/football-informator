@@ -1,6 +1,7 @@
 package com.example.footballmanager.ui.screens.main.detail_components
 
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,16 +35,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
+import com.example.footballmanager.data.entities.MatchEvent
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemUpperBody
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
 
+data class ScorerNameAndTime(
+    val name: String,
+    val elapsed: Int
+)
+
 @Composable
 fun DetailItemView(
+    events: List<MatchEvent>,
     modifier: Modifier = Modifier,
-    selectedItemData: LiveItemElements) {
+    selectedItemData: LiveItemElements
+) {
+
+    val listOfScorers = mutableListOf<ScorerNameAndTime>()
+    events.forEach { event ->
+        with(event) {
+            if (type == "Goal") {
+                listOfScorers.add(
+                    ScorerNameAndTime(
+                        name = player?.name ?: team?.name ?: "",
+                        elapsed = time?.elapsed ?: 0
+                    )
+                )
+            }
+        }
+    }
+
+    Log.d("mikimikim",  listOfScorers.toString())
+
+
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,81 +109,38 @@ fun DetailItemView(
                         textAlign = TextAlign.Center,
                         lineHeight = 1.5.em,
                         style = TextStyle(
-                            fontSize = 12.sp))
+                            fontSize = 12.sp
+                        )
+                    )
                 }
                 Image(
                     painter = painterResource(id = R.drawable.ball_icon),
                     contentDescription = "fluent:sport-soccer-24-filled",
                     colorFilter = ColorFilter.tint(Color(0xff5d5c64)),
                     modifier = Modifier
-                        .requiredSize(size = 16.dp))
+                        .requiredSize(size = 16.dp)
+                )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
                     horizontalAlignment = Alignment.End
                 ) {
-                    Text(
-                        text = "Antony 32’",
-                        color = Color(0xffb6b6b6),
-                        textAlign = TextAlign.Center,
-                        lineHeight = 1.5.em,
-                        style = TextStyle(
-                            fontSize = 12.sp))
-                    Text(
-                        text = "Diogo Dalot 76’",
-                        color = Color(0xffb6b6b6),
-                        textAlign = TextAlign.Center,
-                        lineHeight = 1.5.em,
-                        style = TextStyle(
-                            fontSize = 12.sp))
+                    listOfScorers.forEach{
+                        with(it){
+                            Text(
+                                text = "$name $elapsed`",
+                                color = Color(0xffb6b6b6),
+                                textAlign = TextAlign.Center,
+                                lineHeight = 1.5.em,
+                                style = TextStyle(
+                                    fontSize = 12.sp
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Property1Live(modifier: Modifier = Modifier) {
-    Row(modifier) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(16.dp))
-                .background(color = Color(0xffecfdf3))
-                .padding(
-                    start = 6.dp,
-                    end = 8.dp,
-                    top = 2.dp,
-                    bottom = 2.dp
-                )
-        ) {
-            Sizesm()
-            Text(
-                text = "78",
-                color = Color(0xff027a48),
-                textAlign = TextAlign.Center,
-                lineHeight = 1.5.em,
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium))
-        }
-    }
-}
-
-@Composable
-fun Sizesm(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .requiredSize(size = 8.dp)
-    ) {
-        Badge(
-            containerColor = Color(0xff12b76a),
-            modifier = Modifier
-                .align(alignment = Alignment.TopStart)
-                .offset(
-                    x = 1.dp,
-                    y = 1.dp
-                ))
-    }
-}
 

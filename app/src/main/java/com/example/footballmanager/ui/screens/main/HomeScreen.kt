@@ -13,7 +13,7 @@ import retrofit2.http.Header
 
 @Composable
 fun HomeScreen(
-    retrievingByDateState: RetrievingDataState<Match>,
+    retrievingByDateState: RetrievingDataState<List<Match>>,
     retrievedByLiveNowState: List<Match>,
     modifier: Modifier = Modifier
 ) {

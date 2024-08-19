@@ -1,5 +1,6 @@
 package com.example.footballmanager.ui
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -22,9 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
 import com.example.footballmanager.ui.screens.main.AccountScreen
@@ -91,9 +94,10 @@ fun FootballManagerApp(
                 },
                 bottomBar = {
                     BottomNavigationBar(onNavigateToScreen = { screen ->
-                        navController.navigate(screen.name)
-                        masterViewModel.changeHeader(HeaderType.MainHeader)
-                        masterViewModel.currentBotNavSelection = screen
+                        masterViewModel.navigateToOneOfHomeScreens(
+                            navController = navController,
+                            screen = screen
+                        )
                     })
                 }) { innerPadding ->
                 Column(
@@ -111,8 +115,10 @@ fun FootballManagerApp(
     }
 }
 
+
 @Composable
 fun NavigationManager(navController: NavHostController, masterViewModel: MasterViewModel) {
+    val ctx = LocalContext.current
     NavHost(
         navController = navController, startDestination = MainScreens.Home.name
     ) {
@@ -131,8 +137,11 @@ fun NavigationManager(navController: NavHostController, masterViewModel: MasterV
         composable(route = MainScreens.Account.name) {
             AccountScreen()
         }
-        composable(route = AdditionalScreens.Detail.name) {
-            DetailScreen()
+        composable(
+            route = AdditionalScreens.Detail.name
+        ) {
+                DetailScreen()
+
         }
     }
 }

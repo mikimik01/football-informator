@@ -45,6 +45,7 @@
     <string name="sign_in_via_google">Sign in via Google</string>
     <string name="log_out">Log out</string>
     <string name="google_logo">Google logo</string>
+    <string name="problem_with_fetching_match_events">Problem with fetching match events</string>
 
 
 </resources>

@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -54,6 +55,7 @@ const val ITEMS_TO_LOAD = 10
 fun MatchScoreTab(
     matches: List<Match>, modifier: Modifier = Modifier, cached: Boolean
 ) {
+    val ctx = LocalContext.current
     val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
     var lastLoadedIndex by remember {
@@ -142,9 +144,11 @@ fun MatchScoreTab(
                             fixtureDate = date,
                             modifier = Modifier
                                 .clickable {
-                                    masterViewModel.changeDetailViewData(
-                                        LiveItemElements(
+                                    masterViewModel.navigateToDetailView(
+                                        navController = navController,
+                                        liveItemElements = LiveItemElements(
                                             defaultValue = defaultValue,
+                                            fixtureId = fixture?.id?: 0,
                                             leagueLogo = league?.logo ?: defaultValue,
                                             leagueName = league?.name ?: defaultValue,
                                             nameTeamHome = teams?.home?.name ?: defaultValue,
@@ -153,10 +157,9 @@ fun MatchScoreTab(
                                             scoreTeamAway = goals?.away?.toString() ?: defaultValue,
                                             logoTeamHome = teams?.home?.logo ?: defaultValue,
                                             logoTeamAway = teams?.away?.logo ?: defaultValue
-                                        )
+                                        ),
+                                        ctx = ctx
                                     )
-                                    masterViewModel.changeHeader(HeaderType.DetailHeader)
-                                    navController.navigate(route = AdditionalScreens.Detail.name)
                                 }
                         )
                     }

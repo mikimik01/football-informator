@@ -52,8 +52,7 @@ fun DetailHeader(modifier: Modifier = Modifier) {
                 .align(alignment = Alignment.CenterStart)
                 .padding(start = 16.dp)
                 .clickable {
-                    masterViewModel.changeHeader(HeaderType.MainHeader)
-                    navController.navigateUp()
+                    masterViewModel.navigateUpToHome(navController)
                 }
         )
 

@@ -1,18 +1,16 @@
 package com.example.footballmanager.data.entities
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serial
 
 data class MatchEventsDataWrapper(
-    @SerializedName("response") var matchEvents: ArrayList<MatchEvents> = arrayListOf()
+    @SerializedName("response") var matchEvents: ArrayList<MatchEvent> = arrayListOf()
 )
 
-data class MatchEvents(
+data class MatchEvent(
     @SerializedName("time") var time: Time? = null,
     @SerializedName("team") var team: Team? = null,
     @SerializedName("player") var player: Player? = null,
     @SerializedName("type") var type: String? = null
-
 )
 
 data class Time(

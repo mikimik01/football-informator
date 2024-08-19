@@ -58,6 +58,7 @@ fun LiveScoreTab(
                                 LiveScoreItem(
                                     LiveItemElements(
                                         defaultValue = stringResource(id = R.string.score_separator),
+                                        fixtureId = fixture?.id?: 0,
                                         leagueLogo = league?.logo ?: defaultValue,
                                         leagueName = league?.name ?: defaultValue,
                                         nameTeamHome = teams?.home?.name ?: defaultValue,

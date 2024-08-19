@@ -1,6 +1,5 @@
 package com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,25 +22,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
-import com.example.footballmanager.ui.bottom_navigation.MainScreens
-import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.providers.Providers
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun LiveScoreItem(
     liveItemElements: LiveItemElements
 ) {
+    val ctx = LocalContext.current
     val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
     val boxPaddingStart = dimensionResource(id = R.dimen.big)
@@ -67,9 +58,11 @@ fun LiveScoreItem(
                 LiveItemUpperBody(liveItemElements = liveItemElements)
                 Button(
                     onClick = {
-                        masterViewModel.changeDetailViewData(liveItemElements)
-                        masterViewModel.changeHeader(HeaderType.DetailHeader)
-                        navController.navigate(route = AdditionalScreens.Detail.name)
+                        masterViewModel.navigateToDetailView(
+                            navController = navController,
+                            liveItemElements = liveItemElements,
+                            ctx = ctx
+                        )
                     },
                     colors = ButtonColors(
                         containerColor = colorResource(id = R.color.app_red_motive),

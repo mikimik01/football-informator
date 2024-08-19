@@ -1,34 +1,29 @@
 package com.example.footballmanager.ui.screens.main
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.providers.Providers
-import com.example.footballmanager.ui.screens.main.detail_components.DetailItemView
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
+import com.example.footballmanager.ui.screens.main.detail_components.DetailSuccessScreen
+import com.example.footballmanager.ui.screens.main.home_components.ErrorScreen
+import com.example.footballmanager.ui.screens.main.home_components.LoadingScreen
 
 @Composable
-fun DetailScreen(){
+fun DetailScreen() {
     val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
-    val navController = Providers.localNavControllerProvider.current as NavHostController
-//    Text(text = "Dtail Screen")
-//    TextButton(onClick = {
-//        masterViewModel.changeHeader(HeaderType.HomeHeader)
-//        navController.navigateUp()
-//    }) {
-//        Text(
-//            fontSize = 30.sp,
-//            text = "Back")
-//    }
-    DetailItemView(
-        selectedItemData = masterViewModel.selectedDetailItemData.value,
-        modifier = Modifier.fillMaxWidth()
-        )
+
+    when (val retrievedDataState = masterViewModel.retrievingMatchEventsState) {
+        is RetrievingDataState.Success -> {
+            DetailSuccessScreen(retrievedDataState.matches)
+        }
+
+        is RetrievingDataState.Loading -> LoadingScreen()
+        is RetrievingDataState.Error -> ErrorScreen(errorHint = retrievedDataState.errorHint)
+    }
+
 
 }
