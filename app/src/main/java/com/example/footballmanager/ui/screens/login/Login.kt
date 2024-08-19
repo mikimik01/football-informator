@@ -2,54 +2,45 @@ package com.example.footballmanager.ui.screens.login
 
 import android.app.Activity
 import android.content.Intent
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.HomeActivity
 import com.example.footballmanager.R
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.Firebase
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import com.example.footballmanager.ui.screens.login.login_components.BasicLogin
+import com.example.footballmanager.ui.screens.login.login_components.LogInOutButton
+import com.example.footballmanager.ui.screens.login.login_components.rememberFirebaseAuthLauncher
+import com.example.footballmanager.ui.theme.background
+import kotlin.math.round
 
 @Composable
 fun LoginScreen(
@@ -68,81 +59,90 @@ fun LoginScreen(
     }, onAuthError = {
         user = null
     })
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (user == null) {
-            LogInOutButton(
-                onClickFunction = {
-                    launcher.launch(viewModel.getGoogleClient(ctx = ctx))
-                }, text = stringResource(R.string.sign_in_via_google)
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+    ) { innerPadding ->
+
+
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Ball icon",
+                modifier = Modifier
+                    .align(alignment = Alignment.TopCenter)
+                    .padding(50.dp)
+                    .size(150.dp)
             )
-        } else {
-            LogInOutButton(
-                onClickFunction = {
-                    viewModel.logOut()
-                    user = null
-                }, text = stringResource(R.string.log_out)
-            )
+            Row(
+                Modifier.align(alignment = Alignment.Center)) {
+                BasicLogin { email, password, ctx ->
+                    Toast.makeText(ctx, "Login: $email\nPassword: $password", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            Row(
+                Modifier
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(12.dp)
+                    .padding(bottom = 12.dp)
+            ) {
+                if (user == null) {
+                    LogInOutButton(
+                        onClickFunction = {
+                            launcher.launch(viewModel.getGoogleClient(ctx = ctx))
+                        }, text = stringResource(R.string.sign_in_via_google)
+                    )
+                } else {
+                    LogInOutButton(
+                        onClickFunction = {
+                            viewModel.logOut()
+                            user = null
+                        }, text = stringResource(R.string.log_out)
+                    )
+                }
+            }
         }
     }
+
 }
 
-
+@Preview
 @Composable
-fun LogInOutButton(onClickFunction: () -> Unit, text: String) {
-    ElevatedButton(
-        onClick = {
-            onClickFunction.invoke()
-        },
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.login_activity_button_rounded)),
-        modifier = Modifier
-            .height(dimensionResource(id = R.dimen.login_activity_button_height))
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.login_activity_button_padding)),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White, contentColor = Color.Black
-        )
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.google_logo),
-            contentDescription = stringResource(R.string.google_logo),
-            modifier = Modifier.size(dimensionResource(id = R.dimen.login_activity_button_image_size)),
-            contentScale = ContentScale.Fit
-        )
-
-        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.login_activity_button_spacer)))
-
-        Text(
-            text,
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.ExtraBold,
-            fontSize = dimensionResource(id = R.dimen.login_activity_button_font_size).value.sp,
-            letterSpacing = dimensionResource(id = R.dimen.login_activity_button_font_spacing).value.sp
-        )
-    }
-}
-
-@Composable
-fun rememberFirebaseAuthLauncher(
-    onAuthComplete: (AuthResult) -> Unit, onAuthError: (ApiException) -> Unit
-): ManagedActivityResultLauncher<Intent, ActivityResult> {
-    val scope = rememberCoroutineScope()
-    return rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        try {
-            val account:GoogleSignInAccount? = task.getResult(ApiException::class.java)
-            val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-            scope.launch {
-                val authResult = Firebase.auth.signInWithCredential(credential).await()
-                onAuthComplete(authResult)
-            }
-        } catch (e: ApiException) {
-            onAuthError(e)
+fun Preparation(){
+    Column(
+        Modifier
+            .requiredHeight(300.dp)
+            .requiredWidth(300.dp)
+            .background(Color.Red)){
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(
+                modifier = Modifier
+                    .align(alignment = Alignment.BottomCenter),
+                color = Color.White,
+                fontSize = 20.sp,
+                text = "Gora"
+            )
+            Text(
+                modifier = Modifier
+                    .align(alignment = Alignment.Center),
+                color = Color.White,
+                fontSize = 20.sp,
+                text = "Srodek"
+            )
+            Text(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopCenter),
+                color = Color.White,
+                fontSize = 20.sp,
+                text = "Dol"
+            )
         }
     }
 }
