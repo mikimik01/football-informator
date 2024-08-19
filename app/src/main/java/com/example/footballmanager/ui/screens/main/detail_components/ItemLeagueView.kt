@@ -1,22 +1,16 @@
 package com.example.footballmanager.ui.screens.main.detail_components
 
-
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Badge
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,22 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.MatchEvent
-import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.providers.Providers
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemUpperBody
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
 
 data class ScorerNameAndTime(
     val name: String,
@@ -57,33 +46,30 @@ fun DetailItemView(
     val listOfScorers = mutableListOf<ScorerNameAndTime>()
     events.forEach { event ->
         with(event) {
-            if (type == "Goal") {
+            if (type == stringResource(R.string.goal_type)) {
                 listOfScorers.add(
                     ScorerNameAndTime(
-                        name = player?.name ?: team?.name ?: "",
-                        elapsed = time?.elapsed ?: 0
+                        name = player?.name ?: team?.name ?: stringResource(R.string.def_value),
+                        elapsed = time?.elapsed ?: dimensionResource(id = R.dimen.detail_item_element_default_elapsed_time).value.toInt()
                     )
                 )
             }
         }
     }
 
-    Log.d("mikimikim",  listOfScorers.toString())
-
-
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.detail_item_element_spacing), Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.detail_item_element_inner_spacing), Alignment.CenterVertically),
             horizontalAlignment = Alignment.End,
             modifier = Modifier
-                .requiredWidth(width = 358.dp)
-                .clip(shape = RoundedCornerShape(6.dp))
-                .background(color = Color(0xff1e1e1e))
-                .padding(all = 12.dp)
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.detail_item_element_corner)))
+                .background(color = colorResource(id = R.color.item_row_color))
+                .padding(all = dimensionResource(id = R.dimen.detail_item_element_padding))
         ) {
             LiveItemUpperBody(
                 selectedItemData,
@@ -91,7 +77,7 @@ fun DetailItemView(
 
             HorizontalDivider(
                 modifier = Modifier
-                    .fillMaxWidth(), color = Color(0xff3a3a3a)
+                    .fillMaxWidth(), color = colorResource(id = R.color.horizontal_divider)
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -99,40 +85,40 @@ fun DetailItemView(
                     .fillMaxWidth()
             ) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.detail_item_element_item_spacing), Alignment.Top),
                     modifier = Modifier
-                        .requiredWidth(width = 88.dp)
+                        .requiredWidth(width = dimensionResource(id = R.dimen.detail_item_element_item_width))
                 ) {
                     Text(
                         text = "Goal Scorer",
-                        color = Color(0xff1e1e1e),
+                        color = colorResource(id = R.color.item_row_color),
                         textAlign = TextAlign.Center,
-                        lineHeight = 1.5.em,
+                        lineHeight = dimensionResource(id = R.dimen.detail_item_element_item_line_height).value.sp,
                         style = TextStyle(
-                            fontSize = 12.sp
+                            fontSize = dimensionResource(id = R.dimen.detail_item_element_item_font_size).value.sp
                         )
                     )
                 }
                 Image(
                     painter = painterResource(id = R.drawable.ball_icon),
-                    contentDescription = "fluent:sport-soccer-24-filled",
-                    colorFilter = ColorFilter.tint(Color(0xff5d5c64)),
+                    contentDescription = stringResource(R.string.fluent_sport_soccer_24_filled),
+                    colorFilter = ColorFilter.tint(colorResource(id = R.color.app_grey_motive)),
                     modifier = Modifier
-                        .requiredSize(size = 16.dp)
+                        .requiredSize(size = dimensionResource(id = R.dimen.detail_item_element_item_image_size))
                 )
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.detail_item_element_item_element_spacing), Alignment.Top),
                     horizontalAlignment = Alignment.End
                 ) {
-                    listOfScorers.forEach{
-                        with(it){
+                    listOfScorers.forEach {
+                        with(it) {
                             Text(
                                 text = "$name $elapsed`",
-                                color = Color(0xffb6b6b6),
+                                color = colorResource(id = R.color.app_darker_white_motive),
                                 textAlign = TextAlign.Center,
-                                lineHeight = 1.5.em,
+                                lineHeight = dimensionResource(id = R.dimen.detail_item_element_item_line_height).value.sp,
                                 style = TextStyle(
-                                    fontSize = 12.sp
+                                    fontSize = dimensionResource(id = R.dimen.detail_item_element_item_font_size).value.sp
                                 )
                             )
                         }

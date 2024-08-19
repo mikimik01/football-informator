@@ -114,4 +114,30 @@
     <dimen name="login_activity_button_font_size">15sp</dimen>
     <dimen name="login_activity_button_font_spacing">1sp</dimen>
 
+    <!--  Detail Screen  -->
+    <!--  Detail Header  -->
+    <dimen name="detail_item_header_height">52dp</dimen>
+    <dimen name="detail_item_header_icon_padding">16dp</dimen>
+    <dimen name="detail_item_header_spacing">2dp</dimen>
+    <dimen name="detail_item_header_font_size">14sp</dimen>
+    <dimen name="detail_item_header_line_height">20sp</dimen>
+    <dimen name="detail_item_header_inner_font_size">12sp</dimen>
+    <dimen name="detail_item_header_inner_line_height">18sp</dimen>
+    <dimen name="detail_item_header_inner_spacing">16dp</dimen>
+    <dimen name="detail_item_header_inner_padding">16dp</dimen>
+    <dimen name="detail_item_header_image_size">20dp</dimen>
+
+    <!--  Detail Item Element  -->
+    <dimen name="detail_item_element_spacing">10dp</dimen>
+    <dimen name="detail_item_element_inner_spacing">12dp</dimen>
+    <dimen name="detail_item_element_corner">6dp</dimen>
+    <dimen name="detail_item_element_padding">12dp</dimen>
+    <dimen name="detail_item_element_item_spacing">2dp</dimen>
+    <dimen name="detail_item_element_item_width">88dp</dimen>
+    <dimen name="detail_item_element_item_line_height">18sp</dimen>
+    <dimen name="detail_item_element_item_font_size">12sp</dimen>
+    <dimen name="detail_item_element_item_image_size">16dp</dimen>
+    <dimen name="detail_item_element_item_element_spacing">2dp</dimen>
+    <dimen name="detail_item_element_default_elapsed_time">0</dimen>
+
 </resources>

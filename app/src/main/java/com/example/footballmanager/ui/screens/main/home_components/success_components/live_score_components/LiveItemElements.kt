@@ -5,6 +5,7 @@ import com.example.footballmanager.R
 data class LiveItemElements(
     val defaultValue: String,
     val fixtureId: Int,
+    val date: String,
     val leagueLogo: String = defaultValue,
     val leagueName: String = defaultValue,
     val nameTeamHome: String = defaultValue,

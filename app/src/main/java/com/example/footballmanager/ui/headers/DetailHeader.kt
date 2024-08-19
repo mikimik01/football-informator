@@ -7,57 +7,78 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.footballmanager.R
+import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
 
 
 @Composable
-fun DetailHeader(modifier: Modifier = Modifier) {
+fun DetailHeader(
+    modifier: Modifier = Modifier,
+) {
+    val ctx = LocalContext.current
     val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
+    val loading = stringResource(id = R.string.loading)
+    val error = stringResource(id = R.string.header_error)
+    var tittle = loading
+    var day = loading
+    when (val retrievedDataState = masterViewModel.retrievingMatchEventsState) {
+        is RetrievingDataState.Success -> {
+            tittle = retrievedDataState.matches.selectedItemElements.leagueName
+            day = masterViewModel.formatDateString(retrievedDataState.matches.selectedItemElements.date, ctx)
+        }
+        is RetrievingDataState.Loading -> {
+            tittle = loading
+            day = loading
+        }
+        is RetrievingDataState.Error -> {
+            tittle = error
+            day = error
+        }
+    }
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .requiredHeight(height = 52.dp)
+            .requiredHeight(height = dimensionResource(id = R.dimen.detail_item_header_height))
     ) {
-        //this icon
         Icon(
             tint = colorResource(id = R.color.app_white_motive),
             painter = painterResource(id = R.drawable.back_icon),
-            contentDescription = "chevron-left",
+            contentDescription = stringResource(R.string.chevron_left),
             modifier = Modifier
                 .align(alignment = Alignment.CenterStart)
-                .padding(start = 16.dp)
+                .padding(start = dimensionResource(id = R.dimen.detail_item_header_icon_padding))
                 .clickable {
                     masterViewModel.navigateUpToHome(navController)
                 }
         )
 
         Column(
-            verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen.detail_item_header_spacing),
+                Alignment.CenterVertically
+            ),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(
@@ -65,49 +86,46 @@ fun DetailHeader(modifier: Modifier = Modifier) {
                 )
         ) {
             Text(
-                text = "Premier League",
+                text = tittle,
                 color = Color.White,
-                lineHeight = 1.43.em,
+                lineHeight = dimensionResource(id = R.dimen.detail_item_header_line_height).value.sp,
                 style = TextStyle(
-                    fontSize = 14.sp
+                    fontSize = dimensionResource(id = R.dimen.detail_item_header_font_size).value.sp
                 )
             )
             Text(
-                text = "Today",
-                color = Color(0xffb6b6b6),
-                lineHeight = 1.5.em,
+                text = day,
+                color = colorResource(id = R.color.app_darker_white_motive),
+                lineHeight = dimensionResource(id = R.dimen.detail_item_header_inner_line_height).value.sp,
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = dimensionResource(id = R.dimen.detail_item_header_inner_font_size).value.sp,
                     fontWeight = FontWeight.Medium
                 )
             )
         }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            horizontalArrangement = Arrangement.spacedBy(
+                dimensionResource(id = R.dimen.detail_item_header_inner_spacing),
+                Alignment.Start
+            ),
             modifier = Modifier
                 .align(alignment = Alignment.CenterEnd)
-                .padding(end = 16.dp)
+                .padding(end = dimensionResource(id = R.dimen.detail_item_header_inner_padding))
         ) {
             Image(
                 painter = painterResource(id = R.drawable.baseline_share_24),
-                contentDescription = "fluent:share-android-24-filled",
-                colorFilter = ColorFilter.tint(Color(0xffdadada)),
+                contentDescription = stringResource(R.string.fluent_share_android_24_filled),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.image_tint)),
                 modifier = Modifier
-                    .requiredSize(size = 20.dp)
+                    .requiredSize(size = dimensionResource(id = R.dimen.detail_item_header_image_size))
             )
             Image(
                 painter = painterResource(id = R.drawable.star),
-                contentDescription = "fluent:star-24-filled",
-                colorFilter = ColorFilter.tint(Color(0xffdadada)),
+                contentDescription = stringResource(R.string.fluent_star_24_filled),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.image_tint)),
                 modifier = Modifier
-                    .requiredSize(size = 20.dp)
+                    .requiredSize(size = dimensionResource(id = R.dimen.detail_item_header_image_size))
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun prepre(){
-    DetailHeader()
 }

@@ -47,5 +47,22 @@
     <string name="google_logo">Google logo</string>
     <string name="problem_with_fetching_match_events">Problem with fetching match events</string>
 
+    <!--  Detail Screen  -->
+    <!--  Detail Item Element  -->
+    <string name="goal_type">Goal</string>
+    <string name="def_value">-</string>
+    <string name="fluent_sport_soccer_24_filled">fluent:sport-soccer-24-filled</string>
+
+    <!--  Detail Header  -->
+    <string name="chevron_left">chevron-left</string>
+    <string name="fluent_share_android_24_filled">fluent:share-android-24-filled</string>
+    <string name="fluent_star_24_filled">fluent:star-24-filled</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="date_format">dd.MM.yyyy</string>
+    <string name="loading">Loading...</string>
+    <string name="header_error">Error</string>
+
 
 </resources>

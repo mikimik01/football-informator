@@ -23,6 +23,7 @@ import com.example.footballmanager.ui.screens.main.home_components.success_compo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
@@ -49,8 +50,8 @@ class MasterViewModel @Inject constructor(
     val currentSelectedHeader: State<HeaderType> = _currentSelectedHeader
 
     private val _selectedDetailItemData =
-        mutableStateOf(LiveItemElements("-", 0))//ctx.getString(R.string.score_separator)))
-    val selectedDetailItemData: State<LiveItemElements> = _selectedDetailItemData
+        mutableStateOf(LiveItemElements("-", 0, ""))//ctx.getString(R.string.score_separator)))
+    private val selectedDetailItemData: State<LiveItemElements> = _selectedDetailItemData
 
     private fun changeDetailViewData(liveItemElements: LiveItemElements) {
         _selectedDetailItemData.value = liveItemElements
@@ -168,6 +169,23 @@ class MasterViewModel @Inject constructor(
     fun logOut() {
         authService.signOut()
     }
+
+    fun formatDateString(dateString: String, ctx: Context): String {
+        val dateTime = OffsetDateTime.parse(dateString)
+        val date = dateTime.toLocalDate()
+        val today = LocalDate.now()
+
+        return when (date) {
+            today -> ctx.getString(R.string.today)
+            today.plusDays(1) -> ctx.getString(R.string.tomorrow)
+            today.minusDays(1) -> ctx.getString(R.string.yesterday)
+            else -> {
+                val formatter = DateTimeFormatter.ofPattern(ctx.getString(R.string.date_format))
+                date.format(formatter)
+            }
+        }
+    }
+
 
 }
 

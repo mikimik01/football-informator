@@ -156,7 +156,8 @@ fun MatchScoreTab(
                                             scoreTeamHome = goals?.home?.toString() ?: defaultValue,
                                             scoreTeamAway = goals?.away?.toString() ?: defaultValue,
                                             logoTeamHome = teams?.home?.logo ?: defaultValue,
-                                            logoTeamAway = teams?.away?.logo ?: defaultValue
+                                            logoTeamAway = teams?.away?.logo ?: defaultValue,
+                                            date = fixture?.date?: defaultValue
                                         ),
                                         ctx = ctx
                                     )
