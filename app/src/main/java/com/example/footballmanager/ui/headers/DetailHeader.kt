@@ -13,6 +13,12 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +36,12 @@ import com.example.footballmanager.R
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
+import kotlinx.coroutines.delay
 
+private const val ANIMATION_DELAY = 500L
+private const val ANIMATION_FRAMES = 4
+private const val ANIMATION_STEP = 1
+private const val INITIAL_INDEX = 0
 
 @Composable
 fun DetailHeader(
@@ -41,19 +52,43 @@ fun DetailHeader(
     val navController = Providers.localNavControllerProvider.current as NavHostController
     val loading = stringResource(id = R.string.loading)
     val error = stringResource(id = R.string.header_error)
+    val dot = stringResource(R.string.dot)
     var tittle = loading
     var day = loading
+    var dotCount by remember { mutableIntStateOf(INITIAL_INDEX) }
+    var currentUpperLetter by remember { mutableIntStateOf(INITIAL_INDEX) }
     when (val retrievedDataState = masterViewModel.retrievingMatchEventsState) {
         is RetrievingDataState.Success -> {
             tittle = retrievedDataState.matches.selectedItemElements.leagueName
-            day = masterViewModel.formatDateString(retrievedDataState.matches.selectedItemElements.date, ctx)
+            day = masterViewModel.formatDateString(
+                retrievedDataState.matches.selectedItemElements.date,
+                ctx
+            )
         }
+
         is RetrievingDataState.Loading -> {
-            tittle = loading
-            day = loading
+            LaunchedEffect(Unit) {
+                while (true) {
+                    delay(ANIMATION_DELAY)
+                    dotCount = (dotCount + ANIMATION_STEP) % ANIMATION_FRAMES
+                }
+            }
+            tittle = dot.repeat(dotCount) + loading + dot.repeat(dotCount)
+            day = tittle
         }
+
         is RetrievingDataState.Error -> {
-            tittle = error
+            LaunchedEffect(Unit) {
+                while (true) {
+                    delay(ANIMATION_DELAY)
+                    currentUpperLetter = (currentUpperLetter + ANIMATION_STEP) % error.length
+                }
+            }
+            tittle = buildString {
+                error.forEachIndexed { index, char ->
+                    append(if (index == currentUpperLetter) char.uppercase() else char)
+                }
+            }
             day = error
         }
     }
