@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.login.firebase
+package com.example.footballmanager.data.network.firebase
 
 import android.content.Context
 import android.content.Intent

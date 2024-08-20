@@ -1,7 +1,6 @@
 package com.example.footballmanager.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +15,7 @@ import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.data.entities.MatchEvent
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
-import com.example.footballmanager.ui.screens.login.firebase.AuthService
+import com.example.footballmanager.data.network.firebase.AuthService
 import com.example.footballmanager.ui.bottom_navigation.MainScreens
 import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
@@ -28,7 +27,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.log
 
 
 @HiltViewModel
