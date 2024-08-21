@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 
 object Providers {
-    val localViewModelProvider = compositionLocalOf<ViewModel?> { null }
+    val localMasterModelProvider = compositionLocalOf<ViewModel?> { null }
+    val localRegisterModelProvider = compositionLocalOf<ViewModel?> { null }
     val localNavControllerProvider = compositionLocalOf<NavHostController?> { null }
 }

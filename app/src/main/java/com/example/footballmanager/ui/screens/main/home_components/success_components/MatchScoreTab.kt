@@ -1,7 +1,6 @@
 package com.example.footballmanager.ui.screens.main.home_components.success_components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,8 +40,6 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
-import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.providers.Providers
 import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import java.time.OffsetDateTime
@@ -56,7 +52,7 @@ fun MatchScoreTab(
     matches: List<Match>, modifier: Modifier = Modifier, cached: Boolean
 ) {
     val ctx = LocalContext.current
-    val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
+    val masterViewModel = Providers.localMasterModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
     var lastLoadedIndex by remember {
         mutableIntStateOf(ITEMS_TO_LOAD)

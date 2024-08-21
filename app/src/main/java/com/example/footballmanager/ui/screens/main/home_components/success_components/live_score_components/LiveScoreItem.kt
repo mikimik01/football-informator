@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
@@ -34,7 +33,7 @@ fun LiveScoreItem(
     liveItemElements: LiveItemElements
 ) {
     val ctx = LocalContext.current
-    val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
+    val masterViewModel = Providers.localMasterModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
     val boxPaddingStart = dimensionResource(id = R.dimen.big)
     Box(

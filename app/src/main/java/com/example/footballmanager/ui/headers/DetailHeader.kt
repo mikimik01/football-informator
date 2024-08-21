@@ -47,7 +47,7 @@ fun DetailHeader(
     modifier: Modifier = Modifier,
 ) {
     val ctx = LocalContext.current
-    val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
+    val masterViewModel = Providers.localMasterModelProvider.current as MasterViewModel
     val navController = Providers.localNavControllerProvider.current as NavHostController
     val loading = stringResource(id = R.string.loading)
     val error = stringResource(id = R.string.header_error)

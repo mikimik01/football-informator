@@ -78,7 +78,7 @@ class MasterViewModel @Inject constructor(
                             selectedItemElements = selectedDetailItemData.value),
                         cached = false)
                 }
-            }.getOrElse { e ->
+            }.getOrElse {
                 RetrievingDataState.Error(errorHint = ctx.getString(R.string.problem_with_fetching_match_events))
             }
         }

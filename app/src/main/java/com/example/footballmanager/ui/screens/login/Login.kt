@@ -37,7 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.HomeActivity
+import com.example.footballmanager.LoginActivity
 import com.example.footballmanager.R
+import com.example.footballmanager.ui.screens.data_structures.AuthState
 import com.example.footballmanager.ui.screens.login.login_components.BasicLogin
 import com.example.footballmanager.ui.screens.login.login_components.LogInOutButton
 import com.example.footballmanager.ui.screens.login.login_components.rememberFirebaseAuthLauncher
@@ -46,11 +48,12 @@ import kotlin.math.round
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val ctx = LocalContext.current
-    var user by remember { mutableStateOf(viewModel.user) }
+    var user by remember { mutableStateOf(loginViewModel.user) }
     val putExtraName = stringResource(id = R.string.intent_putextra_user_name)
+    val logged by remember { mutableStateOf(loginViewModel.authState) }
     val launcher = rememberFirebaseAuthLauncher(onAuthComplete = { result ->
         user = result.user
         val intent = Intent(ctx, HomeActivity::class.java)
@@ -61,6 +64,9 @@ fun LoginScreen(
     }, onAuthError = {
         user = null
     })
+
+
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -84,9 +90,25 @@ fun LoginScreen(
             )
             Row(
                 Modifier.align(alignment = Alignment.Center)) {
-                BasicLogin { email, password, ctx ->
-                    Toast.makeText(ctx, "Login: $email\nPassword: $password", Toast.LENGTH_SHORT)
-                        .show()
+
+                when (logged.value){
+                    is AuthState.Await, AuthState.Begin -> {
+                        BasicLogin ({ email, password, ctx ->
+                            loginViewModel.signInWithEmailPassword(email, password, ctx)
+                        })
+                    }
+                    is AuthState.Error -> {
+                        BasicLogin ({ email, password, ctx ->
+                            loginViewModel.signInWithEmailPassword(email, password, ctx)
+                        },
+                            errorMessage = (logged.value as AuthState.Error).message
+                        )
+                    }
+                    is AuthState.Success -> {
+                        Toast.makeText(ctx, (logged.value as AuthState.Success).message, Toast.LENGTH_SHORT).show()
+                        ctx.startActivity(Intent(ctx, LoginActivity::class.java))
+                        (ctx as Activity).finish()
+                    }
                 }
             }
 
@@ -99,13 +121,13 @@ fun LoginScreen(
                 if (user == null) {
                     LogInOutButton(
                         onClickFunction = {
-                            launcher.launch(viewModel.getGoogleClient(ctx = ctx))
+                            launcher.launch(loginViewModel.getGoogleClient(ctx = ctx))
                         }, text = stringResource(R.string.sign_in_via_google)
                     )
                 } else {
                     LogInOutButton(
                         onClickFunction = {
-                            viewModel.logOut()
+                            loginViewModel.logOut()
                             user = null
                         }, text = stringResource(R.string.log_out)
                     )

@@ -1,7 +1,5 @@
 package com.example.footballmanager.ui
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,11 +21,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
 import com.example.footballmanager.ui.screens.main.AccountScreen
@@ -66,7 +62,7 @@ fun FootballManagerApp(
 
     with(Providers) {
         CompositionLocalProvider(
-            localViewModelProvider provides masterViewModel,
+            localMasterModelProvider provides masterViewModel,
             localNavControllerProvider provides navController
         ) {
 
