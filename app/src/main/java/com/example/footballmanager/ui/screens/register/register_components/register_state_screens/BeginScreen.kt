@@ -28,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -43,11 +45,12 @@ import com.example.footballmanager.ui.screens.register.RegisterViewModel
 @Composable
 fun BeginScreen(errorMessage: String? = null) {
 
+    val blank = stringResource(id = R.string.blank)
     val registerViewModel = Providers.localRegisterModelProvider.current as RegisterViewModel
     val ctx = LocalContext.current
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf(blank) }
+    var password by remember { mutableStateOf(blank) }
+    var repeatPassword by remember { mutableStateOf(blank) }
     var isPasswordVisible by remember { mutableStateOf(false) }
     var isRepeatPasswordVisible by remember { mutableStateOf(false) }
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
@@ -61,15 +64,15 @@ fun BeginScreen(errorMessage: String? = null) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.begin_screen_column_padding)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         TextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
-            placeholder = { Text("Enter your email") },
+            label = { Text(stringResource(id = R.string.email)) },
+            placeholder = { Text(stringResource(id = R.string.enter_your_email)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.app_white_motive)),
@@ -79,14 +82,14 @@ fun BeginScreen(errorMessage: String? = null) {
                 imeAction = ImeAction.Next
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.begin_screen_spacer)))
 
         // Password TextField
         TextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            placeholder = { Text("Enter your password") },
+            label = { Text(stringResource(id = R.string.password)) },
+            placeholder = { Text(stringResource(id = R.string.enter_your_password)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.app_white_motive)),
@@ -107,13 +110,13 @@ fun BeginScreen(errorMessage: String? = null) {
             })
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.begin_screen_spacer)))
 
         TextField(
             value = repeatPassword,
             onValueChange = { repeatPassword = it },
-            label = { Text("Repeat Password") },
-            placeholder = { Text("Enter your password again") },
+            label = { Text(stringResource(R.string.repeat_password)) },
+            placeholder = { Text(stringResource(R.string.enter_your_password_again)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.app_white_motive)),
@@ -135,15 +138,15 @@ fun BeginScreen(errorMessage: String? = null) {
         )
 
         Text(
-            text = errorMessage?:"",
+            text = errorMessage?:blank,
             color = Color.Red,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
-                .padding(top = 8.dp)
+                .padding(top = dimensionResource(id = R.dimen.begin_screen_text_padding))
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.begin_screen_spacer)))
 
         Button(
             onClick = {
@@ -157,14 +160,14 @@ fun BeginScreen(errorMessage: String? = null) {
             modifier = Modifier.fillMaxWidth(),
             colors = btnColors
         ) {
-            Text("Create Account")
+            Text(stringResource(R.string.create_account))
         }
         Button(
             onClick = { backDispatcher?.onBackPressed() },
             modifier = Modifier.fillMaxWidth(),
             colors = btnColors
         ) {
-            Text("Back")
+            Text(stringResource(R.string.back))
         }
     }
 }

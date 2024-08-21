@@ -3,6 +3,7 @@ package com.example.footballmanager.data.network.firebase
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.example.footballmanager.R
 import com.example.footballmanager.data.modules.GoogleToken
 import com.example.footballmanager.ui.screens.data_structures.AuthState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -40,16 +41,16 @@ class FirebaseAuthRepository @Inject constructor(
         email: String,
         password: String,
         password1: String,
-        ctx: Context
+        context: Context
     ): AuthState {
         if (password1 != password)
-            return AuthState.Error("Passwords are not matching.")
+            return AuthState.Error(context.getString(R.string.passwords_are_not_matching))
         if (password.isBlank())
-            return AuthState.Error("Password cannot be blank.")
+            return AuthState.Error(context.getString(R.string.password_cannot_be_blank))
 
         return suspendCoroutine { continuation ->
             firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(ctx as Activity) { task ->
+                .addOnCompleteListener(context as Activity) { task ->
                     if (task.isSuccessful) {
                         val user = firebaseAuth.currentUser
                         val profileUpdates = userProfileChangeRequest {
@@ -61,25 +62,29 @@ class FirebaseAuthRepository @Inject constructor(
                                 if (profileUpdateTask.isSuccessful) {
                                     val updatedUser = firebaseAuth.currentUser
                                     if (updatedUser?.displayName != null) {
-                                        continuation.resume(AuthState.Success("Registered successfully."))
+                                        continuation.resume(AuthState.Success(context.getString(R.string.registered_successfully)))
                                     } else {
-                                        continuation.resume(AuthState.Error("Failed to set username."))
+                                        continuation.resume(AuthState.Error(context.getString(R.string.failed_to_set_username)))
                                     }
                                 } else {
-                                    continuation.resume(AuthState.Error("Failed to set username."))
+                                    continuation.resume(AuthState.Error(context.getString(R.string.failed_to_set_username)))
                                 }
                             }
                     } else {
                         val errorState = try {
                             throw task.exception!!
                         } catch (e: FirebaseAuthWeakPasswordException) {
-                            AuthState.Error("Weak Password.")
+                            AuthState.Error(context.getString(R.string.weak_password))
                         } catch (e: FirebaseAuthInvalidCredentialsException) {
-                            AuthState.Error("Invalid Email.")
+                            AuthState.Error(context.getString(R.string.invalid_email))
                         } catch (e: FirebaseAuthUserCollisionException) {
-                            AuthState.Error("User Already Exists.")
+                            AuthState.Error(context.getString(R.string.user_already_exists))
                         } catch (e: Exception) {
-                            AuthState.Error("Registration Failed: ${e.message}")
+                            AuthState.Error(
+                                context.getString(
+                                    R.string.registration_failed,
+                                    e.message
+                                ))
                         }
                         continuation.resume(errorState)
                     }
@@ -91,23 +96,23 @@ class FirebaseAuthRepository @Inject constructor(
     override suspend fun signInWithEmail(
         email: String,
         password: String,
-        ctx: Context
+        context: Context
     ): AuthState {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             AuthState.Success(result.toString())
         } catch (e: FirebaseAuthInvalidUserException) {
-            AuthState.Error("No account found with this email address.")
+            AuthState.Error(context.getString(R.string.no_account_found_with_this_email_address))
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            AuthState.Error("Invalid email address or password.")
+            AuthState.Error(context.getString(R.string.invalid_email_address_or_password))
         } catch (e: FirebaseAuthUserCollisionException) {
-            AuthState.Error("An account with this email already exists.")
+            AuthState.Error(context.getString(R.string.an_account_with_this_email_already_exists))
         } catch (e: FirebaseAuthException) {
-            AuthState.Error("Authentication failed: ${e.localizedMessage}")
+            AuthState.Error(context.getString(R.string.authentication_failed, e.localizedMessage))
         } catch (e: IOException) {
-            AuthState.Error("Network error. Please check your internet connection.")
+            AuthState.Error(context.getString(R.string.network_error_please_check_your_internet_connection))
         } catch (e: Exception) {
-            AuthState.Error("Unknown error occurred: ${e.localizedMessage}")
+            AuthState.Error(context.getString(R.string.unknown_error_occurred, e.localizedMessage))
         }
     }
 

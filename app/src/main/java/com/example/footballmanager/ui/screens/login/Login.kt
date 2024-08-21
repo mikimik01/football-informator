@@ -84,8 +84,8 @@ fun LoginScreen(
                 contentDescription = "Ball icon",
                 modifier = Modifier
                     .align(alignment = Alignment.TopCenter)
-                    .padding(50.dp)
-                    .size(150.dp)
+                    .padding(dimensionResource(id = R.dimen.login_image_padding))
+                    .size(dimensionResource(id = R.dimen.login_image_size))
                     .clip(CircleShape)
             )
             Row(
@@ -115,8 +115,8 @@ fun LoginScreen(
             Row(
                 Modifier
                     .align(alignment = Alignment.BottomCenter)
-                    .padding(12.dp)
-                    .padding(bottom = 12.dp)
+                    .padding(dimensionResource(id = R.dimen.login_row_padding))
+                    .padding(bottom = dimensionResource(id = R.dimen.login_row_padding))
             ) {
                 if (user == null) {
                     LogInOutButton(
@@ -136,38 +136,4 @@ fun LoginScreen(
         }
     }
 
-}
-
-@Preview
-@Composable
-fun Preparation(){
-    Column(
-        Modifier
-            .requiredHeight(300.dp)
-            .requiredWidth(300.dp)
-            .background(Color.Red)){
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.BottomCenter),
-                color = Color.White,
-                fontSize = 20.sp,
-                text = "Gora"
-            )
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.Center),
-                color = Color.White,
-                fontSize = 20.sp,
-                text = "Srodek"
-            )
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.TopCenter),
-                color = Color.White,
-                fontSize = 20.sp,
-                text = "Dol"
-            )
-        }
-    }
 }

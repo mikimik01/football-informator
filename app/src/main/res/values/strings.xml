@@ -65,5 +65,35 @@
     <string name="header_error">error</string>
     <string name="dot">.</string>
 
+    <!--  AuthRepository  -->
+    <string name="passwords_are_not_matching">Passwords are not matching.</string>
+    <string name="password_cannot_be_blank">Password cannot be blank.</string>
+    <string name="registered_successfully">Registered successfully.</string>
+    <string name="failed_to_set_username">Failed to set username.</string>
+    <string name="weak_password">Weak Password.</string>
+    <string name="invalid_email">Invalid Email.</string>
+    <string name="user_already_exists">User Already Exists.</string>
+    <string name="registration_failed">Registration Failed: %1$s</string>
+    <string name="no_account_found_with_this_email_address">No account found with this email address.</string>
+    <string name="invalid_email_address_or_password">Invalid email address or password.</string>
+    <string name="an_account_with_this_email_already_exists">An account with this email already exists.</string>
+    <string name="authentication_failed">Authentication failed: %1$s</string>
+    <string name="network_error_please_check_your_internet_connection">Network error. Please check your internet connection.</string>
+    <string name="unknown_error_occurred">Unknown error occurred: %1$s</string>
+
+    <!--  AuthRepository  -->
+    <string name="blank"/>
+    <string name="email">Email</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <!--  Begin Screen  -->
+    <string name="repeat_password">Repeat Password</string>
+    <string name="enter_your_password_again">Enter your password again</string>
+    <string name="create_account">Create Account</string>
+    <string name="back">Back</string>
 
 </resources>

@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 
 interface AuthService {
     fun getGoogleClient(ctx: Context): Intent
-    suspend fun registerWithEmail(email: String, password: String, password1: String, ctx: Context): AuthState
+    suspend fun registerWithEmail(email: String, password: String, password1: String, context: Context): AuthState
     suspend fun signInWithEmail(email: String, password: String, ctx: Context): AuthState
     fun getCurrentUser(): FirebaseUser?
     suspend fun signInWithGoogle(idToken: String): AuthResult?

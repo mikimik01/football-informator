@@ -24,7 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,8 +42,9 @@ import com.example.footballmanager.RegisterActivity
 @Composable
 fun BasicLogin(onLoginClick: (String, String, Context) -> Unit, errorMessage: String? = null) {
     val ctx = LocalContext.current
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val blank = stringResource(id = R.string.blank)
+    var email by remember { mutableStateOf(blank) }
+    var password by remember { mutableStateOf(blank) }
     var isPasswordVisible by remember { mutableStateOf(false) }
     val btnColors = ButtonColors(
         contentColor = Color.White,
@@ -54,15 +57,15 @@ fun BasicLogin(onLoginClick: (String, String, Context) -> Unit, errorMessage: St
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.basic_login_padding)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         TextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
-            placeholder = { Text("Enter your email") },
+            label = { Text(stringResource(R.string.email)) },
+            placeholder = { Text(stringResource(R.string.enter_your_email)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.app_white_motive)),
@@ -75,14 +78,13 @@ fun BasicLogin(onLoginClick: (String, String, Context) -> Unit, errorMessage: St
 
 
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.basic_login_spacer)))
 
-        // Password TextField
         TextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            placeholder = { Text("Enter your password") },
+            label = { Text(stringResource(R.string.password)) },
+            placeholder = { Text(stringResource(R.string.enter_your_password)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .background(colorResource(id = R.color.app_white_motive)),
@@ -105,22 +107,21 @@ fun BasicLogin(onLoginClick: (String, String, Context) -> Unit, errorMessage: St
         )
 
         Text(
-            text = errorMessage?:"",
+            text = errorMessage?:blank,
             color = Color.Red,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
-                .padding(top = 8.dp)
+                .padding(top = dimensionResource(id = R.dimen.basic_login_text_padding))
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-        // Login Button
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.basic_login_padding)))
         Button(
             onClick = { onLoginClick(email, password, ctx) },
             modifier = Modifier.fillMaxWidth(),
             colors = btnColors
         ) {
-            Text("Login")
+            Text(stringResource(R.string.login))
         }
 
         Button(
@@ -130,7 +131,7 @@ fun BasicLogin(onLoginClick: (String, String, Context) -> Unit, errorMessage: St
             modifier = Modifier.fillMaxWidth(),
             colors = btnColors
         ) {
-            Text("Register")
+            Text(stringResource(R.string.register))
         }
     }
 }

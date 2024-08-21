@@ -140,4 +140,19 @@
     <dimen name="detail_item_element_item_element_spacing">2dp</dimen>
     <dimen name="detail_item_element_default_elapsed_time">0</dimen>
 
+    <!--  Basic Login  -->
+    <dimen name="basic_login_padding">16dp</dimen>
+    <dimen name="basic_login_text_padding">8dp</dimen>
+    <dimen name="basic_login_spacer">16dp</dimen>
+
+    <!--  Login  -->
+    <dimen name="login_image_padding">50dp</dimen>
+    <dimen name="login_image_size">150dp</dimen>
+    <dimen name="login_row_padding">12dp</dimen>
+
+
+    <!--  Begin Screen  -->
+    <dimen name="begin_screen_column_padding">16dp</dimen>
+    <dimen name="begin_screen_spacer">16dp</dimen>
+    <dimen name="begin_screen_text_padding">8dp</dimen>
 </resources>
