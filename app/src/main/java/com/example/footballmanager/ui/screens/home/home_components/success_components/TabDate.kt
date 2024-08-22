@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components.success_components
+package com.example.footballmanager.ui.screens.home.home_components.success_components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.RetrievedData
+import com.example.footballmanager.ui.screens.data_structures.RetrievedDate
 import kotlinx.coroutines.launch
 
 const val COUNT_OF_ITEMS_TO_START_PAGINATION = 6
@@ -48,7 +48,7 @@ fun TabDate(modifier: Modifier = Modifier) {
     val homeViewModel: MasterViewModel = hiltViewModel()
     val gotDates = homeViewModel.get7DatesToDisplay()
     var listOfDates = remember {
-        mutableStateListOf<RetrievedData>().apply {
+        mutableStateListOf<RetrievedDate>().apply {
             addAll(gotDates)
         }
     }

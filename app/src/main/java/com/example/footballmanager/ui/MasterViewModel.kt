@@ -12,13 +12,14 @@ import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.data.entities.MatchEvent
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
 import com.example.footballmanager.data.network.firebase.AuthService
 import com.example.footballmanager.ui.bottom_navigation.MainScreens
 import com.example.footballmanager.ui.headers.HeaderType
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
+import com.example.footballmanager.ui.screens.data_structures.DetailScreenData
+import com.example.footballmanager.ui.screens.data_structures.RetrievedDate
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveItemElements
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -140,18 +141,18 @@ class MasterViewModel @Inject constructor(
     }
 
 
-    private fun getDateProperties(currentTime: LocalDate): RetrievedData {
+    private fun getDateProperties(currentTime: LocalDate): RetrievedDate {
         val formatter = DateTimeFormatter.ofPattern("dd")
         val month = currentTime.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
         val dayOfWeek = currentTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
         val day = currentTime.format(formatter)
         val fullyFormattedDate = "$day $month"
-        return RetrievedData(dayOfWeek, currentTime.toString(), fullyFormattedDate)
+        return RetrievedDate(dayOfWeek, currentTime.toString(), fullyFormattedDate)
     }
 
 
-    fun get7DatesToDisplay(): List<RetrievedData> {
-        val retList = mutableListOf<RetrievedData>()
+    fun get7DatesToDisplay(): List<RetrievedDate> {
+        val retList = mutableListOf<RetrievedDate>()
         for (daysOffset in -DAYS_OFFSET..DAYS_OFFSET) {
             val currentTime = LocalDate.now().plusDays(daysOffset.toLong())
             retList.add(getDateProperties(currentTime))
@@ -159,7 +160,7 @@ class MasterViewModel @Inject constructor(
         return retList
     }
 
-    fun getOneMoreDay(whichDay: Int): RetrievedData {
+    fun getOneMoreDay(whichDay: Int): RetrievedDate {
         val currentTime = LocalDate.now().plusDays((DAYS_OFFSET + whichDay).toLong())
         return getDateProperties(currentTime)
     }
@@ -187,14 +188,5 @@ class MasterViewModel @Inject constructor(
 
 }
 
-data class RetrievedData(
-    val dayOfWeek: String, val localDate: String, val restOfDate: String
-)
-
-data class DetailScreenData(
-    val matchEvents: List<MatchEvent>,
-    val selectedItemElements: LiveItemElements,
-    val fixtureId: Int
-)
 
 

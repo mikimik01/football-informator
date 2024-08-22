@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components.success_components
+package com.example.footballmanager.ui.screens.home.home_components.success_components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -41,7 +41,7 @@ import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveItemElements
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 

@@ -1,12 +1,9 @@
-package com.example.footballmanager.ui.screens.main.detail_components
+package com.example.footballmanager.ui.screens.home.detail_components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.footballmanager.data.entities.MatchEvent
-import com.example.footballmanager.ui.DetailScreenData
-import com.example.footballmanager.ui.MasterViewModel
-import com.example.footballmanager.ui.providers.Providers
+import com.example.footballmanager.ui.screens.data_structures.DetailScreenData
 
 @Composable
 fun DetailSuccessScreen(

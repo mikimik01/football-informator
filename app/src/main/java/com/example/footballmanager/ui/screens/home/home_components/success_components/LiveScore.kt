@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components.success_components
+package com.example.footballmanager.ui.screens.home.home_components.success_components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -17,9 +17,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreHeader
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveItemElements
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveScoreHeader
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveScoreItem
 
 @Composable
 fun LiveScoreTab(

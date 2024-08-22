@@ -148,6 +148,9 @@ dependencies {
     //firebase crash
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
+    //splash screen
+    implementation(libs.androidx.core.splashscreen)
+
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)

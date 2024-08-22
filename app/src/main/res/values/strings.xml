@@ -79,7 +79,7 @@
     <string name="an_account_with_this_email_already_exists">An account with this email already exists.</string>
     <string name="authentication_failed">Authentication failed: %1$s</string>
     <string name="network_error_please_check_your_internet_connection">Network error. Please check your internet connection.</string>
-    <string name="unknown_error_occurred">Unknown error occurred: %1$s</string>
+    <string name="unknown_error_occurred">Unknown error occurred.</string>
 
     <!--  AuthRepository  -->
     <string name="blank"/>

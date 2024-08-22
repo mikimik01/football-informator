@@ -1,12 +1,12 @@
-package com.example.footballmanager.ui.screens.main
+package com.example.footballmanager.ui.screens.home
 
 import androidx.compose.runtime.Composable
 import com.example.footballmanager.data.network.api.RetrievingDataState
 import com.example.footballmanager.ui.MasterViewModel
 import com.example.footballmanager.ui.providers.Providers
-import com.example.footballmanager.ui.screens.main.detail_components.DetailSuccessScreen
-import com.example.footballmanager.ui.screens.main.home_components.ErrorScreen
-import com.example.footballmanager.ui.screens.main.home_components.LoadingScreen
+import com.example.footballmanager.ui.screens.home.detail_components.DetailSuccessScreen
+import com.example.footballmanager.ui.screens.home.home_components.ErrorScreen
+import com.example.footballmanager.ui.screens.home.home_components.LoadingScreen
 
 @Composable
 fun DetailScreen() {

@@ -150,7 +150,6 @@
     <dimen name="login_image_size">150dp</dimen>
     <dimen name="login_row_padding">12dp</dimen>
 
-
     <!--  Begin Screen  -->
     <dimen name="begin_screen_column_padding">16dp</dimen>
     <dimen name="begin_screen_spacer">16dp</dimen>

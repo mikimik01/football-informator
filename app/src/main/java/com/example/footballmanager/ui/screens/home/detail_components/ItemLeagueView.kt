@@ -1,6 +1,5 @@
-package com.example.footballmanager.ui.screens.main.detail_components
+package com.example.footballmanager.ui.screens.home.detail_components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -28,13 +26,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.MatchEvent
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
-import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemUpperBody
-
-data class ScorerNameAndTime(
-    val name: String,
-    val elapsed: Int
-)
+import com.example.footballmanager.ui.screens.data_structures.ScorerNameAndTime
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveItemElements
+import com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components.LiveItemUpperBody
 
 @Composable
 fun DetailItemView(

@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main
+package com.example.footballmanager.ui.screens.home
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

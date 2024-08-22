@@ -1,6 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components
-
-import com.example.footballmanager.R
+package com.example.footballmanager.ui.screens.home.home_components.success_components.live_score_components
 
 data class LiveItemElements(
     val defaultValue: String,

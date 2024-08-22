@@ -96,23 +96,23 @@ class FirebaseAuthRepository @Inject constructor(
     override suspend fun signInWithEmail(
         email: String,
         password: String,
-        context: Context
+        ctx: Context
     ): AuthState {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             AuthState.Success(result.toString())
         } catch (e: FirebaseAuthInvalidUserException) {
-            AuthState.Error(context.getString(R.string.no_account_found_with_this_email_address))
+            AuthState.Error(ctx.getString(R.string.no_account_found_with_this_email_address))
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            AuthState.Error(context.getString(R.string.invalid_email_address_or_password))
+            AuthState.Error(ctx.getString(R.string.invalid_email_address_or_password))
         } catch (e: FirebaseAuthUserCollisionException) {
-            AuthState.Error(context.getString(R.string.an_account_with_this_email_already_exists))
+            AuthState.Error(ctx.getString(R.string.an_account_with_this_email_already_exists))
         } catch (e: FirebaseAuthException) {
-            AuthState.Error(context.getString(R.string.authentication_failed, e.localizedMessage))
+            AuthState.Error(ctx.getString(R.string.authentication_failed, e.localizedMessage))
         } catch (e: IOException) {
-            AuthState.Error(context.getString(R.string.network_error_please_check_your_internet_connection))
+            AuthState.Error(ctx.getString(R.string.network_error_please_check_your_internet_connection))
         } catch (e: Exception) {
-            AuthState.Error(context.getString(R.string.unknown_error_occurred, e.localizedMessage))
+            AuthState.Error(ctx.getString(R.string.unknown_error_occurred))
         }
     }
 

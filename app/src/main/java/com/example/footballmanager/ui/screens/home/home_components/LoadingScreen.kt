@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main.home_components
+package com.example.footballmanager.ui.screens.home.home_components
 
 
 import androidx.compose.animation.core.animateFloat

@@ -1,4 +1,4 @@
-package com.example.footballmanager.ui.screens.main
+package com.example.footballmanager.ui.screens.home
 
 import android.app.Activity
 import android.content.Intent

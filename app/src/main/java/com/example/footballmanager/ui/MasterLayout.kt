@@ -26,17 +26,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.footballmanager.R
 import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
-import com.example.footballmanager.ui.screens.main.AccountScreen
-import com.example.footballmanager.ui.screens.main.CompetitionScreen
-import com.example.footballmanager.ui.screens.main.HomeScreen
-import com.example.footballmanager.ui.screens.main.NewsScreen
+import com.example.footballmanager.ui.screens.home.AccountScreen
+import com.example.footballmanager.ui.screens.home.CompetitionScreen
+import com.example.footballmanager.ui.screens.home.HomeScreen
+import com.example.footballmanager.ui.screens.home.NewsScreen
 import com.example.footballmanager.ui.headers.HomeHeader
 import com.example.footballmanager.ui.bottom_navigation.BottomNavigationBar
 import com.example.footballmanager.ui.bottom_navigation.MainScreens
 import com.example.footballmanager.ui.headers.DetailHeader
 import com.example.footballmanager.ui.headers.HeaderType
 import com.example.footballmanager.ui.providers.Providers
-import com.example.footballmanager.ui.screens.main.DetailScreen
+import com.example.footballmanager.ui.screens.home.DetailScreen
 import com.example.footballmanager.ui.theme.topAppBarColors
 
 @OptIn(ExperimentalMaterial3Api::class)
