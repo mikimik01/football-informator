@@ -1,17 +1,17 @@
 package com.example.footballmanager.data.network.api
 
-import com.example.footballmanager.data.entities.Match
-
-sealed interface RetrievingDataState {
-    data class Success(
-        val matches: List<Match>,
+sealed interface RetrievingDataState<T> {
+    data class Success<T>(
+        val matches: T,
         val cached: Boolean
-    ) : RetrievingDataState
+    ) : RetrievingDataState<T>
 
-    data class Error(
+    data class Error<T>(
         val errorHint: String,
-        val matches: List<Match> = arrayListOf()
-    ) : RetrievingDataState
+        val matches: T? = null
+    ) : RetrievingDataState<T>
 
-    data object Loading : RetrievingDataState
+    data class Loading<T>(
+        val matches: T? = null
+    ) : RetrievingDataState<T>
 }

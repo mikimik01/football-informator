@@ -1,7 +1,7 @@
 package com.example.footballmanager.data.modules
 
-import com.example.footballmanager.ui.screens.login.firebase.AuthService
-import com.example.footballmanager.ui.screens.login.firebase.FirebaseAuthRepository
+import com.example.footballmanager.data.network.firebase.AuthService
+import com.example.footballmanager.data.network.firebase.FirebaseAuthRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -25,4 +25,8 @@
     <!--  BOTTOM NAVIGATION BAR  -->
     <color name="unselected_navigation_item">#667085</color>
 
+    <!--  Detail Screen  -->
+    <color name="horizontal_divider">#3a3a3a</color>
+    <color name="image_tint">#dadada</color>
+
 </resources>
