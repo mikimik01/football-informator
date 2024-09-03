@@ -1,39 +1,90 @@
 package com.example.footballmanager.ui
 
 import android.content.Context
+import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import com.example.footballmanager.DAYS_OFFSET
 import com.example.footballmanager.R
 import com.example.footballmanager.data.MatchesDataSource
 import com.example.footballmanager.data.entities.Match
+import com.example.footballmanager.data.entities.MatchEvent
 import com.example.footballmanager.data.network.api.RetrievingDataState
+import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
 import com.example.footballmanager.ui.screens.login.firebase.AuthService
-import com.example.footballmanager.ui.theme.navigation.ScreensEnum
+import com.example.footballmanager.ui.bottom_navigation.MainScreens
+import com.example.footballmanager.ui.headers.HeaderType
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.log
 
 
 @HiltViewModel
 class MasterViewModel @Inject constructor(
-    private val matchesDataSource: MatchesDataSource,
-    private val authService: AuthService
-
+    private val matchesDataSource: MatchesDataSource, private val authService: AuthService
 ) : ViewModel() {
-    var retrievingByDateState: RetrievingDataState by mutableStateOf(RetrievingDataState.Loading)
+    var retrievingByDateState: RetrievingDataState<List<Match>> by mutableStateOf(
+        RetrievingDataState.Loading()
+    )
         private set
+
+
     var retrievingByLiveNowState: List<Match> by mutableStateOf(listOf())
         private set
 
-    var currentBotNavSelection: ScreensEnum by mutableStateOf(ScreensEnum.Home)
+    var currentBotNavSelection: MainScreens by mutableStateOf(MainScreens.Home)
+
+    private val _currentSelectedHeader = mutableStateOf(HeaderType.MainHeader)
+    val currentSelectedHeader: State<HeaderType> = _currentSelectedHeader
+
+    private val _selectedDetailItemData =
+        mutableStateOf(LiveItemElements("-", 0, ""))//ctx.getString(R.string.score_separator)))
+    private val selectedDetailItemData: State<LiveItemElements> = _selectedDetailItemData
+
+    private fun changeDetailViewData(liveItemElements: LiveItemElements) {
+        _selectedDetailItemData.value = liveItemElements
+    }
+
+    private fun changeHeader(headerType: HeaderType) {
+        _currentSelectedHeader.value = headerType
+    }
+
+    var retrievingMatchEventsState: RetrievingDataState<DetailScreenData> by mutableStateOf(
+        RetrievingDataState.Loading()
+    )
+        private set
+
+    private fun getMatchEvents(fixtureId: Int, ctx: Context) {
+        viewModelScope.launch {
+            retrievingMatchEventsState = kotlin.runCatching {
+                val fetchResult = matchesDataSource.fetchMatchEvents(fixtureId)
+                if (fetchResult.isEmpty()) {
+                    RetrievingDataState.Error(errorHint = ctx.getString(R.string.problem_with_fetching_match_events))
+                } else {
+                    RetrievingDataState.Success(
+                        matches = DetailScreenData(
+                            matchEvents = fetchResult,
+                            fixtureId = fixtureId,
+                            selectedItemElements = selectedDetailItemData.value),
+                        cached = false)
+                }
+            }.getOrElse { e ->
+                RetrievingDataState.Error(errorHint = ctx.getString(R.string.problem_with_fetching_match_events))
+            }
+        }
+    }
 
     fun getFixturesLiveNow() {
         viewModelScope.launch {
@@ -42,6 +93,27 @@ class MasterViewModel @Inject constructor(
                 retrievingByLiveNowState = result
             }
         }
+    }
+
+    fun navigateToDetailView(navController: NavHostController, liveItemElements: LiveItemElements, ctx: Context) {
+        changeDetailViewData(liveItemElements)
+        changeHeader(HeaderType.DetailHeader)
+        getMatchEvents(fixtureId = liveItemElements.fixtureId, ctx = ctx)
+        navController.navigate(
+            route = AdditionalScreens.Detail.name
+        )
+
+    }
+
+    fun navigateUpToHome(navController: NavHostController){
+        changeHeader(HeaderType.MainHeader)
+        navController.navigateUp()
+    }
+
+    fun navigateToOneOfHomeScreens(navController: NavHostController, screen: MainScreens){
+        navController.navigate(screen.name)
+        changeHeader(HeaderType.MainHeader)
+        currentBotNavSelection = screen
     }
 
     fun getFixturesData(date: String = LocalDate.now().toString(), ctx: Context) {
@@ -60,7 +132,7 @@ class MasterViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCached(ctx: Context): RetrievingDataState {
+    private suspend fun getCached(ctx: Context): RetrievingDataState<List<Match>> {
         val getCachedResult = matchesDataSource.getCachedMatches()
         return if (getCachedResult.isEmpty()) {
             RetrievingDataState.Error(ctx.getString(R.string.error_hint_internet_connection))
@@ -98,11 +170,33 @@ class MasterViewModel @Inject constructor(
         authService.signOut()
     }
 
+    fun formatDateString(dateString: String, ctx: Context): String {
+        val dateTime = OffsetDateTime.parse(dateString)
+        val date = dateTime.toLocalDate()
+        val today = LocalDate.now()
+
+        return when (date) {
+            today -> ctx.getString(R.string.today)
+            today.plusDays(1) -> ctx.getString(R.string.tomorrow)
+            today.minusDays(1) -> ctx.getString(R.string.yesterday)
+            else -> {
+                val formatter = DateTimeFormatter.ofPattern(ctx.getString(R.string.date_format))
+                date.format(formatter)
+            }
+        }
+    }
+
+
 }
 
 data class RetrievedData(
     val dayOfWeek: String, val localDate: String, val restOfDate: String
 )
 
+data class DetailScreenData(
+    val matchEvents: List<MatchEvent>,
+    val selectedItemElements: LiveItemElements,
+    val fixtureId: Int
+)
 
 

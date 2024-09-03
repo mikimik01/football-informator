@@ -1,8 +1,9 @@
-package com.example.footballmanager.ui.screens.home_components.success_components
+package com.example.footballmanager.ui.screens.main.home_components.success_components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -33,11 +36,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
+import com.example.footballmanager.ui.MasterViewModel
+import com.example.footballmanager.ui.bottom_navigation.AdditionalScreens
+import com.example.footballmanager.ui.headers.HeaderType
+import com.example.footballmanager.ui.providers.Providers
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -45,9 +53,11 @@ const val ITEMS_TO_LOAD = 10
 
 @Composable
 fun MatchScoreTab(
-    matches: List<Match>, modifier: Modifier = Modifier,
-    cached: Boolean
+    matches: List<Match>, modifier: Modifier = Modifier, cached: Boolean
 ) {
+    val ctx = LocalContext.current
+    val masterViewModel = Providers.localViewModelProvider.current as MasterViewModel
+    val navController = Providers.localNavControllerProvider.current as NavHostController
     var lastLoadedIndex by remember {
         mutableIntStateOf(ITEMS_TO_LOAD)
     }
@@ -76,8 +86,7 @@ fun MatchScoreTab(
         val defaultValue = stringResource(id = R.string.default_value)
         AnimatedVisibility(visible = cached) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
             ) {
                 Text(
                     color = colorResource(id = R.color.app_darker_white_motive),
@@ -132,9 +141,28 @@ fun MatchScoreTab(
                             logoTeamHome = logoTeamHome,
                             logoTeamAway = logoTeamAway,
                             short = short,
-                            fixtureDate = date
+                            fixtureDate = date,
+                            modifier = Modifier
+                                .clickable {
+                                    masterViewModel.navigateToDetailView(
+                                        navController = navController,
+                                        liveItemElements = LiveItemElements(
+                                            defaultValue = defaultValue,
+                                            fixtureId = fixture?.id?: 0,
+                                            leagueLogo = league?.logo ?: defaultValue,
+                                            leagueName = league?.name ?: defaultValue,
+                                            nameTeamHome = teams?.home?.name ?: defaultValue,
+                                            nameTeamAway = teams?.away?.name ?: defaultValue,
+                                            scoreTeamHome = goals?.home?.toString() ?: defaultValue,
+                                            scoreTeamAway = goals?.away?.toString() ?: defaultValue,
+                                            logoTeamHome = teams?.home?.logo ?: defaultValue,
+                                            logoTeamAway = teams?.away?.logo ?: defaultValue,
+                                            date = fixture?.date?: defaultValue
+                                        ),
+                                        ctx = ctx
+                                    )
+                                }
                         )
-
                     }
                 }
             }

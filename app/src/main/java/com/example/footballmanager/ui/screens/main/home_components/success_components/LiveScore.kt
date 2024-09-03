@@ -1,35 +1,25 @@
-package com.example.footballmanager.ui.screens.home_components.success_components
+package com.example.footballmanager.ui.screens.main.home_components.success_components
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.footballmanager.R
 import com.example.footballmanager.data.entities.Match
-import com.example.footballmanager.ui.screens.home_components.success_components.live_score_components.LiveScoreHeader
-import com.example.footballmanager.ui.screens.home_components.success_components.live_score_components.LiveScoreItem
-import com.example.footballmanager.ui.MasterViewModel
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveItemElements
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreHeader
+import com.example.footballmanager.ui.screens.main.home_components.success_components.live_score_components.LiveScoreItem
 
 @Composable
 fun LiveScoreTab(
@@ -66,14 +56,19 @@ fun LiveScoreTab(
                         with(item) {
                             item {
                                 LiveScoreItem(
-                                    leagueLogo = league?.logo ?: defaultValue,
-                                    leagueName = league?.name ?: defaultValue,
-                                    nameTeamHome = teams?.home?.name ?: defaultValue,
-                                    nameTeamAway = teams?.away?.name ?: defaultValue,
-                                    scoreTeamHome = goals?.home?.toString() ?: defaultValue,
-                                    scoreTeamAway = goals?.away?.toString() ?: defaultValue,
-                                    logoTeamHome = teams?.home?.logo ?: defaultValue,
-                                    logoTeamAway = teams?.away?.logo ?: defaultValue
+                                    LiveItemElements(
+                                        defaultValue = stringResource(id = R.string.score_separator),
+                                        fixtureId = fixture?.id?: 0,
+                                        leagueLogo = league?.logo ?: defaultValue,
+                                        leagueName = league?.name ?: defaultValue,
+                                        nameTeamHome = teams?.home?.name ?: defaultValue,
+                                        nameTeamAway = teams?.away?.name ?: defaultValue,
+                                        scoreTeamHome = goals?.home?.toString() ?: defaultValue,
+                                        scoreTeamAway = goals?.away?.toString() ?: defaultValue,
+                                        logoTeamHome = teams?.home?.logo ?: defaultValue,
+                                        logoTeamAway = teams?.away?.logo ?: defaultValue,
+                                        date = fixture?.date?: defaultValue
+                                    )
                                 )
                             }
                         }
